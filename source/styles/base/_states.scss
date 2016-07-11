@@ -1,0 +1,44 @@
+
+.is-hidden {
+  display: none;
+}
+
+.is-hiddeni--aggressive {
+  display: none !important;
+}
+
+@include media(palm) {
+  .is-hidden--palm {
+    display: none !important;
+  }
+}
+
+@include media(lap) {
+  .is-hidden--lap {
+    display: none !important;
+  }
+}
+
+@include media(lap-and-up) {
+  .is-hidden--lap-and-up {
+    display: none !important;
+  }
+}
+
+@include media(portable) {
+  .is-hidden--portable {
+    display: none !important;
+  }
+}
+
+@include media(desk) {
+  .is-hidden--desk {
+    display: none !important;
+  }
+}
+
+@include media(desk-wide) {
+  .is-hidden--desk-wide {
+    display: none !important;
+  }
+}

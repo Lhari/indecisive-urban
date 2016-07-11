@@ -1,0 +1,278 @@
+// Helpers
+//
+// Various helper classes used throughout the site
+//
+// Styleguide 6.
+
+
+// Positioning
+//
+// The `dummy` class is only for presentation purposes and should be ignored.
+//
+// Markup:
+// <div class="{$modifiers} dummy">{$modifiers}</div>
+//
+// .center        - Centers an element. The element needs to a have a width defined.
+// .left         - Floats the element left.
+// .right         - Floats the element right.
+// .flex-center  - Center aligns items inside of it with flex
+//
+// Styleguide 6.1
+
+.hidden {
+  display: none!important;
+}
+.relative {
+  position: relative;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+.noscroll {
+  overflow: hidden;
+}
+.type-block {
+  display: block;
+}
+.flex-center {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+// Spacing
+//
+// Spacers are used to positioning specific elements. Usually it can be modules
+// or elements that just need a litle nudge in a specific direction and a whole module
+// modifier class is overkill for it.
+//
+// Markup:
+// <div class="{$modifiers}">{$modifiers}</div>
+//
+// .flush       - Clear the bottom margin.
+// .slim        - Half spacer unit for the button `$spacing / 2`
+// .landmark    - Usefull for hero elements. Gives element a double bototm margin.
+// .row         - Turns element into a block element and gives it a bottom margin.
+//
+// Styleguide 6.2
+
+.flush {
+  margin-bottom: 0 !important;
+}
+
+.slim {
+  margin-bottom: $spacing/2 !important;
+}
+
+.row {
+  margin-bottom: $spacing;
+  width: 100%;
+  @extend %clearfix;
+}
+
+.landmark {
+  margin-bottom: $spacing*2 !important;
+}
+
+.clear--left {
+  clear: left;
+}
+
+.clear--right {
+  clear: right;
+}
+
+.push-right {
+  margin-left: $spacing;
+}
+
+.push-left {
+  margin-right: $spacing;
+}
+
+.clearfix:after {
+  clear: both;
+  content: '';
+  display: table;
+}
+
+// Text Helpers
+//
+// Various helpers for text element
+//
+// Markup:
+// <div class="{$modifiers}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nibh nisl, mollis eu pretium ac, porta in nulla. Nam id quam a eros dignissim mollis. Aliquam sed sodales elit. Vivamus venenatis diam quis velit tincidunt, in dapibus nisi rutrum. Etiam consequat, nulla ut dictum rhoncus, justo mauris vestibulum elit, et auctor mauris magna eu sem. Aenean a sapien dolor. Phasellus odio enim, gravida a eleifend non, hendrerit a neque. Donec gravida, diam eu congue viverra, metus nisl porttitor felis, id consequat est nulla a purus. Donec a felis libero. Pellentesque sit amet ultrices odio, commodo pulvinar tortor. Curabitur urna nisi, luctus eu tristique in, lobortis ac neque.</div>
+//
+// .align-right       - Align text right
+// .align-center      - Align text center
+// .align-left        - Align text left
+// .caps              - Capitalize text
+// .muted             - Muted text
+// .bold              - Makes text bold weight
+// .normal            - Makes text normal weight
+// .light             - Makes text light weight
+// .js-columns        - Make the text into columns. Each column is 15em wide and as such it is nessessary to have at least a container that's 30ems wide to have two columns. If text is longer than 1600 chars, the columns class isn't added by js-columns
+//
+// Styleguide 6.3
+
+@each $pos in right, center, left {
+  .align-#{$pos} {
+    text-align: #{$pos};
+  }
+}
+
+.caps {
+  text-transform: uppercase;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.muted {
+  opacity: .5 !important;
+  filter: alpha(opacity = 50) !important;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.normal {
+  font-weight: normal;
+}
+
+.light {
+  font-weight: light;
+}
+
+.columns {
+  columns: 15em;
+  column-gap: 1.6em;
+}
+
+// Misc. Helpers
+//
+// The `dummy` class is only for presentational purposes.
+//
+// Markup:
+// <div class="{$modifiers} dummy">{$modifiers}</div>
+//
+// .divider         - Divider class. Adds a border to the bottom of the element
+// .square          - Makes the element behave a like a square image and retains its dimensions
+// .rectangle       - Makes the element behave a like a rectangle image and retains its dimensions
+//
+// Styleguide 6.4
+
+.square {
+  height: 0;
+  padding-bottom: 100%;
+}
+
+.rectangle {
+  height: 0;
+  padding-bottom: 48%;
+  padding-bottom: calc(50% - #{22px/2});
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.limit-width {
+  max-width: 15rem;
+}
+
+.inline {
+  display: inline-block;
+}
+
+// Videos
+//
+// Use the `embed-container` class around embedded videos to get a responsive block.
+//
+// Markup:
+// <div class="embed-container">
+//   <iframe src="http://www.youtube.com/embed/J8wKORctsus"></iframe>
+// </div>
+//
+// Styleguide 6.5
+
+.embed-container { 
+  height: 0;
+  height: auto; 
+  margin-bottom: $spacing;
+  max-width: 100%;
+  overflow: hidden;
+  padding-bottom: 56.25%;
+  position: relative;
+
+  iframe,
+  object,
+  embed { 
+    border: 0;
+    height: 100%; 
+    left: 0;
+    position: absolute; 
+    top: 0; 
+    width: 100%; 
+  }
+} 
+
+
+// Read More
+//
+// Read more functionality is implemented by using the javascript class: `js-readmore`
+// in combination with the data-attribute: `data-max-length`.
+//
+// Markup:
+// <p class="js-readmore" data-max-length=50>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt accumsan orci ac adipiscing. Curabitur congue ut orci id volutpat. Phasellus convallis sed erat porta pretium. Etiam adipiscing nunc laoreet elit ornare, quis laoreet erat commodo. Sed placerat magna et est euismod pulvinar. Morbi sollicitudin mi vitae tempor tempus. Maecenas eu elementum metus, ut scelerisque sem. Proin semper eu magna eu dictum. Fusce gravida augue lacus, venenatis hendrerit turpis rhoncus sodales. In iaculis metus et mi vehicula semper vel porttitor quam. Vivamus mollis pharetra iaculis. Integer vehicula felis et lacus sodales venenatis. Nullam nisl lorem, dictum non turpis nec, vulputate commodo quam. Donec eu placerat diam. Morbi ac lectus nulla. Mauris erat nulla, fringilla sit amet justo vitae, congue pharetra tortor.</p>
+//
+// Styleguide 6.6
+
+%layer-bottom {
+  z-index: 100;
+}
+
+%layer-middle {
+  z-index: 500;
+}
+
+%layer-top {
+  z-index: 1000;
+}
+
+@mixin remove-flicker() {
+  backface-visibility: hidden; // Webkit css flicker fix
+  perspective: 1000;
+}
+
+%remove-flicker {
+  @include remove-flicker;
+}
+
+.dummy {
+  background-color: darken($color-body, 10%);
+  width: 200px;
+  text-align: center;
+
+  &.square,
+  &.rectangle {
+    width: auto;
+  }
+}
+
+
+.heavy {
+  font-weight: $font-weight-heavy;
+}

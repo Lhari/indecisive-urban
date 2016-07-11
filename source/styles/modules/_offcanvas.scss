@@ -1,0 +1,157 @@
+
+
+.oncanvas {
+  height: 100%;
+  position: relative;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  width: 100%;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  padding: 0 11px;
+}
+
+.oncanvas__overlay {
+    width: 100%;
+    height: 100vh;
+    background: $color-fade;
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+
+.is-offcanvas .oncanvas {
+  -webkit-transform: translateX(-$offcanvas-width);
+  transform: translateX(-$offcanvas-width);
+}
+
+.offcanvas {
+	height: 100%;
+	position: absolute;
+	right: -$offcanvas-width;
+	top: 0;
+	width: $offcanvas-width;
+	transition: right 0.5s;
+	background: $color-dark-gray;
+	z-index: 1000;
+	font-size: $font-size-base;
+}
+.offcanvas--right {
+	right: 0;
+}
+
+.offcanvas__nav .list {
+	display: block;
+	border-bottom: 1px solid #000;
+	line-height: 1;
+	transition: all 300ms ease;
+}
+.offcanvas__nav .list a {
+	line-height: 4rem;
+	padding-right: 3.5em;
+	padding-left: $spacing;
+	display: block;
+	color: $color-light;
+	text-decoration: none;
+}
+.offcanvas__nav .list a:hover {
+	background: rgba(0,0,0,0.25);
+}
+.offcanvas__nav .list a:hover {
+	color: $color-primary;
+}
+.offcanvas__nav .active a {
+	color: $color-primary;
+}
+
+.offcanvas__inner {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
+	-webkit-overflow-scrolling: touch;
+}
+
+.offcanvas .has-children ul {
+	display: none;
+}
+.offcanvas .open {
+	border-bottom: 0.3rem solid $color-primary;
+	color: $color-primary;
+	background: rgba(0,0,0,0.25);
+}
+
+.offcanvas__nav .list ul a:hover {
+	background: rgba(0,0,0,0.20)!important;
+}
+.offcanvas .has-children .icon-up-open:before {
+	transform: rotate(180deg);
+}
+
+.offcanvas .has-children .icon-up-open.open:before {
+	transform: rotate(0deg);
+}
+
+.offcanvas .has-children {
+	position: relative;
+}
+
+.offcanvas .has-children .icon-up-open:before {
+		right: 3rem;
+		top: 1.55rem;
+		position: absolute;
+}
+
+.offcanvas .usermenu {
+		height: $spacing*2;
+		padding-top: 10px;
+		padding-bottom: 10px;
+}
+
+.offcanvas .usermenu i {
+		display: block;
+		margin: 0 auto;
+		width: $spacing;
+		font-size: $spacing;
+		color: $color-light;
+		transition: color 250ms ease;
+		position: relative;
+}
+
+.offcanvas .usermenu .messages__unread {
+		position: absolute;
+		right: -$spacing;
+		background: $color-primary;
+		font-size: $font-size-medium-small;
+		width: $spacing;
+		padding: 5px;
+		text-align: center;
+		border-radius: 50%;
+		top: -8px;
+		height: $spacing;
+		vertical-align: middle;
+		color: $color-light!important;
+		box-shadow: 0px 0px 4px black;
+}
+
+.offcanvas .usermenu i:hover {
+	color: $color-primary;
+}
+
+@include media('palm') {
+	.offcanvas {
+		width: 80%;
+		right: -80%;
+	}
+	.offcanvas--right {
+    right: 0;
+  }
+  .is-offcanvas .oncanvas {
+    -webkit-transform: translateX(-80%);
+    transform: translateX(-80%);
+  }
+}

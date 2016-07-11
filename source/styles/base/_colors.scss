@@ -1,0 +1,63 @@
+$color-primary: #FF9900;
+$color-secondary: #f48e75;
+$color-teritary: #a1fe16;
+
+$color-light: #f8fcff;
+$color-dark: #000;
+$color-fade: rgba(0,0,0,.8);
+
+$color-dark-gray: #32363b;
+$color-light-gray: #c6c8c9;
+
+$color-font-base: #f8fcff;
+$color-body: #000;
+
+$class-death-knight: #C41F3B;
+$class-demon-hunter: #A330C9;
+$class-druid: #FF7D0A;
+$class-hunter: #ABD473;
+$class-mage: #69CCF0;
+$class-monk: #00FF96;
+$class-paladin: #F58CBA;
+$class-priest: #FFFFFF;
+$class-rogue: #FFF569;	
+$class-shaman: #0070DE;	
+$class-warlock: #9482C9;
+$class-warrior: #C79C6E;
+
+.class-color--death_knight a, .class-color--death_knight {
+	color: $class-death-knight!important;
+}
+.class-color--demon_hunter a, .class-color--demon_hunter {
+	color: $class-demon-hunter!important;
+}
+.class-color--druid a, .class-color--druid {
+	color: $class-druid!important;
+}
+.class-color--hunter a, .class-color--hunter {
+	color: $class-hunter!important;
+}
+.class-color--mage a, .class-color--mage {
+	color: $class-mage!important;
+}
+.class-color--monk a, .class-color--monk {
+	color: $class-monk!important;
+}
+.class-color--paladin a, .class-color--paladin {
+	color: $class-paladin!important;
+}
+.class-color--priest a, .class-color--priest {
+	color: $class-priest!important;
+}
+.class-color--rogue a, .class-color--rogue {
+	color: $class-rogue!important;
+}
+.class-color--shaman a, .class-color--shaman {
+	color: $class-shaman!important;
+}
+.class-color--warlock a, .class-color--warlock {
+	color: $class-warlock!important;
+}
+.class-color--warrior a, .class-color--warrior {
+	color: $class-warrior!important;
+}

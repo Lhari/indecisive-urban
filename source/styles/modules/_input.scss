@@ -1,0 +1,29 @@
+input[type="text"], input[type="password"] {
+	border-radius: $spacing/4;
+	border: none;
+	color: $color-dark;
+	padding: 5px;
+	margin-bottom: $spacing/2;
+	background: linear-gradient(to top, rgba($color-light, 1) 0%, rgba(lighten($color-dark, 90%), 1) 100%);
+	border-top: 2px solid $color-light;
+	width: 100%;
+	max-width: 250px;
+}
+
+textarea {
+	width: 100%;
+	color: $color-light;
+	background: linear-gradient(to top, rgba($color-dark-gray, 0.6) 0%, rgba($color-dark-gray, 1) 100%);
+	border: none;
+	border-top: 2px solid rgba($color-light, 0.2);
+	padding: $spacing/2;
+	margin-bottom: $spacing/2;
+	border-radius: $spacing/4;
+	box-shadow: 0 0 5px $color-dark;
+	transition: box-shadow 300ms ease;
+
+	&:focus {
+		outline: none !important;
+		box-shadow: 0 0 5px $color-primary;
+	}
+}

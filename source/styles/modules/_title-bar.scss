@@ -1,0 +1,50 @@
+.tborder .tp_rightblock_frame {
+  position: relative;
+}
+
+#tpcontentHeader .titlebg {
+  margin-bottom: 0;
+  border-radius: 6px 6px 0 0;
+  //border-bottom: 1px solid rgba($color-dark, 0.4); 
+}
+
+.title_bar {
+  width: 100%;
+  height: $spacing*2;
+  border-radius: 4px;
+
+  span.article_shortdate.right {
+    font-size: $font-size-base;
+    opacity: 0.4;
+    font-weight: $font-weight-heavy;
+  }
+}
+
+.titlebg {
+  float: left;
+  background-image: url('/inde/ColumnHeaderBG.png');
+  padding: 0 $spacing/2;
+  text-shadow: 0px -1px 0px rgba(0,0,0,0.4);
+  text-indent: 5px;
+  width: 100%;
+  height: $spacing*2;
+  line-height: $spacing*2;
+  border-radius: 4px;
+  box-shadow: 0px 1px 3px rgba(0,0,0,0.4),0px 1px 0px rgba(255,255,255,0.1) inset;
+}
+
+.titlebg a, .titlebg a:visited, .titlebg a:hover, .titlebg {
+  color: $color-light-gray;
+  font-weight: $font-weight-heavy;
+  font-size: $font-size-medium;
+  text-decoration: none;
+  cursor: default;
+}
+
+#toggle_tprightbarHeader, #toggle_tpleftbarHeader, .titlebg [id^="blockcollapse"], .titlebg [title="Edit Block Contents"] {
+  display: none;
+}
+
+  .article_padding, .tp_pad {
+    padding: 0!important;
+  }

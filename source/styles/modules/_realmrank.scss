@@ -1,0 +1,20 @@
+.ranking {
+	&__header {
+		color: $color-light;
+		text-align: center;
+		width: 100%;
+	}
+
+	&__position {
+		color: $color-primary;
+		font-size: $spacing*2;
+		text-align: center;
+		width: 100%;
+		margin: 0;
+	}
+
+	.divider {
+		margin: $spacing $spacing/2;
+		padding: 0;
+	}
+}

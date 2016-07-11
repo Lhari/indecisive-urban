@@ -1,0 +1,20 @@
+.blazy {
+	opacity: 0;
+	transition: all 500ms ease;
+	&.b-loaded {
+		opacity: 1;
+	}
+}
+
+.article_inner img {
+	height: 500px;
+	&.b-loaded {
+		height: auto;
+	}
+}
+.fpsc {
+	width: 100%;	
+	border-radius: 0 0 6px 6px;
+	box-shadow: 0 1px 4px rgba(0,0,0,0.8);
+	//border-top: 1px solid rgba(255,255,255,0.3);
+}
