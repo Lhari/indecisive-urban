@@ -19,36 +19,36 @@
 $classes = array(
 	array(
 		'name' => 'Death Knight',
-		'active' => true,
+		'active' => false,
 		'roles' => array(
 			'melee' => false,
-			'tank' => true
+			'tank' => false
 		)
 	),
 	array(
 		'name' => 'Demon Hunter',
-		'active' => true,
+		'active' => false,
 		'roles' => array(
-			'melee' => true,
+			'melee' => false,
 			'tank' => false
 		)
 	),
 	array(
 		'name' => 'Druid',
-		'active' => true,
+		'active' => false,
 		'roles' => array(
 			'ranged' => false,
-			'melee' => true,
+			'melee' => false,
 			'tank' => false,
-			'healer' => true
+			'healer' => false
 		)
 	),
 	array(
 		'name' => 'Hunter',
-		'active' => true,
+		'active' => false,
 		'roles' => array(
 			'ranged' => false,
-			'melee' => true
+			'melee' => false
 		)
 	),
 	array(
@@ -62,56 +62,56 @@ $classes = array(
 		'name' => 'Monk',
 		'active' => true,
 		'roles' => array(
-			'melee' => true,
+			'melee' => false,
 			'tank' => false,
 			'healer' => true
 		)
 	),
 	array(
 		'name' => 'Paladin',
-		'active' => true,
+		'active' => false,
 		'roles' => array(
-			'melee' => true,
+			'melee' => false,
 			'tank' => false,
-			'healer' => true
+			'healer' => false
 		)
 	),
 	array(
 		'name' => 'Priest',
-		'active' => true,
+		'active' => false,
 		'roles' => array(
-			'ranged' => true,
-			'healer' => true
+			'ranged' => false,
+			'healer' => false
 		)
 	),
 	array(
 		'name' => 'Rogue',
-		'active' => true,
+		'active' => false,
 		'roles' => array(
-			'melee' => true
+			'melee' => false
 		)
 	),
 	array(
 		'name' => 'Shaman',
 		'active' => true,
 		'roles' => array(
-			'melee' => true,
-			'ranged' => true,
+			'melee' => false,
+			'ranged' => false,
 			'healer' => true
 		)
 	),
 	array(
 		'name' => 'Warlock',
-		'active' => true,
+		'active' => false,
 		'roles' => array(
-			'ranged' => true
+			'ranged' => false
 		)
 	),
 	array(
 		'name' => 'Warrior',
-		'active' => true,
+		'active' => false,
 		'roles' => array(
-			'melee' => true,
+			'melee' => false,
 			'tank' => false
 		)
 	)
@@ -126,38 +126,34 @@ $classes = array(
 		
 		$name = strtolower(str_replace(' ', '_', $class['name']));
 
-		if($key == 0)
-			$addClass = ' no-padding';
-		else if($key == 1)
-			$addClass = ' no-padding--desk';
-		else
-			$addClass = '';
+		$displayName = $class['name'];
 
-		$displayName = str_replace(' ', '<br />', $class['name']);
+		if($class['active']) {
 
-		echo '<div class="recruitment__class grid size-6 size-12--desk-smallsize-12--lap size-12--palm'.($class['active'] ? '' : ' inactive').'">';
-			echo '<h3 data-key="'.$key.'" class="class-color--'.$name.$addClass.'" style="text-align: center; width:100%; margin-bottom: 0; font-size: 1em;">'.$displayName.'</h3>';
+		echo '<div class="recruitment__class grid-group'.($class['active'] ? '' : ' inactive').'">';
+			echo '<div class="grid size-5">';
 			echo '<img src="/inde/icon/classicon-'.str_replace('_', '', $name).'.png" alt="'.$class['name'].'" class="size-12 size-12--lap size-12--palm" style="margin: 0 auto; display: block; padding-bottom: 11px;"/>';
-			echo '<div class="recruitment__roles" style="margin: 0 auto; display: block; text-align: center; height: 22px;">';
+			echo '</div>';
+			echo '<div class="grid size-7" style="text-shadow: 0 2px 2px black">';
+			echo '<h3 data-key="'.$key.'" class="class-color--'.$name.' no-padding" style="width:100%; padding-top: 22px; margin-bottom: 6px; font-size: 1em;">'.$displayName.'</h3>';
 	foreach ($class['roles'] as $role => $availability) {
 
 		$isActive = false;
 
 		if($availability)
+
 			echo '<i class="class-color--'.$name.' icon-'.$role.' is-active"></i>';
 
 	}
 		echo '</div>';
 	echo '</div>';
-
+	}
 }
 
 ?>
 
 </div>
-<div class="recruitment__button grid size-12" style="text-align: center; padding: 22px;">
-	<a href="" class="button button--secondary">Apply now</a>
-</div>
+
 </div>
 
 
