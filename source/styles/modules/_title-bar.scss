@@ -23,6 +23,7 @@
 .titlebg {
   float: left;
   background-image: url('/inde/ColumnHeaderBG.png');
+  background-color: #646464;
   padding: 0 $spacing/2;
   text-shadow: 0px -1px 0px rgba(0,0,0,0.4);
   text-indent: 5px;
@@ -30,7 +31,7 @@
   height: $spacing*2;
   line-height: $spacing*2;
   border-radius: 4px;
-  box-shadow: 0px 1px 3px rgba(0,0,0,0.4),0px 1px 0px rgba(255,255,255,0.1) inset;
+  box-shadow: 0px 1px 3px rgba(0,0,0,0.4),0px 1px 0px rgba(255,255,255,0.3) inset;
 }
 
 .titlebg a, .titlebg a:visited, .titlebg a:hover, .titlebg {
