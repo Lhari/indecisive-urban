@@ -1156,7 +1156,7 @@ function article_renders($type = 1, $single = false, $first = false)
 	if($type == 1)
 	{       
 		$code = '
-<div style="margin-bottom: 5px; overflow: hidden;">
+<div style="margin-bottom: 22px; overflow: hidden;">
     ' . ($useFrame ? '<div class="'. $divheader .'">' : '') . '
 	   <h3' . ($useFrame ? ' class="' . $headerstyle . '"' : ' class="article_title"') . '> {article_title} {article_shortdate} </h3>
     ' . ($useFrame ? '</div>' : '') . '
@@ -1183,7 +1183,7 @@ function article_renders($type = 1, $single = false, $first = false)
 	{
 		if($first)
 			$code = '
-<div style="margin-bottom: 5px; overflow: hidden;">
+<div style="margin-bottom: 22px; overflow: hidden;">
     ' . ($useFrame ? '<div class="'. $divheader .'">' : '') . '
 	   <h3' . ($useFrame ? ' class="' . $headerstyle . '"' : ' class="article_title"') . '>{article_shortdate} {article_title} </h3>
     ' . ($useFrame ? '</div>' : '') . '

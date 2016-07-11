@@ -12,7 +12,16 @@
 
 function template_main()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings;
+	global $context, $settings, $options, $txt, $scripturl, $modSettings, $user_profile;
+
+	// Load current users profile
+	loadMemberContext($context['user']['id']);
+	loadMemberData($context['user']['id'], false, 'profile');
+
+	// Find out if user is currently has an offset or not
+	foreach($user_profile as $profile)
+		$offset = $profile['time_offset'];
+
 
 	// Show some statistics if stat info is off.
 	if (!$settings['show_stats_index'])
@@ -86,63 +95,189 @@ function template_main()
 	echo '
 	<div id="boardindex_table">';
 
+
 	/* Each category in categories is made up of:
 	id, href, link, name, is_collapsed (is it collapsed?), can_collapse (is it okay if it is?),
 	new (is it new?), collapse_href (href to collapse/expand), collapse_image (up/down image),
 	and boards. (see below.) */
 	foreach ($context['categories'] as $category)
 	{
+
 		// If theres no parent boards we can see, avoid showing an empty category (unless its collapsed)
 		if (empty($category['boards']) && !$category['is_collapsed'])
 			continue;
 
 		echo '
-			<tbody class="header" id="category_', $category['id'], '">
-				<tr>
-					<td colspan="5">
-						<div class="cat_bar">
-							<h3 class="titlebg">';
+			<div class="cat_bar">
+				<h3 class="titlebg">';
 
-		// If this category even can collapse, show a link to collapse it.
-		if ($category['can_collapse'])
-			echo '
-								<a class="collapse" href="', $category['collapse_href'], '">', $category['collapse_image'], '</a>';
+				?>
+				<div class="grid-group">
+					<div class="grid size-3 size-6--palm"><?php echo $category['link']; ?></div>
+					<div class="grid size-7 size-5--lap is-hidden--palm boardIndex__fade">Description</div>
+					<div class="grid size-1 size-2--lap size-3--palm boardIndex__fade boardIndex__column--small">Topics</div>
+					<div class="grid size-1 size-2--lap size-3--palm boardIndex__fade boardIndex__column--small">Posts</div>
+				</div>
+				<?php
 
-		if (!$context['user']['is_guest'] && !empty($category['show_unread']))
-			echo '
-								<a class="unreadlink" href="', $scripturl, '?action=unread;c=', $category['id'], '">', $txt['view_unread_category'], '</a>';
-
-		echo '
-								', $category['link'], '
-							</h3>
-						</div>
-					</td>
-				</tr>
-			</tbody>';
+					echo '
+				</h3>
+			</div>';
 
 		// Assuming the category hasn't been collapsed...
-		if (!$category['is_collapsed'])
-		{
-		echo '
-			<tbody class="content" id="category_', $category['id'], '_boards">';		
-		
-			echo '
-				<tr>
-					<td colspan="2" class="columndesc_l">', $txt['board_name'], '</td>
-					<td class="centertext columndesc">', $txt['posts'], '</td>
-					<td class="centertext columndesc">', $txt['topics'], '</td>
-					<td class="columndesc_r">', $txt['last_post'], '</td>
-				</tr>';
+		if (!$category['is_collapsed']) {
 			
 			/* Each board in each category's boards has:
 			new (is it new?), id, name, description, moderators (see below), link_moderators (just a list.),
 			children (see below.), link_children (easier to use.), children_new (are they new?),
 			topics (# of), posts (# of), link, href, and last_post. (see below.) */
-			foreach ($category['boards'] as $board)
-			{
-				echo '
-				<tr id="board_', $board['id'], '" class="windowbg2">
-					<td class="icon windowbg"', !empty($board['children']) ? ' rowspan="2"' : '', '>
+
+			$i = -1;
+
+			foreach ($category['boards'] as $board) {
+				$i++;
+				?>
+
+				<div class="boardIndex__board grid grid-group">
+					<div class="boardIndex__board--inner grid size-12  <?php echo ($i % 2 ? 'odd' : 'even'); ?>">
+					<DIV class="grid size-3 size-6--palm">
+
+
+					<?php if(empty($board['children'])) : ?>
+					<?php echo 	'<a class="subject boardIndex__title '.($board['new'] || $board['children_new'] ? 'new' : '').'" href="'.$board['href'].'" name="b'.$board['id'].'">'.$board['name'].'</a>';?>
+					<?php else : ?>
+						<?php echo 	'<a class="subject boardIndex__title '.($board['new'] || $board['children_new'] ? 'new' : '').'" href="#" data-openChild="'.$board['id'].'" name="b'.$board['id'].'"><i class="icon-up-open"></i>'.$board['name'].'</a>';?>
+					<?php endif; ?>
+					<?php
+					if(empty($board['children'])) {
+
+						if (!empty($board['last_post']['id'])) {
+							echo '<p>Last post by: ';
+
+							// Find member
+							loadMemberContext($board['last_post']['member']['id']);
+							loadMemberData($board['last_post']['member']['id'], false, 'profile');
+
+							// Loop over users in userprofile array
+							foreach($user_profile as $profile) {
+								if($profile['real_name'] == $board['last_post']['member']['name'])
+									$class = $profile['options']['cust_class'];
+							}
+
+							// Clean up Poster class to match CSS classes
+							$class = strtolower($class);
+							$class = str_replace(' ', '_', $class);
+
+							echo '<a href="'.$board['last_post']['member']['href'].'" class="boardIndex__poster class-color--'.$class.'">'.$board['last_post']['member']['name'].'</a>';
+
+							echo '</p><p><i class="icon-clock"></i>';
+
+							// Find out if its using js time or offset time
+							if($offset == 0)
+								echo '<span class="recent-post__time js-recent-time" data-timestamp="'.$board['last_post']['timestamp'].'"></span>';
+							else
+								echo $board['last_post']['time'];
+
+							array_unique($user_profile);
+							echo '</p>';
+						}
+					}
+					
+					?>
+					</DIV>
+					<div class="grid size-7 size-5--lap is-hidden--palm">
+
+					<p><?php echo ($board['description'] ?  $board['description'] : '&nbsp'); ?></p>
+					</div>
+					<div class="grid size-1 size-2--lap size-3--palm boardIndex__column--small">
+						<p><?php echo $board['topics']; ?></p>
+					</div>
+					<div class="grid size-1 size-2--lap size-3--palm boardIndex__column--small">
+						<p><?php echo $board['posts']; ?></p>
+					</div>
+
+					<div class="grid size-12">
+					<?php
+
+					// Show the "Child Boards: ". (there's a link_children but we're going to bold the new ones...)
+					if (!empty($board['children'])) :
+
+						echo '<div class="boardIndex__child" data-childof="'.$board['id'].'">';
+						$v = -1;
+						foreach ($board['children'] as $child) :
+							$v++;
+
+							?>
+							<div class="board_Index__board--sub grid-group">
+								<div class="boardIndex__board--inner grid size-12  <?php echo ($v % 2 ? 'odd' : 'even'); ?>">
+								<div class="grid size-3 size-6--palm">
+									<?php echo 	'<a class="subject boardIndex__title '.($child['new'] ? 'new' : '').'" href="'.$child['href'].'" name="b'.$child['id'].'">'.$child['name'].'</a>';?>
+
+									
+									<?php
+									if (!empty($child['last_post']['id'])) {
+										echo '<p>Last post by: ';
+
+										// Find member
+										loadMemberContext($child['last_post']['member']['id']);
+										loadMemberData($child['last_post']['member']['id'], false, 'profile');
+
+										// Loop over users in userprofile array
+										foreach($user_profile as $profile) {
+											if($profile['real_name'] == $child['last_post']['member']['name'])
+												$class = $profile['options']['cust_class'];
+										}
+
+										// Clean up Poster class to match CSS classes
+										$class = strtolower($class);
+										$class = str_replace(' ', '_', $class);
+
+										echo '<a href="'.$child['last_post']['member']['href'].'" class="boardIndex__poster class-color--'.$class.'">'.$child['last_post']['member']['name'].'</a>';
+
+										echo '</p><p><i class="icon-clock"></i>';
+
+										// Find out if its using js time or offset time
+										if($offset == 0)
+											echo '<span class="recent-post__time js-recent-time" data-timestamp="'.$child['last_post']['timestamp'].'"></span>';
+										else
+											echo $child['last_post']['time'];
+
+										array_unique($user_profile);
+									}
+									echo '</p>';
+									?>
+
+								</div>
+								<div class="grid size-7"><p><?php echo ($child['description'] ?  $child['description'] : '&nbsp'); ?></p></div>
+								<div class="grid size-1 size-3--palm boardIndex__column--small">
+									<p><?php echo $child['topics']; ?></p>
+								</div>
+								<div class="grid size-1 size-3--palm boardIndex__column--small">
+									<p><?php echo $child['posts']; ?></p>
+								</div>
+								</div>
+							</div>
+							<?php
+							
+						endforeach;
+						echo '</div>';
+					endif;
+
+					?>
+
+
+					</div>
+
+					</div>
+				</div>	
+
+				<?php
+
+
+				/*
+				Title
+
+				<td class="icon windowbg"', !empty($board['children']) ? ' rowspan="2"' : '', '>
 						<a href="', ($board['is_redirect'] || $context['user']['is_guest'] ? $board['href'] : $scripturl . '?action=unread;board=' . $board['id'] . '.0;children'), '">';
 
 				// If the board or children is new, show an indicator.
@@ -161,92 +296,48 @@ function template_main()
 				echo '
 						</a>
 					</td>
-					<td class="info">
-						<a class="subject" href="', $board['href'], '" name="b', $board['id'], '">', $board['name'], '</a>';
+				<a class="subject" href="', $board['href'], '" name="b', $board['id'], '">', $board['name'], '</a>
+				*/
+				/*
+
+				MODERATOR AND APPROVAL
 
 				// Has it outstanding posts for approval?
 				if ($board['can_approve_posts'] && ($board['unapproved_posts'] || $board['unapproved_topics']))
 					echo '
 						<a href="', $scripturl, '?action=moderate;area=postmod;sa=', ($board['unapproved_topics'] > 0 ? 'topics' : 'posts'), ';brd=', $board['id'], ';', $context['session_var'], '=', $context['session_id'], '" title="', sprintf($txt['unapproved_posts'], $board['unapproved_topics'], $board['unapproved_posts']), '" class="moderation_link">(!)</a>';
 
-				echo '
-
-						<p>', $board['description'] , '</p>';
 
 				// Show the "Moderators: ". Each has name, href, link, and id. (but we're gonna use link_moderators.)
 				if (!empty($board['moderators']))
 					echo '
 						<p class="moderators">', count($board['moderators']) == 1 ? $txt['moderator'] : $txt['moderators'], ': ', implode(', ', $board['link_moderators']), '</p>';
 
+				*/
+				/*
+
+				If board redirect is implemented at some point, we have to use this code
+
 				// Show some basic information about the number of posts, etc.
-					echo '
-					</td>';
-					if (!$board['is_redirect'])
-					echo '
-					<td class="windowbg stats">
-						', $board['posts'], '
-					</td>
-					<td class="windowbg stats">
-						', $board['topics'], '
-					</td>';
-
-					else
-					echo '
-					<td class="windowbg" valign="middle" align="center" colspan="2" width="14%">', $board['posts'], ' ', $txt['redirects'], '</td>';
-					
-					echo '
-					<td class="lastpost windowbg">';
-
-				/* The board's and children's 'last_post's have:
-				time, timestamp (a number that represents the time.), id (of the post), topic (topic id.),
-				link, href, subject, start (where they should go for the first unread post.),
-				and member. (which has id, name, link, href, username in it.) */
-				if (!empty($board['last_post']['id']))
-					echo '
-						<p><strong>', $txt['last_post'], '</strong>  ', $txt['by'], ' ', $board['last_post']['member']['link'] , '<br />
-						', $txt['in'], ' ', $board['last_post']['link'], '<br />
-						', $txt['on'], ' ', $board['last_post']['time'],'
-						</p>';
 				echo '
-					</td>
-				</tr>';
-				// Show the "Child Boards: ". (there's a link_children but we're going to bold the new ones...)
-				if (!empty($board['children']))
-				{
-					// Sort the links into an array with new boards bold so it can be imploded.
-					$children = array();
-					/* Each child in each board's children has:
-							id, name, description, new (is it new?), topics (#), posts (#), href, link, and last_post. */
-					foreach ($board['children'] as $child)
-					{
-						if (!$child['is_redirect'])
-							$child['link'] = '<a href="' . $child['href'] . '" ' . ($child['new'] ? 'class="new_posts" ' : '') . 'title="' . ($child['new'] ? $txt['new_posts'] : $txt['old_posts']) . ' (' . $txt['board_topics'] . ': ' . comma_format($child['topics']) . ', ' . $txt['posts'] . ': ' . comma_format($child['posts']) . ')">' . $child['name'] . ($child['new'] ? '</a> <a href="' . $scripturl . '?action=unread;board=' . $child['id'] . '" title="' . $txt['new_posts'] . ' (' . $txt['board_topics'] . ': ' . comma_format($child['topics']) . ', ' . $txt['posts'] . ': ' . comma_format($child['posts']) . ')"><img src="' . $settings['lang_images_url'] . '/new.gif" class="new_posts" alt="" />' : '') . '</a>';
-						else
-							$child['link'] = '<a href="' . $child['href'] . '" title="' . comma_format($child['posts']) . ' ' . $txt['redirects'] . '">' . $child['name'] . '</a>';
+				</td>';
+				if (!$board['is_redirect'])
+				echo '
+				<td class="windowbg stats">
+					', $board['posts'], '
+				</td>
+				<td class="windowbg stats">
+					', $board['topics'], '
+				</td>';
 
-						// Has it posts awaiting approval?
-						if ($child['can_approve_posts'] && ($child['unapproved_posts'] || $child['unapproved_topics']))
-							$child['link'] .= ' <a href="' . $scripturl . '?action=moderate;area=postmod;sa=' . ($child['unapproved_topics'] > 0 ? 'topics' : 'posts') . ';brd=' . $child['id'] . ';' . $context['session_var'] . '=' . $context['session_id'] . '" title="' . sprintf($txt['unapproved_posts'], $child['unapproved_topics'], $child['unapproved_posts']) . '" class="moderation_link">(!)</a>';
+				else
+				echo '
+				<td class="windowbg" valign="middle" align="center" colspan="2" width="14%">', $board['posts'], ' ', $txt['redirects'], '</td>';
+				
+				*/
 
-						$children[] = $child['new'] ? '<strong>' . $child['link'] . '</strong>' : $child['link'];
-					}
-					echo '
-					<tr id="board_', $board['id'], '_children">
-						<td colspan="4" class="children windowbg">
-							<strong>', $txt['parent_boards'], '</strong>: ', implode(', ', $children), '
-						</td>
-					</tr>';
-				}
-			}
-		echo '
-			</tbody>';			
+			}		
 		}
-		echo '
-			<tbody class="divider">
-				<tr>
-					<td colspan="5"></td>
-				</tr>
-			</tbody>';
 	}
 	echo '
 	</div>';
@@ -261,21 +352,17 @@ function template_main()
 			'markread' => array('text' => 'mark_as_read', 'image' => 'markread.gif', 'lang' => true, 'url' => $scripturl . '?action=markasread;sa=all;' . $context['session_var'] . '=' . $context['session_id']),
 		);
 
-		echo '
-		<ul class="reset">
-			<li class="floatleft"><img src="', $settings['images_url'], '/', $context['theme_variant_url'], 'new_some.png" alt="" /> ', $txt['new_posts'], '</li>
-			<li class="floatleft"><img src="', $settings['images_url'], '/', $context['theme_variant_url'], 'new_none.png" alt="" /> ', $txt['old_posts'], '</li>
-			<li class="floatleft"><img src="', $settings['images_url'], '/', $context['theme_variant_url'], 'new_redirect.png" alt="" /> ', $txt['redirect_board'], '</li>
-		</ul>
-	</div>';
-
+		echo '</div>';
+		echo '<div class="divider-top"></div>';
+		echo '<div class="align-right">';
 		// Show the mark all as read button?
 		if ($settings['show_mark_read'] && !empty($context['categories']))
-			echo '<div class="mark_read">', template_button_strip($mark_read_button, 'right'), '</div>';
+			echo template_button_strip_with_icons_and_text($mark_read_button, 'right');
+		echo '</div>';
 	}
 	else
 	{
-		echo '
+	echo '
 	<div id="posting_icons" class="flow_hidden">
 		<ul class="reset">
 			<li class="floatleft"><img src="', $settings['images_url'], '/new_none.png" alt="" /> ', $txt['old_posts'], '</li>
@@ -284,7 +371,7 @@ function template_main()
 	</div>';
 	}
 
-	template_info_center();
+	//template_info_center();
 }
 
 function template_info_center()
@@ -295,17 +382,10 @@ function template_info_center()
 	echo '
 	<span class="clear upperframe"><span></span></span>
 	<div class="roundframe"><div class="innerframe">
-		<div class="cat_bar">
-			<h3 class="titlebg">
-				<img class="icon" id="upshrink_ic" src="', $settings['images_url'], '/collapse.gif" alt="*" title="', $txt['upshrink_description'], '" style="display: none;" />
-				', sprintf($txt['info_center_title'], $context['forum_name_html_safe']), '
-			</h3>
-		</div>
 		<div id="upshrinkHeaderIC"', empty($options['collapse_header_ic']) ? '' : ' style="display: none;"', '>';
 
 	// This is the "Recent Posts" bar.
-	if (!empty($settings['number_recent_posts']) && (!empty($context['latest_posts']) || !empty($context['latest_post'])))
-	{
+	if (!empty($settings['number_recent_posts']) && (!empty($context['latest_posts']) || !empty($context['latest_post']))) {
 		echo '
 			<div class="title_barIC">
 				<h4 class="titlebg">
