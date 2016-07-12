@@ -6,220 +6,70 @@
   margin: 0;
   width: 98%;
 }
-.dropmenu,
-.dropmenu ul {
+#admin_menu ul.dropmenu {
   list-style: none;
   line-height: 1em;
   padding: 0;
   margin: 0;
-}
-.dropmenu {
-  padding: 0 0.5em;
-}
-.dropmenu a {
-	display: block;
-  padding: 0 10px;
-  color: #505459;
-  white-space: pre;
-  font-size: 13px;
-  font-weight: 400;
-	background: #e7ebef;
-  height: 40px;
-  line-height: 40px;
-}
-.dropmenu a span {
-  display: block;
-  padding: 0 0 0 5px;
-  font-size: 0.9em;
-}
-/* the background's first level only */
-
-.dropmenu li a.firstlevel {
-  margin-right: 8px;
-}
-.dropmenu li a.firstlevel span.firstlevel {
-  display: block;
-  position: relative;
-  left: -5px;
-  padding-left: 5px;
-  height: 40px;
-  line-height: 40px;
-  white-space: pre;
-}
-.dropmenu li {
-  float: left;
-  padding: 0;
-  margin: 0;
-  position: relative;
-}
-.dropmenu li ul {
-  z-index: 90;
-  display: none;
-  position: absolute;
-  width: 19.2em;
-  font-weight: normal;
-  border-bottom: 1px solid #666;
-  padding: 7px 0 0;
-}
-.dropmenu li li {
-  width: 19em;
-  margin: 0;
-  border-left: 1px solid #666;
-  border-right: 1px solid #666;
-}
-.dropmenu li li a span {
-  display: block;
-  padding: 8px;
-}
-.dropmenu li ul ul {
-  margin: -1.8em 0 0 13em;
-}
-/* the active button */
-.dropmenu li a.active {
-  color: #d56f56;
-}
-.dropmenu li a.active span.firstlevel {
-}
-/* the hover effects */
-.dropmenu li a.firstlevel:hover,
-.dropmenu li:hover a.firstlevel {
-  color: #d56f56;
-}
-.dropmenu li a.firstlevel:hover span.firstlevel,
-.dropmenu li:hover a.firstlevel span.firstlevel {
-  color: #d56f56;
-}
-/* the hover effects on level2 and 3 */
-.dropmenu li li a:hover,
-.dropmenu li li:hover > a {
-  color: #d56f56;
-}
-.dropmenu li:hover ul ul,
-.dropmenu li:hover ul ul ul {
-  top: -999em;
-}
-.dropmenu li li:hover ul {
-  top: auto;
-}
-.dropmenu li:hover ul {
-  display: block;
-}
-.dropmenu li li.additional_items {
-  background-color: #fff;
+  a {
+    color: $color-primary;
+    font-size: 12px;
+    font-weight: 400;
+    background-image: url("/inde/ColumnHeaderBG.png");
+    display: block;
+    &.firstlevel {
+      margin-right: 8px;
+      padding: 10px;
+    }
+    &:active,
+    &:hover {
+      color: $color-secondary;
+    }
+  }
+  li {
+    float: left;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    ul {
+      list-style: none;
+      z-index: 90;
+      display: none;
+      position: absolute;
+      font-weight: normal;
+      border-bottom: 1px solid #666;
+      padding: 7px 0 0;
+    }
+    ul ul {
+      margin: -1.8em 0 0 13em;
+    }
+    &:hover ul {
+      display: block;
+    }
+    &:hover ul ul,
+    &:hover ul ul ul {
+      top: -999em;
+    }
+  }
+  li li {
+    width: 16em;
+    margin: 0;
+    border-left: 1px solid $color-dark-gray;
+    border-right: 1px solid $color-dark-gray;
+    a span {
+      display: block;
+      padding: 8px;
+    }
+    &:hover ul {
+      top: auto;
+    }
+  }
 }
 /* The dropdown menu toggle image */
 #menu_toggle {
   display: none;
 }
-/* Styles for the standard button lists.
-------------------------------------------------------- */
-.buttonlist ul {
-  z-index: 100;
-  padding: 5px;
-  margin: 0 0.2em 5px 0;
-}
-.buttonlist ul li {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  float: left;
-}
-.buttonlist ul li a {
-  display: block;
-  font-size: 0.8em;
-  color: #000;
-  background: url("../images/theme/menu_gfx.png") no-repeat 0 -60px;
-  padding: 0;
-  margin-left: 12px;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-.buttonlist ul li a:hover {
-  background: url("../images/theme/menu_gfx.png") no-repeat 0 0;
-  color: #fff;
-  text-decoration: none;
-}
-.buttonlist ul li a span {
-  background: url("../images/theme/menu_gfx.png") no-repeat 100% -60px;
-  display: block;
-  height: 24px;
-  line-height: 21px;
-  padding: 0 8px 0 0;
-  position: relative;
-  right: -8px;
-}
-.buttonlist ul li a:hover span {
-  background: url("../images/theme/menu_gfx.png") no-repeat 100% 0;
-}
-/* the active one */
-.buttonlist ul li a.active {
-  background: url("../images/theme/menu_gfx.png") no-repeat 0 -30px;
-  color: #fff;
-  font-weight: bold;
-}
-.buttonlist ul li a.active span {
-  background: url("../images/theme/menu_gfx.png") no-repeat 100% -30px;
-}
-.buttonlist ul li a.active {
-  font-weight: bold;
-}
-.buttonlist ul li a.active:hover {
-  color: #ddf;
-}
-.align_bottom ul li a,
-.align_top ul li a {
-  margin: 0 12px 0 0;
-}
-/* the navigation list */
-ul#navigation {
-  margin: 0;
-  font-size: 0.9em;
-  padding: 1em 0.4em;
-}
-ul#navigation li {
-  float: none;
-  font-size: 0.95em;
-  display: inline;
-}
-#adm_submenus {
-  padding-left: 2em;
-  overflow: hidden;
-}
-h3,
-h4 {
-  padding-bottom: 3px;
-}
-/* The navigation list (i.e. linktree) */
-.navigate_section {
-  padding: 0.5em;
-  margin: 0;
-}
-.navigate_section ul {
-  display: block;
-  margin: 0;
-  font-size: 0.9em;
-  padding: 0.5em 0;
-  overflow: hidden;
-  list-style: none;
-  clear: both;
-  width: 100%;
-}
-.navigate_section ul li {
-  float: left;
-  padding: 0 0.5em 0 0;
-  font-size: 0.95em;
-}
-.navigate_section ul li a {
-  white-space: pre;
-}
-input.qaction,
-select.qaction {
-  font-size: 0.85em;
-  padding: 0;
-}
-#mlist table tbody td.windowbg2 {
-  text-align: center;
-}
+
 /* Styles for the registration section.
 ------------------------------------------------------- */
 .register_error {
@@ -291,7 +141,7 @@ tr.titlebg td {
   padding-left: 0.7em;
 }
 #admin_menu {
-	padding-top: 20px;
+  padding-top: 20px;
   min-height: 2em;
   padding-left: 0;
 }
