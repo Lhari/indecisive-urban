@@ -78,6 +78,7 @@ bower_components
 
 ### Git ###
 *.orig
+.gitignore
 
 ### Forum Themes To Ignore ###
 core
@@ -85,9 +86,6 @@ default
 
 index.php
 package.json
-
 template/css
-
-gulpfile.js
 
 template/index.template.php
