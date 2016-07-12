@@ -304,9 +304,12 @@ if( $context['user']['is_guest'] )
 								<li class="title">', $message['member']['title'], '</li>';
 
 		// Show the member's primary group (like 'Administrator') if they have one.
+		echo '<li class="membergroup">';					
 		if (!empty($message['member']['group']))
-			echo '
-								<li class="membergroup">', $message['member']['group'], '</li>';
+			echo $message['member']['group'];
+		else
+			echo 'Applicant';
+		echo '</li>';
 
 		// Don't show these things for guests.
 		if (!$message['member']['is_guest'])
@@ -555,8 +558,8 @@ if( $context['user']['is_guest'] )
 			echo '<a class="button modifybutton" id="modify_button_', $message['id'], '" style="cursor: ', ($context['browser']['is_ie5'] || $context['browser']['is_ie5.5'] ? 'hand' : 'pointer'), ';" onclick="oQuickModify.modifyMsg(\'', $message['id'], '\')"><i class="icon-pencil-1"></i>Quick Edit</a>';
 
 					// Maybe they want to report this post to the moderator(s)?
-		if ($context['can_report_moderator'])
-			echo '<a href="', $scripturl, '?action=reporttm;topic=', $context['current_topic'], '.', $message['counter'], ';msg=', $message['id'], '" class="button"><i class="icon-flag-1"></i>Report</a>';
+		//if ($context['can_report_moderator'])
+		//	echo '<a href="', $scripturl, '?action=reporttm;topic=', $context['current_topic'], '.', $message['counter'], ';msg=', $message['id'], '" class="button"><i class="icon-flag-1"></i>Report</a>';
 		echo '</span>';
 		echo '</div>';
 		// Assuming there are attachments...

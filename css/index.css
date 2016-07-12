@@ -1327,10 +1327,6 @@ a {
 .tborder .tp_rightblock_frame {
   position: relative; }
 
-#tpcontentHeader .titlebg {
-  margin-bottom: 0;
-  border-radius: 6px 6px 0 0; }
-
 .title_bar {
   width: 100%;
   height: 44px;
@@ -1352,6 +1348,9 @@ a {
   line-height: 44px;
   border-radius: 4px;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.4), 0px 1px 0px rgba(255, 255, 255, 0.3) inset; }
+  .titlebg--no-rounding {
+    margin-bottom: 0;
+    border-radius: 6px 6px 0 0; }
 
 .titlebg a, .titlebg a:visited, .titlebg a:hover, .titlebg {
   color: #c6c8c9;
