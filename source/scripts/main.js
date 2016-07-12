@@ -2,15 +2,6 @@ jQuery(document).ready(function($) {
 
 	var offcanvas, login;
 
-    $('[data-openChild]').click(function(e) {
-        e.preventDefault();
-        var element = $(this).data('openchild');
-
-        $(this).find('.icon-up-open').toggleClass('open');
-
-        $('[data-childOf='+element+']').slideToggle();
-    })
-
 	$('.js-recent-time').each(function(k, v) {
 		var options = {hour: '2-digit', minute: '2-digit', second: '2-digit', month: 'short', day: 'numeric' };
 		date = new Date($(v).data('timestamp')*1000).toLocaleDateString('en-GB', options);
@@ -84,11 +75,12 @@ jQuery(document).ready(function($) {
 	})
 
 	var bLazy = new Blazy({ 
-		selector: '.blazy', // article images
+		selector: '.article_inner img', // article images
 		offset: 300,
-        success: function(el) {
-            $(el).parent().css('background-image', 'none');
-        }
+		success: function(ele) {
+			$(ele).addClass('fpsc');
+			$(ele).removeClass('loading');
+		}
 	});
 })
 
