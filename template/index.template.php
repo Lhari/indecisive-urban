@@ -106,14 +106,11 @@ function template_html_above()
 	<script type="text/javascript" src="', $settings['theme_url'], '/scripts/mootools-1.2.2-core-nc.js"></script>';
 
 	// Here comes the JavaScript bits!
-	//<script type="text/javascript" src="', $settings['theme_url'], '/scripts/theme.js?fin20"></script>
 	echo '
 	<script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/script.js?fin20"></script>
-
+	<script type="text/javascript" src="', $settings['theme_url'], '/scripts/theme.js?fin20"></script>
 	<script src="https://code.jquery.com/jquery-3.0.0.min.js"   integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
-
-	<script src="',$settings['theme_url'],'/scripts/main.js?fin20"></script>
-
+	<script src="/Themes/urban_20a/scripts/main.js?fin20"></script>
 	<script type="text/javascript"><!-- // --><![CDATA[
 		var smf_theme_url = "', $settings['theme_url'], '";
 		var smf_default_theme_url = "', $settings['default_theme_url'], '";
@@ -175,13 +172,7 @@ function template_html_above()
 
 	echo '
 </head>
-<body class="limited-header--2">
-
-	<div class="header-video">
-		<video preload="auto" autoplay="true" loop="loop" style="opacity: 1;">
-			<source src="/inde/key-render.webm" type="video/webm">
-		</video>
-	</div>';
+<body class="limited-header--2">';
 }
 
 function template_body_above() {
@@ -195,7 +186,15 @@ function template_body_above() {
 		</div>
 	</div>
 	<div class="oncanvas">
-		<div class="oncanvas__overlay js-overlay is-hidden"></div>';
+		<div class="oncanvas__overlay js-overlay is-hidden"></div>
+	<div class="background">
+		<div id="bg-video-wrapper">
+			<video preload="auto" autoplay="true" loop="loop" style="opacity: 1;">
+
+				<source src="/eqdkp/templates/eqdkp_legion/videos/key-render.webm" type="video/webm">
+			</video>
+		</div>
+	</div>';
 
 	if(!$context['user']['is_logged']) {
 
@@ -225,8 +224,9 @@ function template_body_above() {
 	';
 	}
 
-	//<div class="background__overlay"></div>
 	echo '
+	<div class="background__overlay"></div>
+
 
 	<div id="header" class="grid-group content--wrapper">
 		<div class="grid" id="head-wrap">
@@ -236,6 +236,7 @@ function template_body_above() {
 				echo '<img class="logo" src="/inde/indecisive-logo.svg">';
 			else
 				echo '<a href="'.$scripturl.'" title=""><img class="logo" src="/inde/indecisive-logo.svg"></a>';
+
 			echo '
 			</div>
 		</div>
@@ -279,24 +280,21 @@ function template_body_above() {
 			</div>
 		</div>
 	</div>
-		<div class="grid-group content--wrapper">';
+		<div class="grid-group content--wrapper">
+			';
 
 				// Show the navigation tree.
-				// theme_linktree();
+				//theme_linktree();
 }
 
 function template_body_below()
 {
 	global $context, $settings, $options, $scripturl, $txt, $modSettings;
 
-	// echo '</div>';
-
-	// Show the "Powered by" and "Valid" logos, as well as the copyright. Remember, the copyright must be somewhere!
-	echo '
-		<div id="footer">
-			<div class="footer-content">
+		echo '<div id="footer" class="grid size-12">
+			<div class="footer-content" style="font-size: 13px; text-align: center; margin-top: 22px;">
 				', theme_copyright(), '<br />
-				<strong>Indecisive Theme</strong> design by <a href="http://www.dzinerstudio.com" target="_blank">us</a>. We are awesome!
+				<strong>Indecisive Theme</strong> design by <a href="http://www.indecisive.eu" target="_blank">us</a>. We are awesome!
 			</div>
 			<div class="clr"></div>';
 
@@ -307,13 +305,22 @@ function template_body_below()
 
 			echo '
 		</div>';
+
+	echo '
+
+		</div>';
+
+	// Show the "Powered by" and "Valid" logos, as well as the copyright. Remember, the copyright must be somewhere!
+
 }
 
 function template_html_below()
 {
 	global $context, $settings, $options, $scripturl, $txt, $modSettings;
 
-	echo '</div></body></html>';
+	echo '
+	</div>
+</body></html>';
 }
 
 // Show a linktree. This is that thing that shows "My Community | General Category | General Discussion"..
@@ -396,6 +403,7 @@ function template_menu()
 
 			foreach ($context['menu_buttons'] as $act => $button)
 			{
+
 				if(!strstr(strtolower($button['title']), 'moderate') && !strstr($button['title'], 'My Messages') && !strstr(strtolower($button['title']), 'home')) {
 
 					if($button['title'] == 'Logout' || $button['title'] == 'Profile') {
