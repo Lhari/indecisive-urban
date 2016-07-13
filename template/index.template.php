@@ -291,29 +291,27 @@ function template_body_below()
 {
 	global $context, $settings, $options, $scripturl, $txt, $modSettings;
 
+		echo '<div id="footer" class="grid size-12">
+			<div class="footer-content" style="font-size: 13px; text-align: center; margin-top: 22px;">
+				', theme_copyright(), '<br />
+				<strong>Indecisive Theme</strong> design by <a href="http://www.indecisive.eu" target="_blank">us</a>. We are awesome!
+			</div>
+			<div class="clr"></div>';
+
+				// Show the load time?
+				if ($context['show_load_time'])
+				echo '
+				<span class="smalltext">', $txt['page_created'], $context['load_time'], $txt['seconds_with'], $context['load_queries'], $txt['queries'], '</span>';
+
+			echo '
+		</div>';
+
 	echo '
 
 		</div>';
 
 	// Show the "Powered by" and "Valid" logos, as well as the copyright. Remember, the copyright must be somewhere!
-	echo '
-		<div class="grid-group">
-			<div id="foot-wrap">
-				<div id="footerarea">
-					<div class="foot-left">
-					</div>
 
-					<div class="clr"></div>';
-
-						// Show the load time?
-						if ($context['show_load_time'])
-						echo '
-						<span class="smalltext">', $txt['page_created'], $context['load_time'], $txt['seconds_with'], $context['load_queries'], $txt['queries'], '</span>';
-
-			echo '
-				</div>
-			</div>
-		</div>';
 }
 
 function template_html_below()
