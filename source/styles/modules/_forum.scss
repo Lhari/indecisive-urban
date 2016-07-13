@@ -53,7 +53,8 @@
 	    left: 60px;
 	    top: 60px;
 	    border: 3px solid $color-dark-gray;
-	    box-shadow: 0 0 0 3px black;
+		box-shadow: 0 0 0 3px #282828;
+
 	    transition: all 300ms ease;
 	}
 
@@ -79,7 +80,7 @@
 		}
 
 		&--icon {
-			background: $color-dark-gray;
+			background: lighten($color-dark-gray, 10%);
 			color: $color-light;
 			padding: $spacing/2;
 			transition: all 300ms ease;
@@ -124,7 +125,9 @@
 	    }
 	}
 }
-
+.postarea .inner {
+	min-height: 250px;
+}
 .round {
 	border-radius: 50%;
 	background-size: cover;

@@ -711,6 +711,79 @@ th {
 .class-color--warrior a, .class-color--warrior {
   color: #C79C6E !important; }
 
+.class-border--death_knight {
+  box-shadow: 0 0 0 3px #C41F3B; }
+
+.class-border--demon_hunter {
+  box-shadow: 0 0 0 3px #A330C9; }
+
+.class-border--druid {
+  box-shadow: 0 0 0 3px #FF7D0A; }
+
+.class-border--hunter {
+  box-shadow: 0 0 0 3px #ABD473; }
+
+.class-border--mage {
+  box-shadow: 0 0 0 3px #69CCF0; }
+
+.class-border--monk {
+  box-shadow: 0 0 0 3px #00FF96; }
+
+.class-border--paladin {
+  box-shadow: 0 0 0 3px #F58CBA; }
+
+.class-border--priest {
+  box-shadow: 0 0 0 3px #FFFFFF; }
+
+.class-border--rogue {
+  box-shadow: 0 0 0 3px #FFF569; }
+
+.class-border--shaman {
+  box-shadow: 0 0 0 3px #0070DE; }
+
+.class-border--warlock {
+  box-shadow: 0 0 0 3px #9482C9; }
+
+.class-border--warrior {
+  box-shadow: 0 0 0 3px #C79C6E; }
+
+.class-background--death_knight {
+  background-color: #C41F3B !important; }
+
+.class-background--demon_hunter {
+  background-color: #A330C9 !important; }
+
+.class-background--druid {
+  background-color: #FF7D0A !important; }
+
+.class-background--hunter {
+  background-color: #ABD473 !important; }
+
+.class-background--mage {
+  background-color: #69CCF0 !important; }
+
+.class-background--monk {
+  background-color: #00FF96 !important; }
+
+.class-background--paladin {
+  background-color: #F58CBA !important; }
+
+.class-background--priest {
+  background-color: #FFFFFF !important;
+  color: #000 !important; }
+
+.class-background--rogue {
+  background-color: #FFF569 !important; }
+
+.class-background--shaman {
+  background-color: #0070DE !important; }
+
+.class-background--warlock {
+  background-color: #9482C9 !important; }
+
+.class-background--warrior {
+  background-color: #C79C6E !important; }
+
 .small {
   font-size: 10px !important; }
 
@@ -1692,7 +1765,7 @@ a {
   left: 60px;
   top: 60px;
   border: 3px solid #32363b;
-  box-shadow: 0 0 0 3px black;
+  box-shadow: 0 0 0 3px #282828;
   transition: all 300ms ease; }
 
 .member__postcount {
@@ -1711,7 +1784,7 @@ a {
     right: initial;
     position: absolute; }
   .member__profile--icon {
-    background: #32363b;
+    background: #494f57;
     color: #f8fcff;
     padding: 11px;
     transition: all 300ms ease; }
@@ -1741,6 +1814,9 @@ a {
     transition: opacity 300ms ease; }
     .forum__mini-menu a:hover {
       opacity: 1; }
+
+.postarea .inner {
+  min-height: 250px; }
 
 .round {
   border-radius: 50%;
@@ -1800,38 +1876,38 @@ a {
             animation: pulsate 1700ms ease;
     -webkit-animation-iteration-count: 3;
             animation-iteration-count: 3;
-    color: #a1fe16;
-    text-shadow: 0 0 10px #a1fe16; }
+    color: #68ad01;
+    text-shadow: 0 0 10px #68ad01; }
 
 @-webkit-keyframes pulsate {
   0% {
     -webkit-transform: scale(0.1, 0.1);
             transform: scale(0.1, 0.1);
-    color: #a1fe16;
-    text-shadow: 0 0 10px #a1fe16; }
+    color: #68ad01;
+    text-shadow: 0 0 10px #68ad01; }
   50% {
     color: #f8fcff;
     text-shadow: 0 0 10px black; }
   100% {
     -webkit-transform: scale(1.2, 1.2);
             transform: scale(1.2, 1.2);
-    color: #a1fe16;
-    text-shadow: 0 0 10px #a1fe16; } }
+    color: #68ad01;
+    text-shadow: 0 0 10px #68ad01; } }
 
 @keyframes pulsate {
   0% {
     -webkit-transform: scale(0.1, 0.1);
             transform: scale(0.1, 0.1);
-    color: #a1fe16;
-    text-shadow: 0 0 10px #a1fe16; }
+    color: #68ad01;
+    text-shadow: 0 0 10px #68ad01; }
   50% {
     color: #f8fcff;
     text-shadow: 0 0 10px black; }
   100% {
     -webkit-transform: scale(1.2, 1.2);
             transform: scale(1.2, 1.2);
-    color: #a1fe16;
-    text-shadow: 0 0 10px #a1fe16; } }
+    color: #68ad01;
+    text-shadow: 0 0 10px #68ad01; } }
   .recent-post .recent-post__url {
     color: #f8fcff; }
   .recent-post__url {
@@ -1917,35 +1993,39 @@ a {
     .limited-header--2 .tp_container .tp_col16 > div {
       overflow: visible !important; }
 
+input[type="submit"], input[type="button"], button {
+  border-left: 0;
+  border-right: 0;
+  outline: none; }
+
 .button {
-  border: 1px solid rgba(198, 200, 201, 0.7);
   border-radius: 6px;
   padding: 5.5px 11px;
   margin: 0 11px;
   color: #f8fcff;
   transition: all 300ms ease;
-  background: #32363b;
-  box-shadow: inset 0 0 11px rgba(0, 0, 0, 0.5); }
+  background: #494f57;
+  border-top: 1px solid rgba(248, 252, 255, 0.3);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
   .button:hover {
-    color: #FF9900;
-    border-color: rgba(255, 153, 0, 0.9); }
+    background: #FF9900;
+    color: #f8fcff; }
   .button i {
     padding-right: 11px; }
   .button--accept:hover {
-    color: #a1fe16;
-    border-color: rgba(161, 254, 22, 0.9); }
+    background: #68ad01; }
 
 .button--secondary {
-  background: #0f1012; }
+  background: ligthen(#32363b, 5%); }
   .button--secondary:hover {
-    color: #a1fe16;
-    border-color: rgba(161, 254, 22, 0.9); }
+    color: #f8fcff;
+    background-color: #FF9900; }
 
 .admin-button .button {
-  background: #0f1012; }
+  background: #3e4349; }
   .admin-button .button:hover {
-    color: #a1fe16;
-    border-color: rgba(161, 254, 22, 0.9); }
+    color: #f8fcff;
+    background-color: #FF9900; }
 
 .button__wrapper {
   margin: -11px; }
@@ -1964,17 +2044,17 @@ input[type="text"], input[type="password"] {
 textarea {
   width: 100%;
   color: #f8fcff;
-  background: linear-gradient(to top, rgba(50, 54, 59, 0.6) 0%, #32363b 100%);
+  background: linear-gradient(to bottom, rgba(15, 16, 18, 0.4) 0%, rgba(22, 24, 26, 0.4) 100%);
   border: none;
-  border-top: 2px solid rgba(248, 252, 255, 0.2);
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(248, 252, 255, 0.2);
   padding: 11px;
   margin-bottom: 11px;
   border-radius: 5.5px;
-  box-shadow: 0 0 5px #000;
   transition: box-shadow 300ms ease; }
   textarea:focus {
     outline: none !important;
-    box-shadow: 0 0 5px #FF9900; }
+    box-shadow: inset 0 0 7px rgba(255, 153, 0, 0.5); }
 
 .boardIndex__board {
   margin-bottom: 11px; }
@@ -2007,7 +2087,7 @@ textarea {
   .boardIndex__title:hover {
     color: #f8fcff; }
   .boardIndex__title.new {
-    color: #a1fe16; }
+    color: #68ad01; }
     .boardIndex__title.new:hover {
       color: #f8fcff; }
 

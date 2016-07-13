@@ -330,15 +330,15 @@ if( $context['user']['is_guest'] )
 									if(!$message['member']['avatar']['image']) {
 
 										echo '
-										<div class="member__image member__image--no-image round">'.substr($message['member']['name'], 0, 2).'
-											<div class="member__icon round" style="background-image: url('.$icon.')"></div>
+										<div class="member__image member__image--no-image round  class-background--'.str_replace(' ', '_', strtolower($message['member']['options']['cust_class'])).'">'.substr($message['member']['name'], 0, 2).'
+											<div class="member__icon round class-border--'.str_replace(' ', '_', strtolower($message['member']['options']['cust_class'])).'" style="background-image: url('.$icon.')"></div>
 										</div>';
 									} else {
 
 										$src = explode('src="', $message['member']['avatar']['image']);
 										$src = explode('"', $src[1]);
 										echo '
-										<div class="member__image round" style="background-image: url('.$src[0].')">
+										<div class="member__image round  " style="background-image: url('.$src[0].')">
 											<div class="member__icon round" style="background-image: url('.$icon.')"></div>
 										</div>';
 
@@ -786,7 +786,6 @@ if( $context['user']['is_guest'] )
 				<div id="quickReplyOptions"', $options['display_quick_reply'] == 2 ? '' : ' style="display: none"', '>
 					<span class="upperframe"><span></span></span>
 					<div class="roundframe">
-						<p class="smalltext lefttext">', $txt['quick_reply_desc'], '</p>
 						', $context['is_locked'] ? '<p class="alert smalltext">' . $txt['quick_reply_warning'] . '</p>' : '',
 						$context['oldTopicError'] ? '<p class="alert smalltext">' . sprintf($txt['error_old_topic'], $modSettings['oldTopicDays']) . '</p>' : '', '
 						', $context['can_reply_approved'] ? '' : '<em>' . $txt['wait_for_approval'] . '</em>', '
@@ -901,10 +900,12 @@ if( $context['user']['is_guest'] )
 									<input type="hidden" name="topic" value="' . $context['current_topic'] . '" />
 									<input type="hidden" name="msg" value="%msg_id%" />
 									<div class="righttext">
-										<input type="submit" name="post" value="' . $txt['save'] . '" tabindex="' . $context['tabindex']++ . '" onclick="return oQuickModify.modifySave(\'' . $context['session_id'] . '\', \'' . $context['session_var'] . '\');" accesskey="s" class="button_submit" />&nbsp;&nbsp;' . ($context['show_spellchecking'] ? '<input type="button" value="' . $txt['spell_check'] . '" tabindex="' . $context['tabindex']++ . '" onclick="spellCheck(\'quickModForm\', \'message\');" class="button_submit" />&nbsp;&nbsp;' : '') . '<input type="submit" name="cancel" value="' . $txt['modify_cancel'] . '" tabindex="' . $context['tabindex']++ . '" onclick="return oQuickModify.modifyCancel();" class="button_submit" />
+										<input type="submit" name="post" value="' . $txt['save'] . '" tabindex="' . $context['tabindex']++ . '" onclick="return oQuickModify.modifySave(\'' . $context['session_id'] . '\', \'' . $context['session_var'] . '\');" accesskey="s" class="button button--accept button_submit" />&nbsp;&nbsp;' . ($context['show_spellchecking'] ? '<input type="button" value="' . $txt['spell_check'] . '" tabindex="' . $context['tabindex']++ . '" onclick="spellCheck(\'quickModForm\', \'message\');" class="button_submit" />&nbsp;&nbsp;' : '') . '<input type="submit" name="cancel" value="' . $txt['modify_cancel'] . '" tabindex="' . $context['tabindex']++ . '" onclick="return oQuickModify.modifyCancel();" class="button button_submit" />
 									</div>
 								</div>'), ',
-							sTemplateSubjectEdit: ', JavaScriptEscape('<input type="text" style="width: 90%;" name="subject" value="%subject%" size="80" maxlength="80" tabindex="' . $context['tabindex']++ . '" class="input_text" />'), ',
+
+
+							sTemplateSubjectEdit: '.JavaScriptEscape('<input type="text" style="width: 90%;max-width: 760px;background: none;border: none;color: #c6c8c9;padding-top: 9px;text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.4);outline: none;" name="subject" value="%subject%" size="80" maxlength="80" tabindex="' . $context['tabindex']++ . '" class="input_text" />').',
 							sTemplateBodyNormal: ', JavaScriptEscape('%body%'), ',
 							sTemplateSubjectNormal: ', JavaScriptEscape('<a href="' . $scripturl . '?topic=' . $context['current_topic'] . '.msg%msg_id%#msg%msg_id%" rel="nofollow">%subject%</a>'), ',
 							sTemplateTopSubject: ', JavaScriptEscape($txt['topic'] . ': %subject% &nbsp;(' . $txt['read'] . ' ' . $context['num_views'] . ' ' . $txt['times'] . ')'), ',
