@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <theme-info xmlns="http://www.simplemachines.org/xml/theme-info" xmlns:smf="http://www.simplemachines.org/">
 	<!-- For the id, always use something unique - put your name, a colon, and then the package name. -->
-	<id>bikken:urban</id>
+	<id>indecisive:2016</id>
 	<version>2.0</version>
 	<!-- Theme name, used purely for aesthetics. -->
-	<name>Urban</name>
+	<name>Indecisive 2016</name>
 	<!-- Author: your email address or contact information. The name attribute is optional. -->
-	<author name="Bikken">dzinerstudio@gmail.com</author>
+	<author name="Indecisive">http://indecisive.eu</author>
 	<!-- Website... where to get updates and more information. -->
-	<website>http://www.dzinerstudio.com/</website>
+	<website>http://indecisive.eu</website>
 	<!-- Template layers to use, defaults to "html,body". -->
 	<layers>html,body</layers>
 	<!-- Templates to load on startup. Default is "index". -->
