@@ -773,7 +773,8 @@ th {
   color: #000 !important; }
 
 .class-background--rogue {
-  background-color: #FFF569 !important; }
+  background-color: #FFF569 !important;
+  color: #000 !important; }
 
 .class-background--shaman {
   background-color: #0070DE !important; }
@@ -1823,6 +1824,23 @@ a {
   background-size: cover;
   background-position-y: 50%;
   background-position-x: 50%; }
+
+/* Quotes */
+blockquote {
+  margin: 0;
+  padding: 11px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px; }
+  blockquote.bbc_alternate_quote {
+    background: rgba(248, 252, 255, 0.1); }
+
+.quoteheader:before {
+  font-family: "fontello";
+  content: '\e81b';
+  float: left;
+  margin-right: 5.5px;
+  font-size: 11px;
+  color: #FF9900; }
 
 .block {
   padding-top: 22px; }

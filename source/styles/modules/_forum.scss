@@ -92,9 +92,9 @@
 		}	
 	}
 }
-
-.forum {
 	
+.forum {
+
 	&--post {
 		margin-bottom: $spacing*2;
 
@@ -134,4 +134,28 @@
 	background-position-y: 50%;
 	background-position-x: 50%;
 		
+}
+
+
+
+/* Quotes */
+
+blockquote {
+	margin: 0;
+    padding: 11px;
+    background: rgba($color-dark,0.2);
+    border-radius: 6px;
+
+    &.bbc_alternate_quote {
+    	background: rgba($color-light, 0.1);
+    }
+}
+
+.quoteheader:before {
+	font-family: "fontello";
+	content: '\e81b';
+	float: left;
+	margin-right: $spacing/4;
+	font-size: $spacing/2;
+	color: $color-primary;
 }

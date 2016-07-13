@@ -2,6 +2,20 @@ jQuery(document).ready(function($) {
 
 	var offcanvas, login;
 
+    $('.modifybutton').click(function() {
+        setTimeout(function() {
+            loadQuickEdit();
+        }, 300)
+        
+    })
+
+    function loadQuickEdit() {
+        $('#quick_edit_body_container .button--accept').click(function() {
+            $('.modified-pre-text').addClass('is-hidden');
+            $('.modified').removeClass('is-hidden');
+        });
+    }
+
     $('[data-openChild]').click(function(e) {
         e.preventDefault();
         var element = $(this).data('openchild');

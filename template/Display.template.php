@@ -467,7 +467,7 @@ if( $context['user']['is_guest'] )
 							<div class="relative">
 								<div class="keyinfo">
 									<h5 class="titlebg" id="subject_'.$message['id'].'">
-										<a href="', $message['href'], '" rel="nofollow">'.(!empty($message['counter']) ? ' #' . $message['counter'] : '').' '.$message['subject'].', '.$message['time'].'</a>
+										<a href="', $message['href'], '" rel="nofollow">'.(!empty($message['counter']) ? ' #' . $message['counter'] : '').' '.$message['subject'].' - '.$message['time'].'</a>
 									</h5>
 									<div id="msg_', $message['id'], '_quick_mod"></div>
 								</div>';
@@ -543,14 +543,17 @@ if( $context['user']['is_guest'] )
 								<div class="approve_post">
 									', $txt['post_awaiting_approval'], '
 								</div>';
-		echo '
-								<div class="inner" id="msg_', $message['id'], '"', '>', $message['body'], '</div>
-							</div>';
+		echo '<div class="inner" id="msg_'.$message['id'].'">';
+
+			echo $message['body'];
+
+		echo '</div>
+		</div>';
 		echo '<div style="padding-top: 11px;">';
 			// Show "� Last Edit: Time by Person �" if this post was edited.
 		if ($settings['show_modify'] && !empty($message['modified']['name']))
-			echo $txt['last_edit'], ': ', $message['modified']['time'], ' ', $txt['by'], ' <strong>'.$message['modified']['name'].'</strong>';
-
+			echo '<div class="modified-pre-text">'.$txt['last_edit'], ': ', $message['modified']['time'], ' ', $txt['by'], ' <strong>'.$message['modified']['name'].'</strong></div>';
+		echo '<div class="smalltext modified is-hidden" id="modified_', $message['id'], '"></div>';
 		echo '<span class="right" style="margin-left: -11px; margin-right: -11px">';
 
 		// Can the user modify the contents of this post?  Show the modify inline image.
@@ -618,12 +621,11 @@ if( $context['user']['is_guest'] )
 		echo '
 						</div>
 						<div class="moderatorbar grid size-10 size-12--palm grid--last">
-							<div class="smalltext modified" id="modified_', $message['id'], '">';
+							';
 
 
 
 		echo '
-							</div>
 							<div class="smalltext reportlinks">';
 							if(!empty($message['member']['signature']))
 								
