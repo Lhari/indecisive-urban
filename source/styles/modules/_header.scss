@@ -27,5 +27,26 @@
 
 	.extra-spacing {
 		margin-bottom: $spacing;
-	}	
+	}
+}
+
+#header {
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.header-video {
+  z-index: 0;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  height: 360px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
+
+  video {
+    width: 100%;
+  }
 }

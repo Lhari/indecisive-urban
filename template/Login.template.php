@@ -68,7 +68,7 @@ function template_login()
 					<dd><input type="checkbox" name="undelete" class="input_check" /></dd>';
 	echo '
 				</dl>
-				<p><input type="submit" value="', $txt['login'], '" class="button_submit" /></p>
+				<p><input type="submit" value="', $txt['login'], '" class="button" /></p>
 				<p class="smalltext"><a href="', $scripturl, '?action=reminder">', $txt['forgot_your_password'], '</a></p>
 				<input type="hidden" name="hash_passwrd" value="" />
 			</div>
