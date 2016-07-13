@@ -1,6 +1,6 @@
 $color-primary: #FF9900;
 $color-secondary: #f48e75;
-$color-teritary: #a1fe16;
+$color-teritary: darken(#a1fe16, 20%);
 
 $color-light: #f8fcff;
 $color-dark: #000;
@@ -60,4 +60,80 @@ $class-warrior: #C79C6E;
 }
 .class-color--warrior a, .class-color--warrior {
 	color: $class-warrior!important;
+}
+
+.class-border--death_knight {
+	box-shadow: 0 0 0 3px $class-death-knight;
+}
+.class-border--demon_hunter {
+	box-shadow: 0 0 0 3px $class-demon-hunter;
+}
+.class-border--druid {
+	box-shadow: 0 0 0 3px $class-druid;
+}
+.class-border--hunter {
+	box-shadow: 0 0 0 3px $class-hunter;
+}
+.class-border--mage {
+	box-shadow: 0 0 0 3px $class-mage;
+}
+.class-border--monk {
+	box-shadow: 0 0 0 3px $class-monk;
+}
+.class-border--paladin {
+	box-shadow: 0 0 0 3px $class-paladin;
+}
+.class-border--priest {
+	box-shadow: 0 0 0 3px $class-priest;
+}
+.class-border--rogue {
+	box-shadow: 0 0 0 3px $class-rogue;
+}
+.class-border--shaman {
+	box-shadow: 0 0 0 3px $class-shaman;
+}
+.class-border--warlock {
+	box-shadow: 0 0 0 3px $class-warlock;
+}
+.class-border--warrior {
+	box-shadow: 0 0 0 3px $class-warrior;
+}
+
+.class-background--death_knight {
+	background-color: $class-death-knight!important;
+}
+.class-background--demon_hunter {
+	background-color: $class-demon-hunter!important;
+}
+.class-background--druid {
+	background-color: $class-druid!important;
+}
+.class-background--hunter {
+	background-color: $class-hunter!important;
+}
+.class-background--mage {
+	background-color: $class-mage!important;
+}
+.class-background--monk {
+	background-color: $class-monk!important;
+}
+.class-background--paladin {
+	background-color: $class-paladin!important;
+}
+.class-background--priest {
+	background-color:  $class-priest!important;
+	color: $color-dark!important;
+}
+.class-background--rogue {
+	background-color:  $class-rogue!important;
+	color: $color-dark!important;
+}
+.class-background--shaman {
+	background-color: $class-shaman!important;
+}
+.class-background--warlock {
+	background-color: $class-warlock!important;
+}
+.class-background--warrior {
+	background-color: $class-warrior!important;
 }

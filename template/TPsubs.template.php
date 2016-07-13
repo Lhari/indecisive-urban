@@ -1137,7 +1137,7 @@ function article_renders($type = 1, $single = false, $first = false)
 	$code = '';
 	// decide the header style, different for forumposts
     $useFrame = in_array($context['TPortal']['article']['frame'], array('theme', 'title'));
-	$headerstyle = isset($context['TPortal']['article']['boardnews']) ? 'catbg' : 'titlebg';
+	$headerstyle = isset($context['TPortal']['article']['boardnews']) ? 'catbg' : 'titlebg titlebg--no-rounding';
 	$divheader = isset($context['TPortal']['article']['boardnews']) ? 'cat_bar' : 'title_bar';   
 
 	if($image = $context['TPortal']['article']['body']) {

@@ -2,6 +2,29 @@ jQuery(document).ready(function($) {
 
 	var offcanvas, login;
 
+  $('.modifybutton').click(function() {
+      setTimeout(function() {
+          loadQuickEdit();
+      }, 300)
+
+  })
+
+  function loadQuickEdit() {
+      $('#quick_edit_body_container .button--accept').click(function() {
+          $('.modified-pre-text').addClass('is-hidden');
+          $('.modified').removeClass('is-hidden');
+      });
+  }
+
+  $('[data-openChild]').click(function(e) {
+      e.preventDefault();
+      var element = $(this).data('openchild');
+
+      $(this).find('.icon-up-open').toggleClass('open');
+
+      $('[data-childOf='+element+']').slideToggle();
+  })
+
 	$('.js-recent-time').each(function(k, v) {
 		var options = {hour: '2-digit', minute: '2-digit', second: '2-digit', month: 'short', day: 'numeric' };
 		date = new Date($(v).data('timestamp')*1000).toLocaleDateString('en-GB', options);
@@ -52,7 +75,7 @@ jQuery(document).ready(function($) {
 	})
 
 	$('.offcanvas .has-children a').click(function(e) {
-		
+
 		if($(this).hasClass('icon-up-open'))
 			e.preventDefault();
 		$(this).next('ul').slideToggle(299);
@@ -66,7 +89,7 @@ jQuery(document).ready(function($) {
 		} else {
 			$(this).toggleClass('open');
 		}
-		
+
 
 	})
 
@@ -74,7 +97,7 @@ jQuery(document).ready(function($) {
 		location.href = "/?action=register";
 	})
 
-	var bLazy = new Blazy({ 
+	var bLazy = new Blazy({
 		selector: '.article_inner img', // article images
 		offset: 300,
 		success: function(ele) {
@@ -269,7 +292,7 @@ jQuery(document).ready(function($) {
                 if (isImage || ele.src === undefined) {
                     var img = new Image();
                     // using EventListener instead of onerror and onload
-                    // due to bug introduced in chrome v50 
+                    // due to bug introduced in chrome v50
                     // (https://productforums.google.com/forum/#!topic/chrome/p51Lk7vnP2o)
                     var onErrorHandler = function() {
                         if (options.error) options.error(ele, "invalid");

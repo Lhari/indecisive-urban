@@ -191,27 +191,6 @@ function template_body_above() {
 
 	<div class="offcanvas">
 		<div class="offcanvas__inner">';
-		/*echo '
-			<div id="searcharea">
-					<form action="', $scripturl, '?action=search2" method="post" accept-charset="', $context['character_set'], '">
-						<input class="searchbox" type="text" name="search" value="', $txt['search'], '..." onfocus="this.value = \'\';" onblur="if(this.value==\'\') this.value=\'', $txt['search'], '...\';" />';
-
-				// Search within current topic?
-				if (!empty($context['current_topic']))
-					echo '
-						<input type="hidden" name="topic" value="', $context['current_topic'], '" />';
-
-				// If we're on a certain board, limit it to this board ;).
-				elseif (!empty($context['current_board']))
-					echo '
-						<input type="hidden" name="brd[', $context['current_board'], ']" value="', $context['current_board'], '" />';
-
-
-					echo '</form>';
-			echo '
-			</div>';*/
-
-
 			echo template_menu().'
 		</div>
 	</div>
@@ -256,8 +235,7 @@ function template_body_above() {
 			if($_SERVER['REQUEST_URI'] == '/')
 				echo '<img class="logo" src="/inde/indecisive-logo.svg">';
 			else
-				echo '<a href="'.$scripturl.'" title=""><img class="logo" src="/inde/indecisive-logo.png"></a>';
-
+				echo '<a href="'.$scripturl.'" title=""><img class="logo" src="/inde/indecisive-logo.svg"></a>';
 			echo '
 			</div>
 		</div>
@@ -401,10 +379,24 @@ function template_menu()
 	echo '
 			<ul class="offcanvas__nav">';
 
+			?>
+
+			<li class="offcanvas__search">
+				<div class="grid size-3">
+					<a href="/" class="icon-home-1"></a>
+				</div>
+				<div class="grid size-9 offcanvas__search--wrapper">
+					<?php echo '<form action="', $scripturl, '?action=search2" method="post" accept-charset="', $context['character_set'], '">'; ?>
+							<?php echo '<div class="form__wrapper icon-search"><input class="icon-search" type="text" name="search" value="', $txt['search'], '..." onfocus="this.value = \'\';" onblur="if(this.value==\'\') this.value=\'', $txt['search'], '...\';" /></div>'; ?>
+					</form>
+				</div>
+			</li>
+
+			<?php
+
 			foreach ($context['menu_buttons'] as $act => $button)
 			{
-
-				if(!strstr(strtolower($button['title']), 'moderate') && !strstr($button['title'], 'My Messages')) {
+				if(!strstr(strtolower($button['title']), 'moderate') && !strstr($button['title'], 'My Messages') && !strstr(strtolower($button['title']), 'home')) {
 
 					if($button['title'] == 'Logout' || $button['title'] == 'Profile') {
 						$moveElement[$button['title']] = $button['href'];
@@ -412,20 +404,39 @@ function template_menu()
 					else {
 
 						echo '
-							<li class="'.($button['active_button'] ? 'active' : '').(!empty($button['sub_buttons']) ? ' has-children' : '').' list">
-								<a href="', $button['href'], '" class="'.(!empty($button['sub_buttons']) ? 'icon-up-open' : '').'">'.ucfirst(strtolower($button['title'])).'</a>';
+							<li class="'.($button['active_button'] ? 'active' : '').(!empty($button['sub_buttons']) ? ' has-children' : '').' list">';
+
+							if(!empty($button['sub_buttons']))
+								echo '<a class="icon-up-open">'.ucfirst(strtolower($button['title'])).'</a>';
+							else
+								echo '<a href="'.$button['href'].'">'.ucfirst(strtolower($button['title'])).'</a>';
 
 
-					// any subbuttons then?
-					if(!empty($button['sub_buttons']))
-					{
+
+					// Render sub button menu
+					if(!empty($button['sub_buttons'])) {
 					echo '<ul class="offcanvas__nav js-offcanvas-level-1">';
-					foreach ($button['sub_buttons'] as $subact => $sbutton)
 
-						echo '
+						if(strstr(strtolower($button['title']), 'admin'))
+							echo '<li><a href="'.$button['href'].'">Admin Center</a></li>';
+
+						if(strstr(strtolower($button['title']), 'media'))
+							echo '<li><a href="'.$button['href'].'">Gallery</a></li>';
+
+						if(strstr(strtolower($button['title']), 'tinyportal'))
+							echo '<li><a href="'.$button['href'].'">Tinyportal Admin</a></li>';
+
+					foreach ($button['sub_buttons'] as $subact => $sbutton) {
+						if($sbutton['href'] != '#top' && (!strstr(strtolower($button['title'], 'media')) && strtolower($sbutton['title']) != 'home' ) ) {
+
+							echo '
 							<li>
-								<a href="', $sbutton['href'], '">' , $sbutton['title'], '</a>
+								<a href="', $sbutton['href'], '">'.ucwords(strtolower($sbutton['title'])).'</a>
 							</li>';
+						}
+					}
+
+
 					echo '
 						</ul>';
 					}
@@ -443,7 +454,7 @@ function template_menu()
 					echo '<div class="usermenu loggedIn">';
 					if ($context['allow_pm']) {
 					echo '
-						<a class="grid size-4" href="', $scripturl, '?action=unread"><i class="icon-mail">';
+						<a class="grid size-4" href="/pm/"><i class="icon-mail">';
 						if($context['user']['unread_messages'] > 0)
 							echo '<span class="messages__unread">'.$context['user']['unread_messages'].'</span>';
 						echo '</i></a></span>';
