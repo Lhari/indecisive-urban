@@ -5,7 +5,7 @@
 
 global $settings;
 
-$txt['theme_thumbnail_href'] = $settings['images_url'] . '/thumbnail.gif';
-$txt['theme_description'] = 'An open and modern design using dark yellow and grey elements combined with subtile colors.<br /><br />Urban by <a href="http://www.dzinerstudio.com">DzinerStudio</a>';
+$txt['theme_thumbnail_href'] = $settings['images_url'] . '/indearrow.png';
+$txt['theme_description'] = 'Indecisive 2016 Theme';
 
 ?>

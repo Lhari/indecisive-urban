@@ -11,15 +11,14 @@
   line-height: 1em;
   padding: 0;
   margin: 0;
+
   a {
     color: $color-light;
     font-size: 12px;
     font-weight: 400;
-    border-left: 1px solid #000;
-    border-right: 1px solid #000;
-    border-bottom: 1px solid #000;
     background: $color-dark-gray;
     display: block;
+    border-bottom: 1px solid #000;
     &.firstlevel {
       border:1px solid #000;
       padding: 10px 0;
@@ -34,23 +33,25 @@
     }
 
   }
-  li {
-    &:first-child a {
-      // border-top: 1px solid #000;
-    }
+
+  ul li:last-child a {
+    border-bottom: none;
   }
   li {
     float: left;
     padding: 0;
     margin: 0;
     position: relative;
+
+
     ul {
+      margin-top: -1px;
+      border: 1px solid #000;
       list-style: none;
       z-index: 90;
       display: none;
       position: absolute;
       font-weight: normal;
-      padding: 7px 0 0;
     }
     ul ul {
       margin: -1.8em 0 0 13em;
@@ -132,6 +133,12 @@
   #admincenter .block {
     overflow: scroll;
   }
+}
+
+/* Administration Center.
+------------------------------------------------------- */
+#pick_theme img {
+  max-width: 120px;
 }
 
 /* Styles for the registration section.
