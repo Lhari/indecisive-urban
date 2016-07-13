@@ -315,22 +315,19 @@ function template_body_below()
 
 	// Show the "Powered by" and "Valid" logos, as well as the copyright. Remember, the copyright must be somewhere!
 	echo '
-		<div class="grid-group">
-			<div id="foot-wrap">
-				<div id="footerarea">
-					<div class="foot-left">
-					</div>
+		<div id="footer">
+			<div class="footer-content">
+				', theme_copyright(), '<br />
+				<strong>Indecisive Theme</strong> design by <a href="http://www.dzinerstudio.com" target="_blank">us</a>. We are awesome!
+			</div>
+			<div class="clr"></div>';
 
-					<div class="clr"></div>';
-
-						// Show the load time?
-						if ($context['show_load_time'])
-						echo '
-						<span class="smalltext">', $txt['page_created'], $context['load_time'], $txt['seconds_with'], $context['load_queries'], $txt['queries'], '</span>';
+				// Show the load time?
+				if ($context['show_load_time'])
+				echo '
+				<span class="smalltext">', $txt['page_created'], $context['load_time'], $txt['seconds_with'], $context['load_queries'], $txt['queries'], '</span>';
 
 			echo '
-				</div>
-			</div>
 		</div>';
 }
 
