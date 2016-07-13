@@ -1,19 +1,17 @@
-var gulp  = require('gulp'),
-    gutil = require('gulp-util'),
-    sass = require('gulp-sass'),
-    cssnano = require('gulp-cssnano'),
-    prefix      = require('gulp-autoprefixer'),
-    sourcemaps = require('gulp-sourcemaps'),
-    jshint = require('gulp-jshint'),
-    stylish = require('jshint-stylish'),
-    uglify = require('gulp-uglify'),
-    concat = require('gulp-concat'),
-    rename = require('gulp-rename'),
-    plumber = require('gulp-plumber'),
-    bower = require('gulp-bower'),
-    babel = require('gulp-babel'),
-    browserSync = require('browser-sync').create();
-
+var gulp = require('gulp'),
+  gutil = require('gulp-util'),
+  sass = require('gulp-sass'),
+  cssnano = require('gulp-cssnano'),
+  prefix = require('gulp-autoprefixer'),
+  sourcemaps = require('gulp-sourcemaps'),
+  jshint = require('gulp-jshint'),
+  stylish = require('jshint-stylish'),
+  uglify = require('gulp-uglify'),
+  concat = require('gulp-concat'),
+  rename = require('gulp-rename'),
+  plumber = require('gulp-plumber'),
+  bower = require('gulp-bower'),
+  browserSync = require('browser-sync').create();
 
 gulp.task('css', function() {
   gulp.src('source/styles/**.scss')
@@ -46,8 +44,28 @@ gulp.task('scripts', function() {
     .pipe(gulp.dest('template/scripts'))
 });
 
-gulp.task('watch', function() {
-  gulp.watch('source/styles/*/**', ['css']);
-})
+gulp.task('root', function() {
+  gulp.src('root/*.php').pipe(gulp.dest('..'));
+});
 
-gulp.task('default', ['css', 'watch'], function() {});
+// Browser-Sync watch files and inject changes
+gulp.task('browsersync', function() {
+    // Watch files
+    var files = [
+    	'./template/css/*.css',
+    	'./template/scripts/*.js',
+    	'**/*.php',
+    	'./template/images/**/*.{png,jpg,gif,svg,webp}',
+    ];
+
+    browserSync.init(files, {
+	    proxy: "indecisive:5000",
+    });
+
+    gulp.watch('source/styles/*/**', ['css']);
+    gulp.watch('source/scripts/*/**', ['scripts']);
+    gulp.watch('source/font/*/**', ['fonts']);
+    gulp.watch('root/*/**', ['root']).on('change', browserSync.reload);
+});
+
+gulp.task('default', ['css', 'scripts', 'fonts', 'root', 'browsersync'], function() {});

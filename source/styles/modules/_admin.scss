@@ -18,8 +18,10 @@
     background-image: url("/inde/ColumnHeaderBG.png");
     display: block;
     &.firstlevel {
-      margin-right: 8px;
-      padding: 10px;
+      padding: 10px 0;
+      width: 100px;
+      text-align: center;
+      margin-right: 4px;
     }
     &:active,
     &:hover {
@@ -68,6 +70,60 @@
 /* The dropdown menu toggle image */
 #menu_toggle {
   display: none;
+}
+
+/* Administration Center.
+------------------------------------------------------- */
+#admincenter {
+  h3 {
+    margin: 0 0 10px 0;
+    color: $color-primary;
+  }
+
+  .panel {
+    padding: 20px;
+    border: 1px solid black;
+    background: rgba(0,0,0,0.2);
+  }
+
+  .block {
+    height: 120px;
+    padding:0 20px 0 0;
+  }
+
+}
+
+#admin_main_section, #admin_quick_tasks, #welcome {
+  overflow: hidden;
+  margin: 0.5em 0 !important;
+
+  .home_image {
+    margin: 0 1em 1em 0;
+  }
+
+  #smfAnnouncements, .admin-content {
+    padding: 0;
+  }
+}
+
+#admin_quick_tasks {
+  div {
+    padding-top:0;
+  }
+  div:nth-child(n+3) {
+    padding-top: 10px;
+  }
+}
+
+@media only screen and (max-width:$palm-end) {
+  #admincenter .block {
+    height: auto;
+  }
+}
+@media only screen and (max-width:$desk-start) {
+  #admincenter .block {
+    overflow: scroll;
+  }
 }
 
 /* Styles for the registration section.
@@ -159,6 +215,7 @@ tr.titlebg td {
 #admin_login .centertext .error {
   padding: 0 0 1em;
 }
+
 /* Styles for sidebar menus.
 ------------------------------------------------------- */
 .left_admmenu,

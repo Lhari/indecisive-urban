@@ -18,6 +18,7 @@ function template_admin()
 	// Welcome message for the admin.
 	echo '
 	<div id="admincenter">
+		<div id="welcome" class="grid size-12 panel">
 		<div class="cat_bar">
 			<h3 class="catbg">';
 
@@ -27,25 +28,34 @@ function template_admin()
 	echo $txt['admin_center'], '
 			</h3>
 		</div>
-		<span class="upperframe"><span></span></span>
-		<div class="roundframe">
-			<div id="welcome">
-				<strong>', $txt['hello_guest'], ' ', $context['user']['name'], '!</strong>
-				', sprintf($txt['admin_main_welcome'], $txt['admin_center'], $txt['help'], $txt['help']), '
-			</div>
-		</div>
-		<span class="lowerframe"><span></span></span>';
+
+			<strong>', $txt['hello_guest'], ' ', $context['user']['name'], '!</strong>
+			', sprintf($txt['admin_main_welcome'], $txt['admin_center'], $txt['help'], $txt['help']), '
+		</div>';
+
+		echo '
+			<div id="admin_quick_tasks" class="grid size-12 panel">';
+
+		foreach ($context['quick_admin_tasks'] as $task)
+			echo '
+				<div class="block grid size-6--lap-and-up size-12--palm">
+					', !empty($task['icon']) ? '<a href="' . $task['href'] . '">
+					<img src="' . $settings['default_images_url'] . '/admin/' . $task['icon'] . '" alt="" class="home_image png_fix" />
+					</a>' : '', '<h4>', $task['link'], '</h4><p class="task">', $task['description'],'</p>
+				</div>';
+		echo '
+			</div>';
 
 	// Is there an update available?
 	echo '
 		<div id="update_section"></div>';
 
 	echo '
-		<div id="admin_main_section">';
+		<div id="admin_main_section" class="grid size-12 panel">';
 
 	// Display the "live news" from simplemachines.org.
 	echo '
-			<div id="live_news" class="floatleft">
+			<div class="admin-content grid size-8--lap-and-up size-12--palm">
 				<div class="cat_bar">
 					<h3 class="catbg">
 						<span class="ie6_header floatleft"><a href="', $scripturl, '?action=helpadmin;help=live_news" onclick="return reqWin(this.href);" class="help"><img src="', $settings['images_url'], '/helptopics.gif" class="icon" alt="', $txt['help'], '" /></a> ', $txt['live'], '</span>
@@ -62,7 +72,7 @@ function template_admin()
 
 	// Show the user version information from their server.
 	echo '
-			<div id="supportVersionsTable" class="floatright">
+			<div class="grid size-4--lap-and-up size-12--palm">
 				<div class="cat_bar">
 					<h3 class="catbg">
 						<a href="', $scripturl, '?action=admin;area=credits">', $txt['support_title'], '</a>
@@ -97,27 +107,7 @@ function template_admin()
 			</div>
 		</div>';
 
-	echo '
-		<div class="windowbg2 clear_right">
-			<span class="topslice"><span></span></span>
-			<div class="content">
-				<ul id="quick_tasks" class="flow_hidden">';
-
-	foreach ($context['quick_admin_tasks'] as $task)
-		echo '
-					<li>
-						', !empty($task['icon']) ? '<a href="' . $task['href'] . '"><img src="' . $settings['default_images_url'] . '/admin/' . $task['icon'] . '" alt="" class="home_image png_fix" /></a>' : '', '
-						<h5>', $task['link'], '</h5>
-						<span class="task">', $task['description'],'</span>
-					</li>';
-
-	echo '
-				</ul>
-			</div>
-			<span class="botslice clear"><span></span></span>
-		</div>
-	</div>
-	<br class="clear" />';
+	echo '</div>';
 
 	// The below functions include all the scripts needed from the simplemachines.org site. The language and format are passed for internationalization.
 	if (empty($modSettings['disable_smf_js']))
