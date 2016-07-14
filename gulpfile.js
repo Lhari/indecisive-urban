@@ -14,7 +14,7 @@ var gulp = require('gulp'),
   browserSync = require('browser-sync').create();
 
 gulp.task('css', function() {
-  gulp.src('source/styles/**.scss')
+  gulp.src('source/styles/**.*css')
     .pipe(sass({
       errLogToConsole: true
     }))
