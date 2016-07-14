@@ -18,7 +18,7 @@ function template_admin()
 	// Welcome message for the admin.
 	echo '
 	<div id="admincenter">
-		<div id="welcome" class="grid size-12 panel">
+		<div id="welcome" class="grid size-12 admin-panel">
 		<div class="cat_bar">
 			<h3 class="catbg">';
 
@@ -34,7 +34,7 @@ function template_admin()
 		</div>';
 
 		echo '
-			<div id="admin_quick_tasks" class="grid size-12 panel">';
+			<div id="admin_quick_tasks" class="grid size-12 admin-panel">';
 
 		foreach ($context['quick_admin_tasks'] as $task)
 			echo '
@@ -51,7 +51,7 @@ function template_admin()
 		<div id="update_section"></div>';
 
 	echo '
-		<div id="admin_main_section" class="grid size-12 panel">';
+		<div id="admin_main_section" class="grid size-12 admin-panel">';
 
 	// Display the "live news" from simplemachines.org.
 	echo '
