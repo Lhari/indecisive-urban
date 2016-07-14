@@ -199,23 +199,26 @@ function template_main()
 			<a href="'.$scripturl.'?board='.$context['current_board'].'.'.$context['start'].';sort=subject'.($context['sort_by'] == 'subject' && $context['sort_direction'] == 'up' ? ';desc' : '').'">'.$txt['subject'], $context['sort_by'] == 'subject' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : ''.'</a>
 			/
 			<a href="'.$scripturl.'?board='.$context['current_board'].'.'.$context['start'].';sort=starter'.($context['sort_by'] == 'starter' && $context['sort_direction'] == 'up' ? ';desc' : '').'">'.$txt['started_by'], $context['sort_by'] == 'starter' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a>
-		</div>
-		<div class="grid size-3">
+		</div>';
+		// Show a "select all" box for quick moderation?
+		if (empty($context['can_quick_mod']))
+			echo '
+				<div class="grid size-5">
+					<a href="', $scripturl, '?board=', $context['current_board'], '.', $context['start'], ';sort=last_post', $context['sort_by'] == 'last_post' && $context['sort_direction'] == 'up' ? ';desc' : '', '">', $txt['last_post'], $context['sort_by'] == 'last_post' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a>
+				</div>';
+		else
+			echo '
+				<div class="grid size-3">
+					<a href="', $scripturl, '?board=', $context['current_board'], '.', $context['start'], ';sort=last_post', $context['sort_by'] == 'last_post' && $context['sort_direction'] == 'up' ? ';desc' : '', '">', $txt['last_post'], $context['sort_by'] == 'last_post' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a>
+				</div>';
+
+		echo '
+		<div class="grid size-1 align-center">
 			<a href="', $scripturl, '?board=', $context['current_board'], '.', $context['start'], ';sort=replies', $context['sort_by'] == 'replies' && $context['sort_direction'] == 'up' ? ';desc' : '', '">', $txt['replies'], $context['sort_by'] == 'replies' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a>
-			/
+		</div>
+		<div class="grid size-1 align-center">
 			<a href="', $scripturl, '?board=', $context['current_board'], '.', $context['start'], ';sort=views', $context['sort_by'] == 'views' && $context['sort_direction'] == 'up' ? ';desc' : '', '">', $txt['views'], $context['sort_by'] == 'views' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a>
 		</div>';
-			// Show a "select all" box for quick moderation?
-			if (empty($context['can_quick_mod']))
-				echo '
-					<div class="grid size-4">
-						<a href="', $scripturl, '?board=', $context['current_board'], '.', $context['start'], ';sort=last_post', $context['sort_by'] == 'last_post' && $context['sort_direction'] == 'up' ? ';desc' : '', '">', $txt['last_post'], $context['sort_by'] == 'last_post' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a>
-					</div>';
-			else
-				echo '
-					<div class="grid size-2">
-						<a href="', $scripturl, '?board=', $context['current_board'], '.', $context['start'], ';sort=last_post', $context['sort_by'] == 'last_post' && $context['sort_direction'] == 'up' ? ';desc' : '', '">', $txt['last_post'], $context['sort_by'] == 'last_post' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a>
-					</div>';
 
 			// Show a "select all" box for quick moderation?
 			if (!empty($context['can_quick_mod']) && $options['display_quick_mod'] == 1)
@@ -324,20 +327,23 @@ function template_main()
 								<small id="pages' . $topic['first_post']['id'] . '">', $topic['pages'], '</small>
 							</p>
 						</div>
-					</div>
+					</div>';
 
-
-					<div class="grid size-3">
-						', $topic['replies'], ' ', $txt['replies'], '
-						<br />
-						', $topic['views'], ' ', $txt['views'], '
-					</div>
-
-					<div class="grid '.(empty($context['can_quick_mod']) ? 'size-4' : 'size-2').'">
+					echo '
+					<div class="grid '.(empty($context['can_quick_mod']) ? 'size-5' : 'size-3').'">
 						<i class="icon-clock"></i>
 						', $topic['last_post']['time'], '<br />
 						', $txt['by'], ' ', $topic['last_post']['member']['link'], '
 					</div>';
+
+					echo '
+					<div class="grid size-1 align-center">
+						'.$topic['replies'].'
+					</div>
+					<div class="grid size-1 align-center">
+						'.$topic['views'].'
+					</div>';
+
 
 
 			// Show the quick moderation options?
