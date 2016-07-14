@@ -101,6 +101,7 @@ jQuery(document).ready(function($) {
 		selector: '.article_inner img', // article images
 		offset: 300,
 		success: function(ele) {
+            $(ele).parent().css('background-image', 'none');
 			$(ele).addClass('fpsc');
 			$(ele).removeClass('loading');
 		}
