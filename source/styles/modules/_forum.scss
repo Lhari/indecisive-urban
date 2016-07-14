@@ -136,8 +136,27 @@
 		
 }
 
+.odd {
+	background: rgba($color-light, 0.03);
+	border-radius: $spacing/4;
+}
+.new a {
+	color: $color-teritary;
+}
 
+.topic {
+	padding: $spacing/6 0;
 
+	&__title {
+		span a {
+			overflow: hidden;
+    		white-space: nowrap;
+		    text-overflow: ellipsis;
+		    width: 100%;
+		    display: inline-block;
+		}
+	}
+}
 /* Quotes */
 
 blockquote {

@@ -14,19 +14,9 @@ function template_main()
 {
 	global $context, $settings, $options, $scripturl, $modSettings, $txt;
 
-	function trace($val) {
-		echo '<pre>';
-		print_r($val);
-		echo '</pre>';
-	}
+	echo '
+	<a id="top"></a>';
 
-	echo '<h3 class="titlebg" id="top">'.$context['page_title_html_safe'].'</h3>';
-	// Show breadcrumb
-	echo '<div class="grid-group">';
-	theme_linktree();
-	echo '</div>';
-	// Board overview - is there any boards to display
-	// FUNCTION IS CURRENTLY UNSUPPORTED IN TEMPLATE
 	if (!empty($context['boards']) && (!empty($options['show_children']) || $context['start'] == 0))
 	{
 		echo '
@@ -149,11 +139,9 @@ function template_main()
 	</div>';
 	}
 
-	// End boaed overview
-
-	// Display description if written and enabled
 	if (!empty($options['show_board_desc']) && $context['description'] != '')
-		echo '<p class="description_board">', $context['description'], '</p>';
+		echo '
+	<p class="description_board">', $context['description'], '</p>';
 
 	// Create the button set...
 	$normal_buttons = array(
@@ -168,16 +156,14 @@ function template_main()
 		unset($normal_buttons['markread']);
 
 	// Allow adding new buttons easily.
-	//call_integration_hook('integrate_messageindex_buttons', array(&$normal_buttons));
+	call_integration_hook('integrate_messageindex_buttons', array(&$normal_buttons));
 
 	if (!$context['no_topic_listing'])
 	{
 		echo '
 	<div class="pagesection">
-		<div class="pagelinks left">', $txt['pages'], ': ', $context['page_index'], !empty($modSettings['topbottomEnable']) ? $context['menu_separator'] . '&nbsp;&nbsp;<a href="#bot"><strong>' . $txt['go_down'] . '</strong></a>' : '', '</div>
-		<div class="right grid-group">';
-		echo template_button_strip_with_icons_and_text($normal_buttons);
-		echo '</div>
+		<div class="pagelinks floatleft">', $txt['pages'], ': ', $context['page_index'], !empty($modSettings['topbottomEnable']) ? $context['menu_separator'] . '&nbsp;&nbsp;<a href="#bot"><strong>' . $txt['go_down'] . '</strong></a>' : '', '</div>
+		', template_button_strip($normal_buttons, 'right'), '
 	</div>';
 
 		// If Quick Moderation is enabled start the form.
@@ -186,45 +172,35 @@ function template_main()
 	<form action="', $scripturl, '?action=quickmod;board=', $context['current_board'], '.', $context['start'], '" method="post" accept-charset="', $context['character_set'], '" class="clear" name="quickModForm" id="quickModForm">';
 
 		echo '
-	<div class="tborder topic_table" id="messageindex">';
-
-		echo '<h3 class="titlebg">';
+	<div class="tborder topic_table" id="messageindex">
+		<table class="table_grid" cellspacing="0">
+			<thead>
+				<tr class="titlebg">';
 
 		// Are there actually any topics to show?
 		if (!empty($context['topics']))
 		{
 			echo '
-			<div class="grid size-1">&nbsp;</div>
-		<div class="grid size-4">
-			<a href="'.$scripturl.'?board='.$context['current_board'].'.'.$context['start'].';sort=subject'.($context['sort_by'] == 'subject' && $context['sort_direction'] == 'up' ? ';desc' : '').'">'.$txt['subject'], $context['sort_by'] == 'subject' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : ''.'</a>
-			/
-			<a href="'.$scripturl.'?board='.$context['current_board'].'.'.$context['start'].';sort=starter'.($context['sort_by'] == 'starter' && $context['sort_direction'] == 'up' ? ';desc' : '').'">'.$txt['started_by'], $context['sort_by'] == 'starter' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a>
-		</div>
-		<div class="grid size-3">
-			<a href="', $scripturl, '?board=', $context['current_board'], '.', $context['start'], ';sort=replies', $context['sort_by'] == 'replies' && $context['sort_direction'] == 'up' ? ';desc' : '', '">', $txt['replies'], $context['sort_by'] == 'replies' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a>
-			/
-			<a href="', $scripturl, '?board=', $context['current_board'], '.', $context['start'], ';sort=views', $context['sort_by'] == 'views' && $context['sort_direction'] == 'up' ? ';desc' : '', '">', $txt['views'], $context['sort_by'] == 'views' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a>
-		</div>';
+					<th scope="col" class="first_th" width="8%" colspan="2">&nbsp;</th>
+					<th scope="col" class="lefttext"><a href="', $scripturl, '?board=', $context['current_board'], '.', $context['start'], ';sort=subject', $context['sort_by'] == 'subject' && $context['sort_direction'] == 'up' ? ';desc' : '', '">', $txt['subject'], $context['sort_by'] == 'subject' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a> / <a href="', $scripturl, '?board=', $context['current_board'], '.', $context['start'], ';sort=starter', $context['sort_by'] == 'starter' && $context['sort_direction'] == 'up' ? ';desc' : '', '">', $txt['started_by'], $context['sort_by'] == 'starter' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a></th>
+					<th scope="col" width="14%"><a href="', $scripturl, '?board=', $context['current_board'], '.', $context['start'], ';sort=replies', $context['sort_by'] == 'replies' && $context['sort_direction'] == 'up' ? ';desc' : '', '">', $txt['replies'], $context['sort_by'] == 'replies' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a> / <a href="', $scripturl, '?board=', $context['current_board'], '.', $context['start'], ';sort=views', $context['sort_by'] == 'views' && $context['sort_direction'] == 'up' ? ';desc' : '', '">', $txt['views'], $context['sort_by'] == 'views' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a></th>';
 			// Show a "select all" box for quick moderation?
 			if (empty($context['can_quick_mod']))
 				echo '
-					<div class="grid size-4">
-						<a href="', $scripturl, '?board=', $context['current_board'], '.', $context['start'], ';sort=last_post', $context['sort_by'] == 'last_post' && $context['sort_direction'] == 'up' ? ';desc' : '', '">', $txt['last_post'], $context['sort_by'] == 'last_post' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a>
-					</div>';
+					<th scope="col" class="lefttext last_th" width="22%"><a href="', $scripturl, '?board=', $context['current_board'], '.', $context['start'], ';sort=last_post', $context['sort_by'] == 'last_post' && $context['sort_direction'] == 'up' ? ';desc' : '', '">', $txt['last_post'], $context['sort_by'] == 'last_post' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a></th>';
 			else
 				echo '
-					<div class="grid size-2">
-						<a href="', $scripturl, '?board=', $context['current_board'], '.', $context['start'], ';sort=last_post', $context['sort_by'] == 'last_post' && $context['sort_direction'] == 'up' ? ';desc' : '', '">', $txt['last_post'], $context['sort_by'] == 'last_post' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a>
-					</div>';
+					<th scope="col" class="lefttext" width="22%"><a href="', $scripturl, '?board=', $context['current_board'], '.', $context['start'], ';sort=last_post', $context['sort_by'] == 'last_post' && $context['sort_direction'] == 'up' ? ';desc' : '', '">', $txt['last_post'], $context['sort_by'] == 'last_post' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a></th>';
 
 			// Show a "select all" box for quick moderation?
 			if (!empty($context['can_quick_mod']) && $options['display_quick_mod'] == 1)
 				echo '
-					<div class="grid size-2 grid--last align-right">
-						Select all <input type="checkbox" onclick="invertAll(this, this.form, \'topics[]\');" class="input_check" />
-					</div>';
+					<th scope="col" class="last_th" width="24"><input type="checkbox" onclick="invertAll(this, this.form, \'topics[]\');" class="input_check" /></th>';
 
-
+			// If it's on in "image" mode, don't show anything but the column.
+			elseif (!empty($context['can_quick_mod']))
+				echo '
+					<th class="last_th" width="4%">&nbsp;</th>';
 		}
 		// No topics.... just say, "sorry bub".
 		else
@@ -233,7 +209,10 @@ function template_main()
 					<th colspan="3"><strong>', $txt['msg_alert_none'], '</strong></th>
 					<th scope="col" class="last_th" width="8%">&nbsp;</th>';
 
-		echo '</h3>';
+		echo '
+				</tr>
+			</thead>
+			<tbody>';
 
 		if (!empty($settings['display_who_viewing']))
 		{
@@ -259,11 +238,9 @@ function template_main()
 					</td>
 				</tr>';
 		}
-		$i = -1;
+
 		foreach ($context['topics'] as $topic)
 		{
-			$i++;
-			echo '<div class="grid size-12 '.($i % 2 ? 'odd' : 'even').' topic">';
 			// Is this topic pending approval, or does it have any posts pending approval?
 			if ($context['can_approve_posts'] && $topic['unapproved_posts'])
 				$color_class = !$topic['approved'] ? 'approvetbg' : 'approvebg';
@@ -283,68 +260,45 @@ function template_main()
 			// Some columns require a different shade of the color class.
 			$alternate_class = $color_class . '2';
 
-			/*
-				WTF?
-				<td class="icon2 ', $color_class, '">
-					<img src="', $topic['first_post']['icon_url'], '" alt="" />
-				</td>
-					
-			*/
-
-
-
-
 			echo '
-				
-					<div class="grid size-1" style="font-size: 14px; margin-top: 15px;">
-						';
-
-						if(strstr($topic['class'], 'my')) 
-							echo '<i class="icon-doc-text-inv"></i>';
-						else
-							echo '<i class="icon-doc-text"></i>';
-
-						if(strstr($topic['class'], 'poll'))
-							echo '<i class="icon-chart-bar-2"></i>';
-						if(strstr($topic['class'], 'sticky'))
-							echo '<i class="icon-pin-1"></i>';
-						if(strstr($topic['class'], 'locked'))
-							echo '<i class="icon-lock"></i>';
-						//var_dump($topic['class']);
-						//echo '<img src="', $settings['images_url'], '/topic/', $topic['class'], '.gif" alt="" />&nbsp;';
-						echo '
-					</div>
-					<div class="grid size-4 topic__title">
-
-
+				<tr>
+					<td class="icon1 ', $color_class, '">
+						<img src="', $settings['images_url'], '/topic/', $topic['class'], '.gif" alt="" />
+					</td>
+					<td class="icon2 ', $color_class, '">
+						<img src="', $topic['first_post']['icon_url'], '" alt="" />
+					</td>
+					<td class="subject ', $alternate_class, '">
 						<div ', (!empty($topic['quick_mod']['modify']) ? 'id="topic_' . $topic['first_post']['id'] . '" onmouseout="mouse_on_div = 0;" onmouseover="mouse_on_div = 1;" ondblclick="modify_topic(\'' . $topic['id'] . '\', \'' . $topic['first_post']['id'] . '\');"' : ''), '>
-							', $topic['is_sticky'] ? '<strong>' : '', '<span class="'.($topic['new'] && $context['user']['is_logged'] ? 'new' : '').'" id="msg_' . $topic['first_post']['id'] . '">', $topic['first_post']['link'], (!$context['can_approve_posts'] && !$topic['approved'] ? '&nbsp;<em>(' . $txt['awaiting_approval'] . ')</em>' : ''), '</span>', $topic['is_sticky'] ? '</strong>' : '';
+							', $topic['is_sticky'] ? '<strong>' : '', '<span id="msg_' . $topic['first_post']['id'] . '">', $topic['first_post']['link'], (!$context['can_approve_posts'] && !$topic['approved'] ? '&nbsp;<em>(' . $txt['awaiting_approval'] . ')</em>' : ''), '</span>', $topic['is_sticky'] ? '</strong>' : '';
+
+			// Is this topic new? (assuming they are logged in!)
+			if ($topic['new'] && $context['user']['is_logged'])
+					echo '
+							<a href="', $topic['new_href'], '" id="newicon' . $topic['first_post']['id'] . '"><img src="', $settings['lang_images_url'], '/new.gif" alt="', $txt['new'], '" /></a>';
+
 			echo '
 							<p>', $txt['started_by'], ' ', $topic['first_post']['member']['link'], '
 								<small id="pages' . $topic['first_post']['id'] . '">', $topic['pages'], '</small>
 							</p>
 						</div>
-					</div>
-
-
-					<div class="grid size-3">
+					</td>
+					<td class="stats ', $color_class, '">
 						', $topic['replies'], ' ', $txt['replies'], '
 						<br />
 						', $topic['views'], ' ', $txt['views'], '
-					</div>
-
-					<div class="grid '.(empty($context['can_quick_mod']) ? 'size-4' : 'size-2').'">
-						<i class="icon-clock"></i>
+					</td>
+					<td class="lastpost ', $alternate_class, '">
+						<a href="', $topic['last_post']['href'], '"><img src="', $settings['images_url'], '/icons/last_post.gif" alt="', $txt['last_post'], '" title="', $txt['last_post'], '" /></a>
 						', $topic['last_post']['time'], '<br />
 						', $txt['by'], ' ', $topic['last_post']['member']['link'], '
-					</div>';
-
+					</td>';
 
 			// Show the quick moderation options?
 			if (!empty($context['can_quick_mod']))
 			{
 				echo '
-					<div class="grid size-2 align-right" style="margin-top: 15px;">';
+					<td class="moderation ', $color_class, '" align="center">';
 				if ($options['display_quick_mod'] == 1)
 					echo '
 						<input type="checkbox" name="topics[]" value="', $topic['id'], '" class="input_check" />';
@@ -367,15 +321,17 @@ function template_main()
 						echo '<a href="', $scripturl, '?action=movetopic;board=', $context['current_board'], '.', $context['start'], ';topic=', $topic['id'], '.0"><img src="', $settings['images_url'], '/icons/quick_move.gif" width="16" alt="', $txt['move_topic'], '" title="', $txt['move_topic'], '" /></a>';
 				}
 				echo '
-					</div>';
+					</td>';
 			}
-			echo '</div>';
+			echo '
+				</tr>';
 		}
 
+		if (!empty($context['can_quick_mod']) && $options['display_quick_mod'] == 1 && !empty($context['topics']))
 		{
 			echo '
-				
-					<div class="grid-group grid--last size-12 align-right" style="margin-bottom: 22px; margin-top: 22px;">
+				<tr class="titlebg">
+					<td colspan="6" align="right">
 						<select class="qaction" name="qaction"', $context['can_move'] ? ' onchange="this.form.moveItTo.disabled = (this.options[this.selectedIndex].value != \'move\');"' : '', '>
 							<option value="">--------</option>', $context['can_remove'] ? '
 							<option value="remove">' . $txt['quick_mod_remove'] . '</option>' : '', $context['can_lock'] ? '
@@ -409,11 +365,14 @@ function template_main()
 			}
 
 			echo '
-						<input type="submit" value="Execute" onclick="return document.forms.quickModForm.qaction.value != \'\' &amp;&amp; confirm(\'', $txt['quickmod_confirm'], '\');" class="button_submit button button--accept qaction" />
-					</div>';
+						<input type="submit" value="', $txt['quick_mod_go'], '" onclick="return document.forms.quickModForm.qaction.value != \'\' &amp;&amp; confirm(\'', $txt['quickmod_confirm'], '\');" class="button_submit qaction" />
+					</td>
+				</tr>';
 		}
 
 		echo '
+			</tbody>
+		</table>
 	</div>
 	<a id="bot"></a>';
 
@@ -424,28 +383,32 @@ function template_main()
 	</form>';
 
 		echo '
-	<div class="grid-group pagesection">
-
-
-		<div class="grid">', $txt['pages'], ': ', $context['page_index'], !empty($modSettings['topbottomEnable']) ? $context['menu_separator'] . '&nbsp;&nbsp;<a href="#top"><strong>' . $txt['go_up'] . '</strong></a>' : '', '</div>';
-		echo '<div class="right">';
-		//echo template_button_strip_with_icons_and_text($normal_buttons);
-		echo '</div>
+	<div class="pagesection">
+		', template_button_strip($normal_buttons, 'right'), '
+		<div class="pagelinks">', $txt['pages'], ': ', $context['page_index'], !empty($modSettings['topbottomEnable']) ? $context['menu_separator'] . '&nbsp;&nbsp;<a href="#top"><strong>' . $txt['go_up'] . '</strong></a>' : '', '</div>
 	</div>';
 	}
 
+	// Show breadcrumbs at the bottom too.
+	theme_linktree();
+
 	echo '
 	<div class="tborder" id="topic_icons">
-		<div class="description">';
+		<div class="description">
+			<p class="floatright" id="message_index_jump_to">&nbsp;</p>';
 
 	if (!$context['no_topic_listing'])
 		echo '
 			<p class="floatleft smalltext">', !empty($modSettings['enableParticipation']) && $context['user']['is_logged'] ? '
-				<i class="icon-doc-text-inv"></i> ' . $txt['participation_caption'] . '<br />' : '', '
-				<i class="icon-doc-text"></i> ' . $txt['normal_topic'] . '<br />
-				<i class="icon-lock"></i> ' . $txt['locked_topic'] . '<br />' . ($modSettings['enableStickyTopics'] == '1' ? '
-				<i class="icon-pin-1"></i> ' . $txt['sticky_topic'] . '<br />' : '') . ($modSettings['pollMode'] == '1' ? '
-				<i class="icon-chart-bar-2"></i> ' . $txt['poll'] : '') . '
+				<img src="' . $settings['images_url'] . '/topic/my_normal_post.gif" alt="" align="middle" /> ' . $txt['participation_caption'] . '<br />' : '', '
+				<img src="' . $settings['images_url'] . '/topic/normal_post.gif" alt="" align="middle" /> ' . $txt['normal_topic'] . '<br />
+				<img src="' . $settings['images_url'] . '/topic/hot_post.gif" alt="" align="middle" /> ' . sprintf($txt['hot_topics'], $modSettings['hotTopicPosts']) . '<br />
+				<img src="' . $settings['images_url'] . '/topic/veryhot_post.gif" alt="" align="middle" /> ' . sprintf($txt['very_hot_topics'], $modSettings['hotTopicVeryPosts']) . '
+			</p>
+			<p class="smalltext">
+				<img src="' . $settings['images_url'] . '/icons/quick_lock.gif" alt="" align="middle" /> ' . $txt['locked_topic'] . '<br />' . ($modSettings['enableStickyTopics'] == '1' ? '
+				<img src="' . $settings['images_url'] . '/icons/quick_sticky.gif" alt="" align="middle" /> ' . $txt['sticky_topic'] . '<br />' : '') . ($modSettings['pollMode'] == '1' ? '
+				<img src="' . $settings['images_url'] . '/topic/normal_poll.gif" alt="" align="middle" /> ' . $txt['poll'] : '') . '
 			</p>';
 
 	echo '
