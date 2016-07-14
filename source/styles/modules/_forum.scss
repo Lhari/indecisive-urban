@@ -145,7 +145,8 @@
 }
 
 .topic {
-	padding: $spacing/6 0;
+	padding-top: $spacing/6;
+	padding-bottom: $spacing/6;
 
 	&__title {
 		span a {
