@@ -150,7 +150,7 @@ function template_main()
 					<?php endif; ?>
 					<?php
 					if(empty($board['children'])) {
-
+						/*
 						if (!empty($board['last_post']['id'])) {
 							echo '<p>Last post by: ';
 
@@ -181,6 +181,7 @@ function template_main()
 							array_unique($user_profile);
 							echo '</p>';
 						}
+						*/
 					}
 					
 					?>
@@ -211,11 +212,12 @@ function template_main()
 							<div class="board_Index__board--sub grid-group">
 								<div class="boardIndex__board--inner grid size-12  <?php echo ($v % 2 ? 'odd' : 'even'); ?>">
 								<div class="grid size-3 size-6--palm">
-									<?php echo 	'<a class="subject boardIndex__title '.($child['new'] ? 'new' : '').'" href="'.$child['href'].'" name="b'.$child['id'].'">'.$child['name'].'</a>';?>
+									<?php echo 	'<a class="subject boardIndex__title '.($child['new'] ? 'new' : '').'" href="'.$child['href'].'" name="b'.$child['id'].'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$child['name'].'</a>';?>
 
 									
 									<?php
 									if (!empty($child['last_post']['id'])) {
+										/*
 										echo '<p>Last post by: ';
 
 										// Find member
@@ -243,6 +245,7 @@ function template_main()
 											echo $child['last_post']['time'];
 
 										array_unique($user_profile);
+										*/
 									}
 									echo '</p>';
 									?>
