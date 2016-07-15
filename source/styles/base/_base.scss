@@ -30,6 +30,7 @@ select {
 a {
   color: $color-primary;
   text-decoration: none;
+  transition: color 200ms ease;
 
   &:hover {
     color: $color-secondary;
