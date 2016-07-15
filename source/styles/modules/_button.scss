@@ -4,7 +4,7 @@ input[type="submit"], input[type="button"], button {
 	outline: none;
 }
 .button {
-	
+
 	//border: 1px solid rgba($color-light-gray, 0.7);
 	border-radius: 6px;
 	padding: $spacing/4 $spacing/2;
@@ -28,7 +28,7 @@ input[type="submit"], input[type="button"], button {
 	&--accept {
 		&:hover {
 			background:$color-teritary;
-		}	
+		}
 	}
 }
 
@@ -38,7 +38,7 @@ input[type="submit"], input[type="button"], button {
 	&:hover {
 		color: $color-light;
 		background-color: $color-primary;
-	}	
+	}
 }
 
 .admin-button .button {
@@ -47,10 +47,28 @@ input[type="submit"], input[type="button"], button {
 	&:hover {
 		color: $color-light;
 		background-color: $color-primary;
-		
-	}	
+
+	}
 }
 
 .button__wrapper {
 	margin: 0 -$spacing/2;
 }
+
+@mixin admin-button {
+  color: $color-light;
+  font-size: $font-size-medium-small;
+  font-weight: 400;
+  background: $color-dark-gray;
+  display: block;
+  min-width: 90px;
+  margin-right: 4px;
+
+	&:active,
+	&:hover {
+		color: $color-primary;
+		background: #25292c;
+	}
+}
+
+$button-border: 1px solid #000;

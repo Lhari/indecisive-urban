@@ -1,0 +1,19 @@
+.buttonlist {
+  ul {
+    list-style: none;
+    line-height: 1em;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    display: inline-block;
+  }
+
+  a {
+    @include admin-button;
+    text-align: center;
+    padding: 10px;
+    border: $button-border;
+  }
+}

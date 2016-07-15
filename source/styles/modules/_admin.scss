@@ -14,25 +14,13 @@ ul.dropmenu {
   margin: 0;
 
   a {
-    color: $color-light;
-    font-size: 12px;
-    font-weight: 400;
-    background: $color-dark-gray;
-    display: block;
+    @include admin-button;
     border-bottom: 1px solid #000;
 
     &.firstlevel {
-      border: 1px solid #000;
-      padding: 10px;
-      min-width: 90px;
+      border: $button-border;
       text-align: center;
-      margin-right: 4px;
-    }
-
-    &:active,
-    &:hover {
-      color: $color-primary;
-      background: #25292c;
+      padding: 10px;
     }
   }
 
@@ -43,7 +31,7 @@ ul.dropmenu {
 
     ul li {
       a {
-        border-bottom: 1px solid #000;
+        border-bottom: $button-border;
       }
 
       &:last-child a {
@@ -60,7 +48,7 @@ ul.dropmenu {
 
     ul {
       margin-top: -1px;
-      border: 1px solid #000;
+      border: $button-border;
       list-style: none;
       z-index: 90;
       display: none;
@@ -1472,10 +1460,6 @@ span.hidelink {
 }
 /* Custom Styles.
 ---------------- */
-a {
-  outline: none;
-  transition: all 0.4s ease-out 0s;
-}
 
 form,
 p,
