@@ -7,7 +7,7 @@ html {
   width: 100%;
 }
 
-body{
+body {
   overflow-x: hidden;
   font-family: $font-family-base;
   margin: 0;
@@ -30,10 +30,10 @@ select {
 a {
   color: $color-primary;
   text-decoration: none;
-  transition: color 200ms ease;
+  transition: all 300ms ease;
 
   &:hover {
-    color: $color-secondary;
+    color: $color-teritary;
   }
 }
 

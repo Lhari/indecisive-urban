@@ -195,7 +195,7 @@ function template_main()
 		{
 			echo '
 			<div class="grid size-1">&nbsp;</div>
-		<div class="grid size-5">
+		<div class="grid '.(!empty($context['can_quick_mod']) && $options['display_quick_mod'] > 0 ? 'size-5' : 'size-6').'">
 			<a href="'.$scripturl.'?board='.$context['current_board'].'.'.$context['start'].';sort=subject'.($context['sort_by'] == 'subject' && $context['sort_direction'] == 'up' ? ';desc' : '').'">'.$txt['subject'], $context['sort_by'] == 'subject' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : ''.'</a>
 			/
 			<a href="'.$scripturl.'?board='.$context['current_board'].'.'.$context['start'].';sort=starter'.($context['sort_by'] == 'starter' && $context['sort_direction'] == 'up' ? ';desc' : '').'">'.$txt['started_by'], $context['sort_by'] == 'starter' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a>
@@ -203,7 +203,7 @@ function template_main()
 		// Show a "select all" box for quick moderation?
 		if (empty($context['can_quick_mod']))
 			echo '
-				<div class="grid '.(!empty($context['can_quick_mod']) && $options['display_quick_mod'] == 1 ? 'size-5' : 'size-6').'">
+				<div class="grid size-3">
 					<a href="', $scripturl, '?board=', $context['current_board'], '.', $context['start'], ';sort=last_post', $context['sort_by'] == 'last_post' && $context['sort_direction'] == 'up' ? ';desc' : '', '">', $txt['last_post'], $context['sort_by'] == 'last_post' ? ' <img src="' . $settings['images_url'] . '/sort_' . $context['sort_direction'] . '.gif" alt="" />' : '', '</a>
 				</div>';
 		else
@@ -221,11 +221,13 @@ function template_main()
 		</div>';
 
 			// Show a "select all" box for quick moderation?
-			if (!empty($context['can_quick_mod']) && $options['display_quick_mod'] == 1)
+			if (!empty($context['can_quick_mod']) && $options['display_quick_mod'] > 0)
 				echo '
 					<div class="grid size-1 grid--last align-right">
-						&nbsp;<input type="checkbox" onclick="invertAll(this, this.form, \'topics[]\');" class="input_check" />
-					</div>';
+						&nbsp;';
+						if($options['display_quick_mod'] == 1)
+							echo '<input type="checkbox" onclick="invertAll(this, this.form, \'topics[]\');" class="input_check" />';
+					echo '</div>';
 
 
 		}
@@ -332,7 +334,7 @@ function template_main()
 					echo '
 					</div>
 
-					<div class="grid '.(!empty($context['can_quick_mod']) && $options['display_quick_mod'] == 1 ? 'size-5' : 'size-6').' topic__title">
+					<div class="grid '.(!empty($context['can_quick_mod']) ? 'size-5' : 'size-6').' topic__title">
 
 
 						<div ', (!empty($topic['quick_mod']['modify']) ? 'id="topic_' . $topic['first_post']['id'] . '" onmouseout="mouse_on_div = 0;" onmouseover="mouse_on_div = 1;" ondblclick="modify_topic(\'' . $topic['id'] . '\', \'' . $topic['first_post']['id'] . '\');"' : ''), '>
@@ -359,7 +361,7 @@ function template_main()
 					$class = str_replace(' ', '_', $class);
 
 					echo '
-					<div class="grid '.(empty($context['can_quick_mod']) ? 'size-5' : 'size-3').'">
+					<div class="grid size-3">
 						<i class="icon-clock"></i>
 						', $topic['last_post']['time'], '<br />
 						', $txt['by'], ' <strong class="class-color--'.$class.'">'.$topic['last_post']['member']['link'].'</strong>
