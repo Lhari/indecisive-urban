@@ -26,7 +26,7 @@
 }
 .member {
 	&__image {
-		
+
 		width: 90px;
 		height: 90px;
 		position: relative;
@@ -67,7 +67,7 @@
 	&__profile {
 		padding-bottom: $spacing;
 		position: relative;
-		
+
 		&__icon {
 			position: absolute;
 			right: 30px;
@@ -89,10 +89,10 @@
 	    		color: $color-light;
 	    		background: $color-primary;
 	    	}
-		}	
+		}
 	}
 }
-	
+
 .forum {
 
 	&--post {
@@ -133,7 +133,7 @@
 	background-size: cover;
 	background-position-y: 50%;
 	background-position-x: 50%;
-		
+
 }
 
 .odd {
