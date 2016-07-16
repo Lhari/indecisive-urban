@@ -15,6 +15,8 @@ Links to http://www.smfhacks.com must remain unless
 branding free option is purchased.
 #############################################
 */
+
+
 function template_mainview()
 {
 	global $scripturl, $txt, $context, $modSettings;
@@ -33,7 +35,7 @@ function template_mainview()
 	}
 
 
-	ShowTopGalleryBar($txt['gallery_text_title']);
+	ShowTopGalleryBarNew($txt['gallery_text_title']);
 
 		// List all the catagories
 
@@ -157,7 +159,7 @@ function template_image_listing()
     $cat = $context['gallery_catid'];
 
 
-	ShowTopGalleryBar();
+	ShowTopGalleryBarNew();
 
 
 		$maxrowlevel = $modSettings['gallery_set_images_per_row'];
@@ -203,14 +205,14 @@ function template_image_listing()
 			echo '<td align="center"><a href="' . $scripturl . '?action=gallery;sa=view;pic=' . $row['id_picture'] . '">
 			<img ' . ($GD_Installed == true ?  'src="' . $modSettings['gallery_url'] . $row['thumbfilename'] . '" ' : 'src="' . $modSettings['gallery_url'] . $row['filename'] . '" height="78" width="120" ')  . ' border="0" alt="' . $row['title'] . '" /></a><br />';
 			echo '<span class="smalltext">' . $txt['gallery_text_views'] . $row['views'] . '<br />';
-			echo $txt['gallery_text_filesize'] . gallery_format_size($row['filesize'], 2) . '<br />';
-			echo $txt['gallery_text_date'] . timeformat($row['date']) . '<br />';
-			echo $txt['gallery_text_comments'] . ' (<a href="' . $scripturl . '?action=gallery;sa=view;pic=' . $row['id_picture'] . '">' . $row['commenttotal'] . '</a>)<br />';
+			// echo $txt['gallery_text_filesize'] . gallery_format_size($row['filesize'], 2) . '<br />';
+			// echo $txt['gallery_text_date'] . timeformat($row['date']) . '<br />';
+			// echo $txt['gallery_text_comments'] . ' (<a href="' . $scripturl . '?action=gallery;sa=view;pic=' . $row['id_picture'] . '">' . $row['commenttotal'] . '</a>)<br />';
 
-			if ($row['real_name'] != '')
-				echo $txt['gallery_text_by'] . ' <a href="' . $scripturl . '?action=profile;u=' . $row['id_member'] . '">'  . $row['real_name'] . '</a><br />';
-			else
-				echo $txt['gallery_text_by'], $txt['gallery_guest'],  '<br />';
+			// if ($row['real_name'] != '')
+			// 	echo $txt['gallery_text_by'] . ' <a href="' . $scripturl . '?action=profile;u=' . $row['id_member'] . '">'  . $row['real_name'] . '</a><br />';
+			// else
+			// 	echo $txt['gallery_text_by'], $txt['gallery_guest'],  '<br />';
 
 
 			if ($g_manage)
@@ -256,13 +258,14 @@ function template_image_listing()
 
 			// Show just numbers...?
 			// show the actual people viewing the gallery?
-			echo empty($context['view_members_list']) ? '0 ' . $txt['gallery_who_members'] : implode(', ', $context['view_members_list']) . (empty($context['view_num_hidden']) || @$context['can_moderate_forum'] ? '' : ' (+ ' . $context['view_num_hidden'] . ' ' . $txt['gallery_who_hidden'] . ')');
+			echo empty(
+				$context['view_members_list']) ? '0 ' . $txt['gallery_who_members'] : implode(', ', $context['view_members_list']) . (empty($context['view_num_hidden']) || @$context['can_moderate_forum'] ? '' : ' (+ ' . $context['view_num_hidden'] . ' ' . $txt['gallery_who_hidden'] . ')');
 
 			// Now show how many guests are here too.
 			echo $txt['who_and'], @$context['view_num_guests'], ' ', @$context['view_num_guests'] == 1 ? $txt['guest'] : $txt['guests'], $txt['gallery_who_viewgallery'], '</span></td></tr>';
 		}
 
-			echo '<tr class="titlebg">
+			echo '<tr class="windowbg">
 					<td align="left" colspan="' . $maxrowlevel . '">
 					' . $txt['gallery_text_pages'];
 
@@ -277,7 +280,7 @@ function template_image_listing()
 
 		// Show return to gallery link and Show add picture if they can
 		echo '
-				<tr class="titlebg"><td align="center" colspan="' . $maxrowlevel . '">';
+				<tr class="windowbg"><td align="left" colspan="' . $maxrowlevel . '">';
 				if($g_add)
 				echo '<a href="' . $scripturl . '?action=gallery;sa=add;cat=' . $cat . '">' . $txt['gallery_text_addpicture'] .'</a>&nbsp; - &nbsp;';
 
@@ -416,8 +419,8 @@ echo '</td>
 function template_edit_category()
 {
 	global $scripturl, $txt, $context, $settings;
-    
-    ShowTopGalleryBar();
+
+    ShowTopGalleryBarNew();
 
 	// Load the spell checker?
 	if ($context['show_spellchecking'])
@@ -535,8 +538,8 @@ echo '</td>
 function template_delete_category()
 {
 	global $scripturl, $txt, $context;
-    
-    ShowTopGalleryBar();
+
+    ShowTopGalleryBarNew();
 
 	echo '
 <form method="post" action="' . $scripturl . '?action=gallery&sa=deletecat2" accept-charset="', $context['character_set'], '">
@@ -566,7 +569,7 @@ function template_add_picture()
 	global $scripturl, $modSettings,  $txt, $context, $settings;
 
 
-	ShowTopGalleryBar();
+	ShowTopGalleryBarNew();
 
 
 	// Load the spell checker?
@@ -582,7 +585,7 @@ function template_add_picture()
         </h3>
 </div>
 ';
-  
+
   if (!empty($context['gallery_errors']))
   {
 	echo '<div class="errorbox" id="errors">
@@ -591,17 +594,17 @@ function template_add_picture()
 								<strong style="" id="error_serious">' . $txt['gallery_errors_addpicture'] . '</strong>
 							</dt>
 							<dt class="error" id="error_list">';
-                            
+
                             foreach($context['gallery_errors'] as $msg)
                                 echo $msg . '<br />';
-                            
+
                             echo '
 							</dt>
 						</dl>
 					</div>';
 }
 
-echo '  
+echo '
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
   <tr class="windowbg2">
   	<td align="right"><b>' . $txt['gallery_form_title'] . '</b>&nbsp;</td>
@@ -751,7 +754,7 @@ function template_edit_picture()
 {
 	global $scripturl, $modSettings, $txt, $context, $settings;
 
-	ShowTopGalleryBar();
+	ShowTopGalleryBarNew();
 
 	// Load the spell checker?
 	if ($context['show_spellchecking'])
@@ -932,7 +935,7 @@ function template_view_picture()
 	$previousImage = PreviousImage($context['gallery_pic']['id_picture'],$context['gallery_pic']['id_cat'],true);
 	$nextImage =  NextImage($context['gallery_pic']['id_picture'],$context['gallery_pic']['id_cat'],true);
 
-	ShowTopGalleryBar();
+	ShowTopGalleryBarNew();
 
 
 	echo '<br /><table cellspacing="0" cellpadding="10" border="0" align="center" width="100%" class="tborder">
@@ -940,7 +943,7 @@ function template_view_picture()
 				<td align="center">' . $context['gallery_pic']['title'] . '</td>
 			</tr>
 			<tr class="windowbg2">
-				<td align="center"><img height="' . $context['gallery_pic']['height']  . '" width="' . $context['gallery_pic']['width']  . '" src="' . $modSettings['gallery_url'] . $context['gallery_pic']['filename']  . '" alt="' . $context['gallery_pic']['title']  . '" /></td>
+				<td align="center"><img width="100%" src="' . $modSettings['gallery_url'] . $context['gallery_pic']['filename']  . '" alt="' . $context['gallery_pic']['title']  . '" /></td>
 			</tr>
 
 <tr class="windowbg2">
@@ -1047,7 +1050,8 @@ function template_view_picture()
 
 			// Show just numbers...?
 			// show the actual people viewing the topic?
-			echo empty($context['view_members_list']) ? '0 ' . $txt['gallery_who_members'] : implode(', ', $context['view_members_list']) . (empty($context['view_num_hidden']) || $context['can_moderate_forum'] ? '' : ' (+ ' . $context['view_num_hidden'] . ' ' . $txt['gallery_who_hidden'] . ')');
+			echo empty(
+				$context['view_members_list']) ? '0 ' . $txt['gallery_who_members'] : implode(', ', $context['view_members_list']) . (empty($context['view_num_hidden']) || $context['can_moderate_forum'] ? '' : ' (+ ' . $context['view_num_hidden'] . ' ' . $txt['gallery_who_hidden'] . ')');
 
 			// Now show how many guests are here too.
 			echo $txt['who_and'], @$context['view_num_guests'], ' ', @$context['view_num_guests'] == 1 ? $txt['guest'] : $txt['guests'], $txt['gallery_who_viewpicture'], '</span></td></tr>';
@@ -1148,7 +1152,7 @@ function template_delete_picture()
 {
 	global $scripturl, $modSettings, $txt, $context;
 
-	ShowTopGalleryBar();
+	ShowTopGalleryBarNew();
 
 	echo '
 	<form method="post" action="' . $scripturl . '?action=gallery&sa=delete2" accept-charset="', $context['character_set'], '">
@@ -1186,8 +1190,8 @@ function template_add_comment()
 {
 	global $context, $scripturl, $txt,$settings;
 
-	ShowTopGalleryBar();
-    
+	ShowTopGalleryBarNew();
+
 	// Load the spell checker?
 	if ($context['show_spellchecking'])
 		echo '
@@ -1293,8 +1297,8 @@ echo '
 function template_report_picture()
 {
 	global $scripturl, $context, $txt;
-    
-    ShowTopGalleryBar();
+
+    ShowTopGalleryBarNew();
 
 	echo '
 <form method="post" name="cprofile" id="cprofile" action="' . $scripturl . '?action=gallery;sa=report2" accept-charset="', $context['character_set'], '">
@@ -1357,13 +1361,15 @@ echo '
 			echo '<td align="center">', $totalpics, '</td>';
 
 			// Show Edit Delete and Order category
-			echo '<td><a href="', $scripturl, '?action=gallery;sa=catup;cat=' . $row['id_cat'] . '">' . $txt['gallery_text_up'] . '</a>&nbsp;<a href="' . $scripturl . '?action=gallery;sa=catdown;cat=' . $row['id_cat'] . '">' . $txt['gallery_text_down'] . '</a></td><td><a href="' . $scripturl . '?action=gallery;sa=editcat;cat=' . $row['id_cat'] . '">' . $txt['gallery_text_edit'] .'</a>&nbsp;<a href="' . $scripturl . '?action=gallery;sa=deletecat;cat=' . $row['id_cat'] . '">' . $txt['gallery_text_delete'] .'</a>
+			echo '
+				<td><a href="', $scripturl, '?action=gallery;sa=catup;cat=' . $row['id_cat'] . '">' . $txt['gallery_text_up'] . '</a>&nbsp;<a href="' . $scripturl . '?action=gallery;sa=catdown;cat=' . $row['id_cat'] . '">' . $txt['gallery_text_down'] . '</a></td><td><a href="' . $scripturl . '?action=gallery;sa=editcat;cat='
+				. $row['id_cat'] . '">' . $txt['gallery_text_edit'] .'</a>&nbsp;<a href="' . $scripturl . '?action=gallery;sa=deletecat;cat=' . $row['id_cat'] . '">' . $txt['gallery_text_delete'] .'</a>
 					<br />
 			<a href="' . $scripturl . '?action=gallery;sa=regen;cat=' .  $row['id_cat'] . '">' . $txt['gallery_text_regeneratethumbnails'] . '</a>
 
 			</td>
             </tr>';
-            
+
             if ($styleclass == 'windowbg')
 				    $styleclass = 'windowbg2';
     			else
@@ -1538,7 +1544,7 @@ echo '
 
 				echo '<td><a href="' . $scripturl . '?action=gallery;sa=approve&id=' . $row['id_picture'] . '">' . $txt['gallery_text_approve']  . '</a><br /><a href="' . $scripturl . '?action=gallery;sa=edit;pic=' . $row['id_picture'] . '">' . $txt['gallery_text_edit'] . '</a><br /><a href="' . $scripturl . '?action=gallery;sa=delete;pic=' . $row['id_picture'] . '">' . $txt['gallery_text_delete'] . '</a></td>';
 				echo '</tr>';
-                
+
                 if ($styleclass == 'windowbg')
 				    $styleclass = 'windowbg2';
     			else
@@ -1610,7 +1616,7 @@ echo '
 				echo '<td><a href="' . $scripturl . '?action=gallery;sa=delete;pic=' . $row['id_picture'] . '">' . $txt['gallery_rep_deletepic']  . '</a>';
 				echo '<br /><a href="' . $scripturl . '?action=gallery;sa=deletereport&id=' . $row['ID'] . '">' . $txt['gallery_rep_delete'] . '</a></td>';
 				echo '</tr>';
-                
+
                 if ($styleclass == 'windowbg')
     				$styleclass = 'windowbg2';
     			else
@@ -1648,7 +1654,7 @@ function template_search()
 {
 	global $scripturl, $txt, $context;
 
-	ShowTopGalleryBar();
+	ShowTopGalleryBarNew();
 
 
 	echo '
@@ -1697,18 +1703,18 @@ function template_search_results()
 
 
 
-	ShowTopGalleryBar();
+	ShowTopGalleryBarNew();
 
 
 	$maxrowlevel = $modSettings['gallery_set_images_per_row'];
 	echo '<br />
-    
+
 <div class="cat_bar">
 		<h3 class="catbg centertext">
         ', $txt['gallery_searchresults'], '
         </h3>
 </div>
-    
+
     <table class="table_list">
          ';
 
@@ -1795,18 +1801,18 @@ function template_myimages()
 	$GD_Installed = function_exists('imagecreate');
 
 
-	ShowTopGalleryBar();
+	ShowTopGalleryBarNew();
 
 
 	$maxrowlevel = $modSettings['gallery_set_images_per_row'];
 	echo '<br />
-    
+
     <div class="cat_bar">
 		<h3 class="catbg centertext">
         ', $context['gallery_usergallery_name'], '
         </h3>
 </div>
-    
+
     <table class="table_list">
         ';
 
@@ -1912,7 +1918,7 @@ function GalleryCopyright()
 
 	// Copyright link must remain. To remove you need to purchase link removal at smfhacks.com
     $showInfo = GalleryCheckInfo();
-    
+
     if ($showInfo == true)
 	   echo '<div align="center"><span class="smalltext">Powered by: <a href="http://www.smfhacks.com/smf-gallery.php" target="blank">SMF Gallery</a></span></div>';
 
@@ -1921,8 +1927,8 @@ function GalleryCopyright()
 function template_regenerate()
 {
 	global $scripturl, $context, $txt, $modSettings;
-    
-    ShowTopGalleryBar();
+
+    ShowTopGalleryBarNew();
 
 	echo '<div class="tborder">
 		<form method="post" action="' . $scripturl . '?action=gallery;sa=regen2">
@@ -1931,7 +1937,7 @@ function template_regenerate()
         ', $txt['gallery_text_regeneratethumbnails2'], '
         </h3>
 </div>
-    
+
 		<table border="0" cellpadding="0" cellspacing="0" width="100%">
 		  <tr>
 			<td width="50%" class="windowbg2" align="right"><b>' . $txt['gallery_form_category']. '</b>&nbsp;</td>
@@ -2019,11 +2025,11 @@ function template_regenerate2()
 function template_gallerycopyright()
 {
 	global $txt, $scripturl, $context, $boardurl, $modSettings;
-                    
+
     $modID = 19;
-    
-    $urlBoardurl = urlencode(base64_encode($boardurl));                
-                    
+
+    $urlBoardurl = urlencode(base64_encode($boardurl));
+
     	echo '
 	<form method="post" action="',$scripturl,'?action=admin;area=gallery;sa=copyright;save=1">
     <div class="cat_bar">
@@ -2048,29 +2054,29 @@ function template_gallerycopyright()
 		</tr>
 	</table>
 	</form>
-    ';   
-    
-    GalleryCopyright();           
-                    
+    ';
+
+    GalleryCopyright();
+
 }
 
 function template_importconvert()
 {
     global $context, $scripturl;
-    
-    
+
+
    	if (empty($context['continue_countdown']))
 		$context['continue_countdown'] = 3;
-		
+
 	if (empty($context['continue_get_data']))
 		$context['continue_get_data'] ='';
 
 	if (empty($context['continue_post_data']))
 		$context['continue_post_data'] ='';
-        
+
         if (!empty($context['import_step_title']))
 echo '<b>' . $context['import_step_title']. '</b><br />';
-		
+
 		if (!empty($context['continue_percent']))
 		echo '
 					<div style="padding-left: 20%; padding-right: 20%; margin-top: 1ex;">
@@ -2079,12 +2085,12 @@ echo '<b>' . $context['import_step_title']. '</b><br />';
 							<div style="width: ', $context['continue_percent'], '%; height: 12pt; z-index: 1; background-color: red;">&nbsp;</div>
 						</div>
 					</div>';
-		
+
 	echo '<form action="', '' .$scripturl . '?action=admin;area=gallery;sa=convert;importstep=' . $context['continue_action'], $context['continue_get_data'], '" method="post" accept-charset="', $context['character_set'], '" style="margin: 0;" name="autoSubmit" id="autoSubmit">
 				<div style="margin: 1ex; text-align: right;"><input type="submit" name="cont" value="', 'Continue', '" class="button_submit" /></div>
 				', $context['continue_post_data'], '
 			</form>
-		
+
 			<script type="text/javascript"><!-- // --><![CDATA[
 		var countdown = ', $context['continue_countdown'], ';
 		doAutoSubmit();
@@ -2121,10 +2127,10 @@ function template_import_welcomeaeva()
 		' . $txt['gallery_txt_inorderimport']  . '<br />
 		' . $txt['gallery_txt_pathtoimportaeva']  . $AevaSettings['data_dir_path'] . '<br />
 		';
-		
+
 		if (!file_exists($AevaSettings['data_dir_path']))
 			echo '<strong>' . $txt['gallery_text_aevapathnotfound'] . '</strong>';
-		
+
 		echo '
 		<br />
 		<b>' . $txt['gallery_text_import_warning'] . '</b>
@@ -2138,16 +2144,16 @@ function template_import_welcomeaeva()
 		</table>
         </form>
 		</div>
-		
-		
+
+
 		';
 }
 
 function template_import_completeaeva()
 {
     global $txt, $scripturl, $context, $boardurl;
-    
-  
+
+
  	echo '<div class="tborder">
 		<table border="0" cellpadding="0" cellspacing="0" width="100%">
 		  <tr>
@@ -2162,20 +2168,20 @@ function template_import_completeaeva()
             <h2>' . $txt['gallery_visit_promo1'] . '</h2>
             <br />
             ' .  $txt['gallery_visit_promo2']  . '<a href="http://www.smfhacks.com/promos/aevamediaconvert.php?site=' . urlencode(base64_encode($boardurl)) . '" target="_blank">http://www.smfhacks.com/promos/aevamediaconvert.php</a>
-  
+
 			    </td>
 		  </tr>
 
 		</table>
 
-		</div>'; 
+		</div>';
 
 }
 
 function template_convertgallery()
 {
     global $txt, $scripturl, $context;
-    
+
     echo '
 
 	<table border="0" width="80%" cellspacing="0" align="center" cellpadding="4" class="tborder">
@@ -2185,10 +2191,10 @@ function template_convertgallery()
 
 		<tr class="windowbg">
             <td>';
-            
+
             echo $txt['gallery_txt_findotherconvetors'] . '<br />';
-        
-        
+
+
         if (isAevaInstalled() == true)
         {
             echo '<form action="' .$scripturl . '?action=admin;area=gallery;sa=convert;convertavea=1" method="post">';
@@ -2199,15 +2205,29 @@ function template_convertgallery()
         {
             echo $txt['gallery_txt_noimport'];
         }
-        
-        
-        
+
+
+
         echo '</td>
         </tr>
   </table>
         ';
-        
-        
+
+
 }
+
+function ShowTopGalleryBarNew($title = '')
+{
+	global $txt, $context;
+		echo '
+
+	 <div class="cat_bar">
+		<h3 class="catbg centertext">
+        ', $title, '
+        </h3>
+		</div>',
+	DoToolBarStrip($context['gallery']['buttons'], 'top'), '<br />';
+}
+
 
 ?>
