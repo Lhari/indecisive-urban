@@ -118,6 +118,19 @@ jQuery(document).ready(function($) {
 			$(ele).removeClass('loading');
 		}
 	});
+
+
+    // Script for getting realm ranks
+    setInterval(function() {
+
+    }, 300)
+
+    $.ajax({
+        method: 'GET',
+        url: '/getRealmRank.php',
+    }).done(function(data) {
+        console.log(data.realm_rank);
+    })
 })
 
 

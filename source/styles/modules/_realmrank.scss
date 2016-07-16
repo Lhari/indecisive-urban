@@ -1,4 +1,7 @@
 .ranking {
+
+	text-shadow: 0 2px 1px rgba($color-dark, 0.8);
+
 	&__header {
 		color: $color-light;
 		text-align: center;
@@ -11,6 +14,7 @@
 		text-align: center;
 		width: 100%;
 		margin: 0;
+		height: 60px;
 	}
 
 	.divider {

@@ -48,11 +48,15 @@
 		    	text-shadow: 0 0 10px rgba($color-teritary, 1);
 		   	}
 		}
+
+	}
+	.recent-post__time {
+		margin-left: 4px;
+		display: inline-block;
 	}
 
 	.recent-post__url {
 		color: $color-light;
-
 	}
 
 	&__url {
@@ -71,6 +75,7 @@
 
 	&.first {
 		padding-top: 0;
+		margin-top: 8px!important;
 	}
 
 	&.last {
