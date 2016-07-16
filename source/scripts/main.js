@@ -106,6 +106,26 @@ jQuery(document).ready(function($) {
 			$(ele).removeClass('loading');
 		}
 	});
+
+
+    // Script for getting realm ranks
+
+    $.ajax({
+        url: "/getRealmRank.php",
+       method: "GET",
+     }).done(function( msg ) {
+        var str =  jQuery.parseJSON( msg );
+
+        if(typeof $('.js-realmrank').html() !== 'undefined')
+            $('.js-realmrank').html('#'+str.realm_rank);
+        if(typeof $('.js-arearank').html() !== 'undefined')
+            $('.js-arearank').html('#'+str.area_rank);
+        if(typeof $('.js-worldrank').html() !== 'undefined')
+            $('.js-worldrank').html('#'+str.world_rank);
+
+        $('.js-ranks').fadeIn(600);
+       
+     });
 })
 
 

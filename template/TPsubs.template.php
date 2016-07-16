@@ -166,7 +166,6 @@ function TPortal_recentbox()
 	$what = ssi_recentTopics($num_recent = $context['TPortal']['recentboxnum'] , $exclude_boards = array($bb),  $output_method = 'array');
 
 		// Output the topics
-		//echo '<ul>';
 		$coun = 1;
 
 		// Load current users profile
@@ -216,16 +215,23 @@ function TPortal_recentbox()
 
 			echo '<div><i class="icon-clock"></i>';
 
-			// Find out if its using js time or offset time
-			if($offset == 0)
-				echo '<span class="recent-post__time js-recent-time" data-timestamp="'.$w['timestamp'].'"></span>';
-			else
-				echo $w['time'];
+			$time = $w['time'];
+			if(strstr(strtolower($time), 'today') || strstr(strtolower($time), 'yesterday')) {
+				$time = str_replace(' at', ',', $time);
+			} else {
+				$time = explode(',', $time);
+				$clock = str_replace(' ', '', $time[1]);
+				$clock = substr($clock, 4);
+
+				$time = $time[0].', '.$clock;
+			}
+
+			echo '<span class="recent-post__time">'.strip_tags($time).'</span>';
+				
 			echo '</div>	
 			</a>';
 			$coun++;
 		}
-		//echo '</ul>';
 		echo '</div>';
 	}
 	else
