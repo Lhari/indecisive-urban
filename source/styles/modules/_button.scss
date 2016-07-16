@@ -55,6 +55,31 @@ input[type="submit"], input[type="button"], button {
 	margin: 0 -$spacing/2;
 }
 
+.buttonlist {
+  ul {
+    list-style: none;
+    line-height: 1em;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    display: inline-block;
+  }
+
+  a {
+    @extend .button;
+  }
+
+  li:first-child a {
+    margin-left: 0;
+  }
+}
+
+/* Admin Nav */
+
+$button-border: 1px solid #000;
+
 @mixin admin-button {
   color: $color-light;
   font-size: $font-size-medium-small;
@@ -70,5 +95,3 @@ input[type="submit"], input[type="button"], button {
 		background: #25292c;
 	}
 }
-
-$button-border: 1px solid #000;

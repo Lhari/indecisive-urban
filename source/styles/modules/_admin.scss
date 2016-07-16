@@ -7,7 +7,7 @@
   width: 98%;
 }
 
-ul.dropmenu {
+#admin_menu ul.dropmenu {
   list-style: none;
   line-height: 1em;
   padding: 0;
@@ -101,6 +101,25 @@ ul.dropmenu {
   padding-top: 24px;
 }
 
+#adm_submenus ul {
+  list-style: none;
+  line-height: 1em;
+  padding: 0;
+  margin: 0;
+
+  a {
+    @extend .button;
+    float: left;
+    margin: 0 2px;
+  }
+  li:first-child a {
+    margin-left: 0;
+  }
+  li:last-child a {
+    margin-right: 0;
+  }
+}
+
 #admincenter {
   h3 {
     margin: 0 0 10px;
@@ -135,6 +154,8 @@ ul.dropmenu {
     @extend .button;
     margin: 1em 0;
   }
+
+
 }
 
 #admin_main_section,

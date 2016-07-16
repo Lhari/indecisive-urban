@@ -1,5 +1,17 @@
 jQuery(document).ready(function($) {
 
+	jQuery.ajax({
+	  url: "/getRealmRank.php",
+	  method: "GET",
+	})
+	.done(function( msg ) {
+		var str =  jQuery.parseJSON( msg );
+		jQuery('.ranking__position').val(str.realm_rank);
+	})
+	.fail(function( err ) {
+	  console.log(err)
+	});
+
 	var offcanvas, login;
 
   $('.modifybutton').click(function() {
