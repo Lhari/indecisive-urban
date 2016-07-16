@@ -142,6 +142,11 @@
 }
 .new a {
 	color: $color-teritary;
+	
+	&:hover {
+		color: $color-light;
+	}
+
 }
 
 .topic {
@@ -155,6 +160,10 @@
 		    text-overflow: ellipsis;
 		    width: 100%;
 		    display: inline-block;
+
+			&:hover {
+				color: $color-light;
+			}
 		}
 	}
 }
