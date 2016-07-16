@@ -166,8 +166,7 @@ function TPortal_recentbox()
 	$what = ssi_recentTopics($num_recent = $context['TPortal']['recentboxnum'] , $exclude_boards = array($bb),  $output_method = 'array');
 
 		// Output the topics
-		echo '
-		<ul>';
+		//echo '<ul>';
 		$coun = 1;
 
 		// Load current users profile
@@ -204,13 +203,16 @@ function TPortal_recentbox()
 			// Clean up Poster class to match CSS classes
 			$class = strtolower($class);
 			$class = str_replace(' ', '_', $class);
-			
+
 			echo '
-			<li class="recent-post divider '. (!$w['new'] ? 'recent-post--new ' : '') .$queue.' ">
-				<div>
-					<a href="' . $w['href'] . '" title="' . $w['subject'] . '" class="recent-post__url">' . $w['subject'] . '</a>
+			<a class="recent-post divider '. (!$w['new'] ? 'recent-post--new ' : '') .$queue.' "  href="' . $w['href'] . '">
+				<div class="recent-post__url">
+					'.$w['subject'].'
 				</div>
-				<div><i class="icon-user-1"></i><span class="recent-post__poster class-color--'.$class.'">', $w['poster']['link'],'</span></div>';
+				<div>
+					<i class="icon-user-1"></i>
+					<span class="recent-post__poster class-color--'.$class.'">'.$w['poster']['name'].'</span>
+				</div>';
 
 			echo '<div><i class="icon-clock"></i>';
 
@@ -220,11 +222,10 @@ function TPortal_recentbox()
 			else
 				echo $w['time'];
 			echo '</div>	
-			</li>';
+			</a>';
 			$coun++;
 		}
-		echo '
-		</ul>';
+		//echo '</ul>';
 		echo '</div>';
 	}
 	else
