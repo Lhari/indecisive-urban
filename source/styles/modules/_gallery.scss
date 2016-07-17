@@ -23,13 +23,8 @@
     margin-bottom: 0;
   }
 
-  .pagelinks {
-    a {
-      cursor: pointer;
-    }
-    a:hover {
-      color: $color-light;
-    }
+  .pagesection {
+    margin-top: $spacing;
   }
 }
 

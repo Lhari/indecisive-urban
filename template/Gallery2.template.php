@@ -245,9 +245,9 @@ function template_image_listing()
 		echo '</ul>';
 
 		echo
-			'<div class="pagesection titlebg">
+			'<div class="pagesection">
 				<div class="pagelinks">';
-					$txt['gallery_text_pages'];
+					echo $txt['gallery_text_pages'];
 					$context['page_index'] = constructPageIndex($scripturl . '?action=gallery;cat=' . $cat, $context['start'], $totalPics, $modSettings['gallery_set_images_per_page']);
 					echo $context['page_index'];
 		echo '
