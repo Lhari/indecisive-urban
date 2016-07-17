@@ -1,17 +1,5 @@
 jQuery(document).ready(function($) {
 
-	jQuery.ajax({
-	  url: "/getRealmRank.php",
-	  method: "GET",
-	})
-	.done(function( msg ) {
-		var str =  jQuery.parseJSON( msg );
-		jQuery('.ranking__position').val(str.realm_rank);
-	})
-	.fail(function( err ) {
-	  console.log(err)
-	});
-
 	var offcanvas, login;
 
   $('.modifybutton').click(function() {
@@ -121,16 +109,23 @@ jQuery(document).ready(function($) {
 
 
     // Script for getting realm ranks
-    setInterval(function() {
-
-    }, 300)
 
     $.ajax({
-        method: 'GET',
-        url: '/getRealmRank.php',
-    }).done(function(data) {
-        console.log(data.realm_rank);
-    })
+        url: "/getRealmRank.php",
+       method: "GET",
+     }).done(function( msg ) {
+        var str =  jQuery.parseJSON( msg );
+
+        if(typeof $('.js-realmrank').html() !== 'undefined')
+            $('.js-realmrank').html('#'+str.realm_rank);
+        if(typeof $('.js-arearank').html() !== 'undefined')
+            $('.js-arearank').html('#'+str.area_rank);
+        if(typeof $('.js-worldrank').html() !== 'undefined')
+            $('.js-worldrank').html('#'+str.world_rank);
+
+        $('.js-ranks').fadeIn(600);
+       
+     });
 })
 
 

@@ -39,7 +39,6 @@ function template_mainview()
 
 		// List all the catagories
 
-
 		echo '<table border="0" cellspacing="1" cellpadding="4" class="table_grid"  align="center" width="100%">
 <thead>
 <tr class="catbg">
@@ -158,53 +157,73 @@ function template_image_listing()
 	// Get the Category
     $cat = $context['gallery_catid'];
 
+	echo '
+		<div id="gallery">';
 
 	ShowTopGalleryBarNew();
 
 
 		$maxrowlevel = $modSettings['gallery_set_images_per_row'];
-		echo '<br />
-        <div class="cat_bar">
-		<h3 class="catbg centertext">
-        ', @$context['gallery_cat_name'], '
-        </h3>
-</div>
-		<table class="table_list">
-     ';
+		echo '
+      <div class="title_bar">
+				<h3 class="titlebg centertext">', @$context['gallery_cat_name'], '</h3>
+			</div>';
 
 		$context['start'] = (int) $_REQUEST['start'];
-
-
 		$totalPics = GetTotalPicturesByCATID($cat);
-
 
 		// Show the pictures
 		$rowlevel = 0;
 		$styleclass = 'windowbg';
-
-
 		$image_count = $context['gallery_image_count'];
 
-		if ($image_count == 0)
-		{
-			echo '
-			<tr class="' . $styleclass . '">
-				<td colspan="' . $maxrowlevel . '" align="center"><b>',$txt['gallery_nopicsincategory'],'</b></td>
-			</tr>
-
-			';
-
+		if ($image_count == 0) {
+			echo '<b>',$txt['gallery_nopicsincategory'],'</b>';
 		}
 
+		echo '
+			<ul id="gallery-grid" class="grid-group">';
 
-		foreach($context['gallery_image_list'] as $row)
-		{
-			if ($rowlevel == 0)
-				echo '<tr class="' . $styleclass . '">';
+		foreach($context['gallery_image_list'] as $row) {
 
-			echo '<td align="center"><a href="' . $scripturl . '?action=gallery;sa=view;pic=' . $row['id_picture'] . '">
-			<img ' . ($GD_Installed == true ?  'src="' . $modSettings['gallery_url'] . $row['thumbfilename'] . '" ' : 'src="' . $modSettings['gallery_url'] . $row['filename'] . '" height="78" width="120" ')  . ' border="0" alt="' . $row['title'] . '" /></a><br />';
-			echo '<span class="smalltext">' . $txt['gallery_text_views'] . $row['views'] . '<br />';
+			echo '<li class="grid size-12--palm size-6--lap-and-up size-3--desk-wide">';
+
+			//.  $row['title'] .
+			echo '
+			<div class="gallery-image">
+				<div class="flex-image">
+
+					<img src="' . $modSettings['gallery_url'] . $row['thumbfilename'] . '" alt=""' . $row['title'] . ' />
+
+					<div class="overlay">
+						<a class="view-image" href="' . $scripturl . '?action=gallery;sa=view;pic=' . $row['id_picture'] . '">
+							<span class="icon-eye"><span>&nbsp;
+						</a>
+
+						<div class="overlay-menu">
+							<a href="' . $scripturl . '?action=gallery;sa=edit;pic=' . $row['id_picture'] . '">
+								<span class="icon-pencil-1"></span>
+							</a>
+							<a href="' . $scripturl . '?action=gallery;sa=delete;pic=' . $row['id_picture'] . '">
+								<span class="icon-cancel-1"></span>
+							</a>
+							<a href="' . $scripturl . '?action=gallery;sa=unapprove;pic=' . $row['id_picture'] . '">
+								<span class="icon-lock"></span>
+							</a>
+						</div>
+
+					</div>
+				</div>
+			</div>';
+
+			echo '</li>';
+
+			// if ($rowlevel == 0)
+			// 	echo '<tr class="' . $styleclass . '">';
+
+			// echo '<td align="center"><a href="' . $scripturl . '?action=gallery;sa=view;pic=' . $row['id_picture'] . '">
+			// <img ' . ($GD_Installed == true ?  'src="' . $modSettings['gallery_url'] . $row['thumbfilename'] . '" ' : 'src="' . $modSettings['gallery_url'] . $row['filename'] . '" height="78" width="120" ')  . ' border="0" alt="' . $row['title'] . '" /></a><br />';
+			// echo '<span class="smalltext">' . $txt['gallery_text_views'] . $row['views'] . '<br />';
 			// echo $txt['gallery_text_filesize'] . gallery_format_size($row['filesize'], 2) . '<br />';
 			// echo $txt['gallery_text_date'] . timeformat($row['date']) . '<br />';
 			// echo $txt['gallery_text_comments'] . ' (<a href="' . $scripturl . '?action=gallery;sa=view;pic=' . $row['id_picture'] . '">' . $row['commenttotal'] . '</a>)<br />';
@@ -215,89 +234,47 @@ function template_image_listing()
 			// 	echo $txt['gallery_text_by'], $txt['gallery_guest'],  '<br />';
 
 
-			if ($g_manage)
-				echo '&nbsp;<a href="' . $scripturl . '?action=gallery;sa=unapprove;pic=' . $row['id_picture'] . '">' . $txt['gallery_text_unapprove'] . '</a>';
-			if ($g_manage || $g_edit_own && $row['id_member'] == $id_member)
-				echo '&nbsp;<a href="' . $scripturl . '?action=gallery;sa=edit;pic=' . $row['id_picture'] . '">' . $txt['gallery_text_edit'] . '</a>';
-			if ($g_manage || $g_delete_own && $row['id_member'] == $id_member)
-				echo '&nbsp;<a href="' . $scripturl . '?action=gallery;sa=delete;pic=' . $row['id_picture'] . '">' . $txt['gallery_text_delete'] . '</a>';
+			// if ($g_manage)
+			// 	echo '&nbsp;<a href="' . $scripturl . '?action=gallery;sa=unapprove;pic=' . $row['id_picture'] . '">' . $txt['gallery_text_unapprove'] . '</a>';
+			// if ($g_manage || $g_edit_own && $row['id_member'] == $id_member)
+			// 	echo '&nbsp;<a href="' . $scripturl . '?action=gallery;sa=edit;pic=' . $row['id_picture'] . '">' . $txt['gallery_text_edit'] . '</a>';
+			// if ($g_manage || $g_delete_own && $row['id_member'] == $id_member)
+			// 	echo '&nbsp;<a href="' . $scripturl . '?action=gallery;sa=delete;pic=' . $row['id_picture'] . '">' . $txt['gallery_text_delete'] . '</a>';
+			//
+			// echo '</span></td>';
 
-			echo '</span></td>';
 
-
-			if($rowlevel < ($maxrowlevel-1))
-				$rowlevel++;
-			else
-			{
-				echo '</tr>';
-				$rowlevel = 0;
-			}
-
-			if ($styleclass == 'windowbg')
-				$styleclass = 'windowbg2';
-			else
-				$styleclass = 'windowbg';
+			// if($rowlevel < ($maxrowlevel-1))
+			// 	$rowlevel++;
+			// else
+			// {
+			// 	echo '</tr>';
+			// 	$rowlevel = 0;
+			// }
+			//
+			// if ($styleclass == 'windowbg')
+			// 	$styleclass = 'windowbg2';
+			// else
+			// 	$styleclass = 'windowbg';
 
 
 		}
+		echo '</ul>';
 
-
-		if ($rowlevel !=0)
-		{
-			echo '<td colspan="' . ($maxrowlevel - $rowlevel) . '"> </td>';
-			echo '</tr>';
-		}
-
-
-
-		// Display who is viewing the picture.
-		if (!empty($modSettings['gallery_who_viewing']))
-		{
-			echo '<tr class="' . $styleclass . '">
-			<td align="center" colspan="' . $maxrowlevel . '"><span class="smalltext">';
-
-			// Show just numbers...?
-			// show the actual people viewing the gallery?
-			echo empty(
-				$context['view_members_list']) ? '0 ' . $txt['gallery_who_members'] : implode(', ', $context['view_members_list']) . (empty($context['view_num_hidden']) || @$context['can_moderate_forum'] ? '' : ' (+ ' . $context['view_num_hidden'] . ' ' . $txt['gallery_who_hidden'] . ')');
-
-			// Now show how many guests are here too.
-			echo $txt['who_and'], @$context['view_num_guests'], ' ', @$context['view_num_guests'] == 1 ? $txt['guest'] : $txt['guests'], $txt['gallery_who_viewgallery'], '</span></td></tr>';
-		}
-
-			echo '<tr class="windowbg">
-					<td align="left" colspan="' . $maxrowlevel . '">
-					' . $txt['gallery_text_pages'];
-
-					$context['page_index'] = constructPageIndex($scripturl . '?action=gallery;cat=' . $cat, $context['start'], $totalPics, $modSettings['gallery_set_images_per_page']);
-
-					echo $context['page_index'];
-
-
-			echo '
-					</td>
-				</tr>';
-
-		// Show return to gallery link and Show add picture if they can
-		echo '
-				<tr class="windowbg"><td align="left" colspan="' . $maxrowlevel . '">';
-				if($g_add)
-				echo '<a href="' . $scripturl . '?action=gallery;sa=add;cat=' . $cat . '">' . $txt['gallery_text_addpicture'] .'</a>&nbsp; - &nbsp;';
-
-				echo '
-				<a href="' . $scripturl . '?action=gallery">' . $txt['gallery_text_returngallery'] . '</a></td>
-			</tr>';
-
-
-		echo '</table><br />';
-
+		// if ($rowlevel !=0)
+		// {
+		// 	echo '<td colspan="' . ($maxrowlevel - $rowlevel) . '"> </td>';
+		// 	echo '</tr>';
+		// }
+		//
+		// echo '</table><br />';
 
 		// Footer padding
 		echo '<br /><br />';
 
-
-
 		GalleryCopyright();
+
+	echo '</div>';
 }
 
 function template_add_category()

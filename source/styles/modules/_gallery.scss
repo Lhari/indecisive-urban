@@ -1,0 +1,99 @@
+
+#gallery {
+  .titlebg {
+    margin-bottom: 0;
+  }
+}
+
+#gallery-grid {
+  list-style: none;
+  padding: 0 $spacing/2;
+  li {
+    padding: 1px;
+    border: 2px solid $color-dark-gray;
+    background: rgba(0,0,0,0.3)
+  }
+
+  .flex-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.8);
+  }
+
+  .gallery-image {
+    display: block;
+    padding-bottom: 50%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  a {
+    color: transparent;
+    position: relative;
+  }
+
+  .overlay {
+    top:0;
+    left:0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    &:hover {
+      color: $color-primary;
+      background-color: rgba(0,0,0,0.8);
+    }
+    &:hover * {
+      color: $color-primary;
+    }
+  }
+
+  a.view-image {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 22.5%;
+    span {
+      font-size: $font-size-xxxlarge;
+    }
+    &:hover span {
+      color: #fff;
+    }
+  }
+
+  .overlay-menu {
+    position: absolute;
+    width: 100%;
+    bottom: 5%;
+    text-align: center;
+
+    a {
+      display: inline-block;
+      margin-right: 10px;
+    }
+    span {
+      font-size: $font-size-large - 4px;
+    }
+    a:hover span {
+      color: #fff;
+    }
+  }
+}
