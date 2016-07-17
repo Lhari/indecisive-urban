@@ -10,8 +10,7 @@ var gulp = require('gulp'),
   concat = require('gulp-concat'),
   rename = require('gulp-rename'),
   plumber = require('gulp-plumber'),
-  bower = require('gulp-bower'),
-  browserSync = require('browser-sync').create();
+  bower = require('gulp-bower');
 
 gulp.task('css', function() {
   gulp.src('source/styles/**.*css')
@@ -48,24 +47,11 @@ gulp.task('root', function() {
   gulp.src('root/*.php').pipe(gulp.dest('..'));
 });
 
-// Browser-Sync watch files and inject changes
-gulp.task('browsersync', function() {
-    // Watch files
-    var files = [
-    	'./template/css/*.css',
-    	'./template/scripts/*.js',
-    	'**/*.php',
-    	'./template/images/**/*.{png,jpg,gif,svg,webp}',
-    ];
-
-    browserSync.init(files, {
-	    proxy: "indecisive:5000",
-    });
-
-    gulp.watch('source/styles/*/**', ['css']);
-    gulp.watch('source/scripts/*/**', ['scripts']);
-    gulp.watch('source/font/*/**', ['fonts']);
-    gulp.watch('root/*/**', ['root']).on('change', browserSync.reload);
+gulp.task('watch', function() {
+  gulp.watch('source/styles/*/**', ['css']);
+  gulp.watch('source/scripts/*/**', ['scripts']);
+  gulp.watch('source/font/*/**', ['fonts']);
+  gulp.watch('root/*/**', ['root'])
 });
 
-gulp.task('default', ['css', 'scripts', 'fonts', 'root', 'browsersync'], function() {});
+gulp.task('default', ['css', 'scripts', 'fonts', 'root', 'watch'], function() {});

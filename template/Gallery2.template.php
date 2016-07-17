@@ -166,7 +166,7 @@ function template_image_listing()
 		$maxrowlevel = $modSettings['gallery_set_images_per_row'];
 		echo '
       <div class="title_bar">
-				<h3 class="titlebg centertext">', @$context['gallery_cat_name'], '</h3>
+				<h3 class="titlebg centertext">', $context['gallery_cat_name'], '</h3>
 			</div>';
 
 		$context['start'] = (int) $_REQUEST['start'];
@@ -186,88 +186,74 @@ function template_image_listing()
 
 		foreach($context['gallery_image_list'] as $row) {
 
-			echo '<li class="grid size-12--palm size-6--lap-and-up size-3--desk-wide">';
-
-			//.  $row['title'] .
 			echo '
-			<div class="gallery-image">
-				<div class="flex-image">
+				<li class="grid size-12--palm size-6--lap-and-up size-3--desk-wide">';
 
-					<img src="' . $modSettings['gallery_url'] . $row['thumbfilename'] . '" alt=""' . $row['title'] . ' />
+					echo '
+					<div class="gallery-image">
+						<div class="middle-image">
 
-					<div class="overlay">
-						<a class="view-image" href="' . $scripturl . '?action=gallery;sa=view;pic=' . $row['id_picture'] . '">
-							<span class="icon-eye"><span>&nbsp;
-						</a>
+							<img src="' . $modSettings['gallery_url'] . $row['thumbfilename'] . '" alt=""' . $row['title'] . ' />
 
-						<div class="overlay-menu">
-							<a href="' . $scripturl . '?action=gallery;sa=edit;pic=' . $row['id_picture'] . '">
-								<span class="icon-pencil-1"></span>
-							</a>
-							<a href="' . $scripturl . '?action=gallery;sa=delete;pic=' . $row['id_picture'] . '">
-								<span class="icon-cancel-1"></span>
-							</a>
-							<a href="' . $scripturl . '?action=gallery;sa=unapprove;pic=' . $row['id_picture'] . '">
-								<span class="icon-lock"></span>
-							</a>
+							<div class="overlay">
+								<div class="title">' . $row['title'] . '</div>
+
+								<a class="view-image" href="' . $scripturl . '?action=gallery;sa=view;pic=' . $row['id_picture'] . '">
+									<span class="icon-eye"></span>
+								</a>
+
+								<div class="overlay-menu">';
+
+								if ($g_manage || $g_edit_own && $row['id_member'] == $id_member)
+									echo '
+										<a href="' . $scripturl . '?action=gallery;sa=edit;pic=' . $row['id_picture'] . '">
+											<span class="icon-pencil-1"></span>
+										</a>';
+
+								if ($g_manage || $g_delete_own && $row['id_member'] == $id_member)
+
+									echo '
+										<a href="' . $scripturl . '?action=gallery;sa=delete;pic=' . $row['id_picture'] . '">
+											<span class="icon-cancel-1"></span>
+										</a>';
+
+								if ($g_manage)
+									echo '
+									<a href="' . $scripturl . '?action=gallery;sa=unapprove;pic=' . $row['id_picture'] . '">
+										<span class="icon-lock"></span>
+									</a>';
+
+								echo '
+								</div>
+							</div>
 						</div>
+					</div>';
 
-					</div>
+			echo '</li>';
+		}
+
+	// Show return to gallery link and Show add picture if they can
+	// echo '
+	// 		<tr class="titlebg"><td align="center" colspan="' . $maxrowlevel . '">';
+	// 		if($g_add)
+	// 		echo '<a href="' . $scripturl . '?action=gallery;sa=add;cat=' . $cat . '">' . $txt['gallery_text_addpicture'] .'</a>&nbsp; - &nbsp;';
+	//
+	// 		echo '
+	// 		<a href="' . $scripturl . '?action=gallery">' . $txt['gallery_text_returngallery'] . '</a></td>
+	// 	</tr>';
+
+		echo '</ul>';
+
+		echo
+			'<div class="pagesection titlebg">
+				<div class="pagelinks">';
+					$txt['gallery_text_pages'];
+					$context['page_index'] = constructPageIndex($scripturl . '?action=gallery;cat=' . $cat, $context['start'], $totalPics, $modSettings['gallery_set_images_per_page']);
+					echo $context['page_index'];
+		echo '
 				</div>
 			</div>';
 
-			echo '</li>';
-
-			// if ($rowlevel == 0)
-			// 	echo '<tr class="' . $styleclass . '">';
-
-			// echo '<td align="center"><a href="' . $scripturl . '?action=gallery;sa=view;pic=' . $row['id_picture'] . '">
-			// <img ' . ($GD_Installed == true ?  'src="' . $modSettings['gallery_url'] . $row['thumbfilename'] . '" ' : 'src="' . $modSettings['gallery_url'] . $row['filename'] . '" height="78" width="120" ')  . ' border="0" alt="' . $row['title'] . '" /></a><br />';
-			// echo '<span class="smalltext">' . $txt['gallery_text_views'] . $row['views'] . '<br />';
-			// echo $txt['gallery_text_filesize'] . gallery_format_size($row['filesize'], 2) . '<br />';
-			// echo $txt['gallery_text_date'] . timeformat($row['date']) . '<br />';
-			// echo $txt['gallery_text_comments'] . ' (<a href="' . $scripturl . '?action=gallery;sa=view;pic=' . $row['id_picture'] . '">' . $row['commenttotal'] . '</a>)<br />';
-
-			// if ($row['real_name'] != '')
-			// 	echo $txt['gallery_text_by'] . ' <a href="' . $scripturl . '?action=profile;u=' . $row['id_member'] . '">'  . $row['real_name'] . '</a><br />';
-			// else
-			// 	echo $txt['gallery_text_by'], $txt['gallery_guest'],  '<br />';
-
-
-			// if ($g_manage)
-			// 	echo '&nbsp;<a href="' . $scripturl . '?action=gallery;sa=unapprove;pic=' . $row['id_picture'] . '">' . $txt['gallery_text_unapprove'] . '</a>';
-			// if ($g_manage || $g_edit_own && $row['id_member'] == $id_member)
-			// 	echo '&nbsp;<a href="' . $scripturl . '?action=gallery;sa=edit;pic=' . $row['id_picture'] . '">' . $txt['gallery_text_edit'] . '</a>';
-			// if ($g_manage || $g_delete_own && $row['id_member'] == $id_member)
-			// 	echo '&nbsp;<a href="' . $scripturl . '?action=gallery;sa=delete;pic=' . $row['id_picture'] . '">' . $txt['gallery_text_delete'] . '</a>';
-			//
-			// echo '</span></td>';
-
-
-			// if($rowlevel < ($maxrowlevel-1))
-			// 	$rowlevel++;
-			// else
-			// {
-			// 	echo '</tr>';
-			// 	$rowlevel = 0;
-			// }
-			//
-			// if ($styleclass == 'windowbg')
-			// 	$styleclass = 'windowbg2';
-			// else
-			// 	$styleclass = 'windowbg';
-
-
-		}
-		echo '</ul>';
-
-		// if ($rowlevel !=0)
-		// {
-		// 	echo '<td colspan="' . ($maxrowlevel - $rowlevel) . '"> </td>';
-		// 	echo '</tr>';
-		// }
-		//
-		// echo '</table><br />';
 
 		// Footer padding
 		echo '<br /><br />';

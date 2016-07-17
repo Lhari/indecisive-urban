@@ -83,15 +83,14 @@ $button-border: 1px solid #000;
 @mixin admin-button {
   color: $color-light;
   font-size: $font-size-medium-small;
-  font-weight: 400;
-  background: $color-dark-gray;
+  background: rgba(0,0,0,$background-opacity);
   display: block;
   min-width: 90px;
-  margin-right: 4px;
+	padding: ($spacing+10)/2 20px;
 
 	&:active,
 	&:hover {
 		color: $color-primary;
-		background: #25292c;
+		background: rgba(0,0,0,$background-opacity*2);
 	}
 }

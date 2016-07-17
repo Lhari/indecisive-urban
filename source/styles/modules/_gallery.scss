@@ -1,35 +1,50 @@
+@mixin align-middle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-pack: center;
+  -ms-flex-align: center;
+  justify-content: center;
+}
 
 #gallery {
+  padding-top: $spacing*2;
+
   .titlebg {
     margin-bottom: 0;
+  }
+
+  .pagelinks {
+    a {
+      cursor: pointer;
+    }
+    a:hover {
+      color: $color-light;
+    }
   }
 }
 
 #gallery-grid {
   list-style: none;
   padding: 0 $spacing/2;
+
   li {
     padding: 1px;
     border: 2px solid $color-dark-gray;
-    background: rgba(0,0,0,0.3)
+    background: rgba(0,0,0,0.3);
   }
 
-  .flex-image {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
-    justify-content: center;
+  .middle-image {
+    @include align-middle;
     background: rgba(0,0,0,0.8);
   }
 
@@ -50,30 +65,41 @@
     position: relative;
   }
 
+  .title {
+    top: 0;
+    width: 100%;
+    text-align: center;
+    color: transparent;
+    position: absolute;
+    padding: 10px;
+  }
+
   .overlay {
-    top:0;
-    left:0;
+    top: 0;
+    left: 0;
     position: absolute;
     width: 100%;
     height: 100%;
+    transition: all 300ms ease;
 
     &:hover {
       color: $color-primary;
       background-color: rgba(0,0,0,0.8);
     }
+
     &:hover * {
       color: $color-primary;
     }
   }
 
   a.view-image {
-    width: 100%;
     text-align: center;
-    position: absolute;
-    top: 22.5%;
+    @include align-middle;
+
     span {
-      font-size: $font-size-xxxlarge;
+      font-size: $font-size-xxlarge;
     }
+
     &:hover span {
       color: #fff;
     }
@@ -82,16 +108,19 @@
   .overlay-menu {
     position: absolute;
     width: 100%;
-    bottom: 5%;
+    bottom: 0;
+    padding: 10px;
     text-align: center;
 
     a {
       display: inline-block;
-      margin-right: 10px;
+      margin: 0 5px;
     }
+
     span {
-      font-size: $font-size-large - 4px;
+      font-size: $font-size-large;
     }
+
     a:hover span {
       color: #fff;
     }
