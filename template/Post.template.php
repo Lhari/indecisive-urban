@@ -110,7 +110,7 @@ function template_main()
 	echo '
 			<div id="preview_section"', isset($context['preview_message']) ? '' : ' style="display: none;"', '>
 				<div class="cat_bar">
-					<h3 class="catbg">
+					<h3 class="titlebg">
 						<span id="preview_subject">', empty($context['preview_subject']) ? '' : $context['preview_subject'], '</span>
 					</h3>
 				</div>
@@ -123,7 +123,7 @@ function template_main()
 					</div>
 					<span class="botslice"><span></span></span>
 				</div>
-			</div><br />';
+			</div>';
 
 	if ($context['make_event'] && (!$context['event']['new'] || !empty($context['current_board'])))
 		echo '
@@ -132,11 +132,10 @@ function template_main()
 	// Start the main table.
 	echo '
 			<div class="cat_bar">
-				<h3 class="catbg">', $context['page_title'], '</h3>
+				<h3 class="titlebg">'.$context['page_title'].'</h3>
 			</div>
 			<div>
-				<span class="upperframe"><span></span></span>
-				<div class="roundframe">', isset($context['current_topic']) ? '
+				<div class="roundframe grid size-12">', isset($context['current_topic']) ? '
 					<input type="hidden" name="topic" value="' . $context['current_topic'] . '" />' : '';
 
 	// If an error occurred, explain what happened.
@@ -195,17 +194,24 @@ function template_main()
 
 	// Now show the subject box for this post.
 	echo '
-						<dt>
-							<span', isset($context['post_error']['no_subject']) ? ' class="error"' : '', ' id="caption_subject">', $txt['subject'], ':</span>
-						</dt>
-						<dd>
-							<input type="text" name="subject"', $context['subject'] == '' ? '' : ' value="' . $context['subject'] . '"', ' tabindex="', $context['tabindex']++, '" size="80" maxlength="80" class="input_text" />
-						</dd>
+						<div>
+							<label class="'.(isset($context['post_error']['no_subject']) ? 'error' : '').'" id="caption_subject" for="subject">
+								'.$txt['subject'].'<br/>
+								<input type="text" name="subject"', $context['subject'] == '' ? '' : ' value="' . $context['subject'] . '"', ' tabindex="', $context['tabindex']++, '" size="80" maxlength="80" class="input_text" />
+							</label>
+						</div>
+							
+
+';
+	$messageIcons = false;
+	if($messageIcons) {
+		echo '
 						<dt class="clear_left">
-							', $txt['message_icon'], ':
+							'.$txt['message_icon'].':
 						</dt>
 						<dd>
 							<select name="icon" id="icon" onchange="showimage()">';
+
 
 	// Loop through each message icon allowed, adding it to the drop down list.
 	foreach ($context['icons'] as $icon)
@@ -218,6 +224,7 @@ function template_main()
 						</dd>
 					</dl><hr class="clear" />';
 
+	}
 	// Are you posting a calendar event?
 	if ($context['make_event'])
 	{
@@ -412,11 +419,19 @@ function template_main()
 					</div>';
 
 	// If the admin has enabled the hiding of the additional options - show a link and image for it.
-	if (!empty($settings['additional_options_collapsable']))
+	if (!empty($settings['additional_options_collapsable'])) {
+
 		echo '
 					<div id="postAdditionalOptionsHeader">
-						<img src="', $settings['images_url'], '/collapse.gif" alt="-" id="postMoreExpand" style="display: none;" /> <strong><a href="#" id="postMoreExpandLink">', $txt['post_additionalopt'], '</a></strong>
+
+						<img src="', $settings['images_url'], '/collapse.gif" alt="-" id="postMoreExpand" class="is-hidden" style="display: none;" />
+						<i class="icon-open-up"></i>
+						<strong>
+						<a href="#" id="postMoreExpandLink" class="icon-up-open closed">
+						'.$txt['post_additionalopt'].'</a>
+						</strong>
 					</div>';
+	}
 
 	// Display the check boxes for all the standard options - if they are available to the user!
 	echo '
@@ -522,10 +537,7 @@ function template_main()
 
 	// Finally, the submit buttons.
 	echo '
-					<p class="smalltext" id="shortcuts">
-						', $context['browser']['is_firefox'] ? $txt['shortcuts_firefox'] : $txt['shortcuts'], '
-					</p>
-					<p id="post_confirm_buttons" class="righttext">
+					<p id="post_confirm_buttons" class="buttons">
 						', template_control_richedit_buttons($context['post_box_name']);
 
 	// Option to delete an event if user is editing one.
@@ -782,51 +794,62 @@ function template_main()
 		echo '
 		<div id="recent" class="flow_hidden main_section">
 			<div class="cat_bar">
-				<h3 class="catbg">', $txt['topic_summary'], '</h3>
+				<h3 class="titlebg">', $txt['topic_summary'], '</h3>
 			</div>
 			<span id="new_replies"></span>';
 
 		$ignored_posts = array();
 		foreach ($context['previous_posts'] as $post)
 		{
-			$ignoring = false;
-			if (!empty($post['is_ignored']))
-				$ignored_posts[] = $ignoring = $post['id'];
+		$ignoring = false;
+		if (!empty($post['is_ignored'])) {
+			$ignored_posts[] = $ignoring = $post['id'];
+		}
 
-			echo '
-				<div class="', $post['alternate'] == 0 ? 'windowbg' : 'windowbg2', ' core_posts">
-				<span class="topslice"><span></span></span>
-				<div class="content" id="msg', $post['id'], '">
-					<div class="floatleft">
-						<h5>', $txt['posted_by'], ': ', $post['poster'], '</h5>
-						<span class="smalltext">&#171;&nbsp;<strong>', $txt['on'], ':</strong> ', $post['time'], '&nbsp;&#187;</span>
-					</div>';
+		?>
 
-			if ($context['can_quote'])
-			{
-				echo '
-					<ul class="reset smalltext quickbuttons" id="msg_', $post['id'], '_quote">
-						<li class="quote_button"><a href="#postmodify" onclick="return insertQuoteFast(', $post['id'], ');"><span>',$txt['bbc_quote'],'</span></a></li>
-					</ul>';
-			}
 
-			echo '
-					<br class="clear" />';
 
-			if ($ignoring)
-			{
-				echo '
-					<div id="msg_', $post['id'], '_ignored_prompt" class="smalltext">
-						', $txt['ignoring_user'], '
-						<a href="#" id="msg_', $post['id'], '_ignored_link" style="display: none;">', $txt['show_ignore_user_post'], '</a>
-					</div>';
-			}
-
-			echo '
-					<div class="list_posts smalltext" id="msg_', $post['id'], '_body">', $post['message'], '</div>
+		<div class="<?php echo ($post['alternate'] == 0 ? 'windowbg' : 'windowbg2'); ?>  core_posts divider">
+			<div class="content" id="msg' <?php echo $post['id']; ?>">
+			<div class="grid-group">
+				<div class="grid size-6">
+					<?php echo $txt['posted_by']; ?>: <?php echo $post['poster']; ?>, <?php echo $post['time']; ?>
 				</div>
-				<span class="botslice"><span></span></span>
-			</div>';
+
+		<?php 
+		if ($context['can_quote']) 
+			echo '
+				<div class="quote_button grid size-6 align-right">
+					<a href="#postmodify" onclick="return insertQuoteFast(', $post['id'], ');">
+						<span>
+							<i class="icon-quote"></i>
+						</span>
+					</a>
+				</div>
+				';
+		?>
+		</div>
+		<?php 
+		if ($ignoring)
+			echo '
+				<div id="msg_', $post['id'], '_ignored_prompt" class="" style="margin-top: 11px;">
+					'.$txt['ignoring_user'].'
+					<a href="#" id="msg_', $post['id'], '_ignored_link" style="display: none;">
+						'.$txt['show_ignore_user_post'], '
+					</a>
+				</div>
+				';
+
+
+		?>
+				<div id="msg_<?php echo $post['id']; ?>_body" style="margin-top: 11px;">
+					<?php echo $post['message']; ?>	
+				</div>
+			</div>
+		</div>
+
+		<?php
 		}
 
 		echo '
