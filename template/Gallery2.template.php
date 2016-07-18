@@ -199,7 +199,7 @@ function template_image_listing()
 								<div class="title top">' . $row['title'] . '</div>
 
 								<a class="view-image" href="' . $scripturl . '?action=gallery;sa=view;pic=' . $row['id_picture'] . '">
-									<span class="icon-eye"></span>
+									<span class="icon-eye-1"></span>
 								</a>
 
 								<div class="title bottom">' . $row['views'] . ' Views</div>
@@ -209,7 +209,7 @@ function template_image_listing()
 
 			echo '</li>';
 		}
-		
+
 		echo '</ul>';
 
 		echo
