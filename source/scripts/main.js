@@ -126,6 +126,13 @@ jQuery(document).ready(function($) {
         $('.js-ranks').fadeIn(600);
        
      });
+
+
+
+     $('#postMoreExpandLink').click(function() {
+        $(this).toggleClass('open');
+        $(this).toggleClass('closed');
+     })
 })
 
 
