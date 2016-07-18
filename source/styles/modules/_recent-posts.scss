@@ -5,7 +5,9 @@
 	display: block;
 	margin: 0!important;
 	transition: all 300ms ease;
-
+	padding-left: 3px!important;
+    padding-right: 3px!important;
+    
 	&:hover {
 		color: $color-light!important;
 		background: rgba($color-dark, 0.25);

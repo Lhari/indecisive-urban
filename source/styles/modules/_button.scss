@@ -3,7 +3,7 @@ input[type="submit"], input[type="button"], button {
 	border-right: 0;
 	outline: none;
 }
-.button {
+.button, .buttons input[type="button"], .buttons input[type="submit"] {
 
 	//border: 1px solid rgba($color-light-gray, 0.7);
 	border-radius: 6px;
@@ -29,6 +29,12 @@ input[type="submit"], input[type="button"], button {
 		&:hover {
 			background:$color-teritary;
 		}
+	}
+}
+
+.buttons input[type="submit"]:first-of-type {
+	&:hover {
+		background:$color-teritary;
 	}
 }
 
