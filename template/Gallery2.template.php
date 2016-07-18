@@ -196,35 +196,13 @@ function template_image_listing()
 							<img src="' . $modSettings['gallery_url'] . $row['thumbfilename'] . '" alt=""' . $row['title'] . ' />
 
 							<div class="overlay">
-								<div class="title">' . $row['title'] . '</div>
+								<div class="title top">' . $row['title'] . '</div>
 
 								<a class="view-image" href="' . $scripturl . '?action=gallery;sa=view;pic=' . $row['id_picture'] . '">
 									<span class="icon-eye"></span>
 								</a>
 
-								<div class="overlay-menu">';
-
-								if ($g_manage || $g_edit_own && $row['id_member'] == $id_member)
-									echo '
-										<a href="' . $scripturl . '?action=gallery;sa=edit;pic=' . $row['id_picture'] . '">
-											<span class="icon-pencil-1"></span>
-										</a>';
-
-								if ($g_manage || $g_delete_own && $row['id_member'] == $id_member)
-
-									echo '
-										<a href="' . $scripturl . '?action=gallery;sa=delete;pic=' . $row['id_picture'] . '">
-											<span class="icon-cancel-1"></span>
-										</a>';
-
-								if ($g_manage)
-									echo '
-									<a href="' . $scripturl . '?action=gallery;sa=unapprove;pic=' . $row['id_picture'] . '">
-										<span class="icon-lock"></span>
-									</a>';
-
-								echo '
-								</div>
+								<div class="title bottom">' . $row['views'] . ' Views</div>
 							</div>
 						</div>
 					</div>';
