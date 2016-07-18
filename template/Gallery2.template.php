@@ -209,26 +209,19 @@ function template_image_listing()
 
 			echo '</li>';
 		}
-
-	// Show return to gallery link and Show add picture if they can
-	// echo '
-	// 		<tr class="titlebg"><td align="center" colspan="' . $maxrowlevel . '">';
-	// 		if($g_add)
-	// 		echo '<a href="' . $scripturl . '?action=gallery;sa=add;cat=' . $cat . '">' . $txt['gallery_text_addpicture'] .'</a>&nbsp; - &nbsp;';
-	//
-	// 		echo '
-	// 		<a href="' . $scripturl . '?action=gallery">' . $txt['gallery_text_returngallery'] . '</a></td>
-	// 	</tr>';
-
+		
 		echo '</ul>';
 
 		echo
-			'<div class="pagesection">
-				<div class="pagelinks">';
+			'<div class="gallery-footer">
+				<div class="pagelinks left">';
 					echo $txt['gallery_text_pages'];
 					$context['page_index'] = constructPageIndex($scripturl . '?action=gallery;cat=' . $cat, $context['start'], $totalPics, $modSettings['gallery_set_images_per_page']);
 					echo $context['page_index'];
 		echo '
+				</div>
+				<div class="right">
+					<a href="' . $scripturl . '?action=gallery">' . $txt['gallery_text_returngallery'] . '</a>
 				</div>
 			</div>';
 

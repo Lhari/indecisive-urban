@@ -7,6 +7,14 @@
   width: 98%;
 }
 
+#admin_menu {
+  span.icon-up-open {
+    transform: rotate(90deg);
+    padding: 0 !important;
+    display: inline-block !important;
+  }
+}
+
 #admin_menu ul {
   background: url('/inde/site-BG-dark.png');
 }
@@ -73,7 +81,7 @@
     }
 
     ul ul {
-      margin: -1.8em 0 0 13em;
+      margin: -1.8em 0 0 ($admin-menu-width)-1;
     }
 
     &:hover ul {
@@ -87,7 +95,7 @@
   }
 
   li li {
-    width: 16em;
+    width: $admin-menu-width;
     margin: 0;
 
     a span {
