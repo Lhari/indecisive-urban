@@ -1,3 +1,31 @@
+@mixin title-style {
+  background-image: url('/inde/ColumnHeaderBG.png');
+  background-color: #646464;
+  text-shadow: 0px -1px 0px rgba(0,0,0,0.4);
+  text-indent: 5px;
+  border-radius: 4px;
+  box-shadow: 0px 1px 3px rgba(0,0,0,0.4),0px 1px 0px rgba(255,255,255,0.3) inset;
+  padding: 0 $spacing/2;
+  height: $spacing*2;
+  line-height: $spacing*2;
+  color: $color-light-gray;
+  font-weight: $font-weight-heavy;
+  font-size: $font-size-medium;
+
+  a,a:visited {
+    color: $color-light-gray;
+    font-weight: $font-weight-heavy;
+    font-size: $font-size-medium;
+    text-decoration: none;
+    cursor: default;
+  }
+
+  a:hover {
+    color: $color-light;
+    cursor: pointer;
+  }
+}
+
 .tborder .tp_rightblock_frame {
   position: relative;
 }
@@ -16,29 +44,13 @@
 
 .titlebg {
   float: left;
-  background-image: url('/inde/ColumnHeaderBG.png');
-  background-color: #646464;
-  padding: 0 $spacing/2;
-  text-shadow: 0px -1px 0px rgba(0,0,0,0.4);
-  text-indent: 5px;
   width: 100%;
-  height: $spacing*2;
-  line-height: $spacing*2;
-  border-radius: 4px;
-  box-shadow: 0px 1px 3px rgba(0,0,0,0.4),0px 1px 0px rgba(255,255,255,0.3) inset;
+  @include title-style;
 
   &--no-rounding {
     margin-bottom: 0;
     border-radius: 6px 6px 0 0;
   }
-}
-
-.titlebg a, .titlebg a:visited, .titlebg a:hover, .titlebg {
-  color: $color-light-gray;
-  font-weight: $font-weight-heavy;
-  font-size: $font-size-medium;
-  text-decoration: none;
-  cursor: default;
 }
 
 #toggle_tprightbarHeader, #toggle_tpleftbarHeader, .titlebg [id^="blockcollapse"], .titlebg [title="Edit Block Contents"] {

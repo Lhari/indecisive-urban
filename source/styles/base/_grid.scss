@@ -32,7 +32,7 @@ $breakpoints: 'palm', 'lap', 'lap-and-up', 'portable', 'desk-small', 'desk', 'de
   @if $media == 'portable' {
     @media only screen and (max-width:$lap-end) { @content; }
   }
-  
+
   @if $media == 'desk'{
     @media only screen and (min-width:$desk-start) { @content; }
   }
@@ -47,6 +47,10 @@ $breakpoints: 'palm', 'lap', 'lap-and-up', 'portable', 'desk-small', 'desk', 'de
 
   @if $media == 'ultra-wide'{
     @media only screen and (min-width: $ultra-wide) { @content; }
+  }
+
+  @if $media == 'below-ultra-wide'{
+    @media only screen and (max-width: $ultra-wide) { @content; }
   }
 }
 
@@ -184,7 +188,7 @@ $breakpoints: 'palm', 'lap', 'lap-and-up', 'portable', 'desk-small', 'desk', 'de
 // Styleguide 1.1
 
 // Nesting Grid Elements
-// 
+//
 // Everything is based on proportions, so a `size-6` inside a `size-6` will still be 50%
 //
 // Markup:
@@ -224,7 +228,7 @@ $breakpoints: 'palm', 'lap', 'lap-and-up', 'portable', 'desk-small', 'desk', 'de
 //
 // Sometimes it's necessary to dictate the rows. e.g. if the elements in the grid have
 // varying heights.
-// 
+//
 // It's also possible to define rows in different breakpoints by using the breakpoint modifiers
 // we also use on the grid. e.g: `clear--palm` to start a row in palm only.
 //
@@ -246,6 +250,5 @@ $breakpoints: 'palm', 'lap', 'lap-and-up', 'portable', 'desk-small', 'desk', 'de
 //     size-2
 //   </div>
 // </div>
-// 
+//
 // Styleguide 1.3
-
