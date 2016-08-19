@@ -9,6 +9,10 @@
 	}
 }
 
+.spoiler_body {
+	display: none;
+}
+
 .avatar, .flow_hidden {
 	position: relative;
 	padding-bottom: $spacing;

@@ -2,6 +2,21 @@ jQuery(document).ready(function($) {
 
 	var offcanvas, login;
 
+  $('.spoiler_head').click(function() {
+
+    if($(this).next('.spoiler_body').hasClass('active')) {
+
+        $(this).next('.spoiler_body').slideUp();
+        $(this).next('.spoiler_body').removeClass('active');
+        $(this).html('Show content');
+     
+    } else {
+        $(this).next('.spoiler_body').slideDown();
+        $(this).next('.spoiler_body').addClass('active');
+        $(this).html('Hide content');
+    }
+ })
+
   $('.modifybutton').click(function() {
       setTimeout(function() {
           loadQuickEdit();

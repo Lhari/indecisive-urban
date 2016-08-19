@@ -19,115 +19,94 @@ branding free option is purchased.
 
 function template_mainview()
 {
-	global $scripturl, $txt, $context, $modSettings;
+	global $scripturl, $txt, $context, $modSettings, $settings;
 
 
 	// Permissions
 	$g_manage = allowedTo('smfgallery_manage');
 
-
-	if ($g_manage)
-	{
+	if ($g_manage) {
 
 		// Warn the user if they are managing the gallery that it is not writable
 		if (!is_writable($modSettings['gallery_path']))
 			echo '<font color="#FF0000"><b>', $txt['gallery_write_error'], $modSettings['gallery_path'] . '</b></font>';
 	}
 
+	echo '
+		<div id="gallery">';
 
-	ShowTopGalleryBarNew($txt['gallery_text_title']);
+	echo '
+		<div class="gallery-header">
+			<h3>Albums</h3>
+			<div class="gallery-menu">';
+			ShowGalleryMenu();
+
+		echo '
+			</div>
+		</div>';
+
+	echo '
+		<div class="gallery-albums grid-group">';
 
 		// List all the catagories
-
-		echo '<table border="0" cellspacing="1" cellpadding="4" class="table_grid"  align="center" width="100%">
-<thead>
-<tr class="catbg">
-				<th scope="col" class="smalltext first_th" colspan="2">', $txt['gallery_text_galleryname'], '</th>
-				<th scope="col" class="smalltext">', $txt['gallery_text_gallerydescription'], '</th>
-				<th scope="col" class="smalltext ' . ($g_manage ? ''  : 'last_th') . '" align="center">', $txt['gallery_text_totalimages'], '</th>
-				';
-		if ($g_manage)
+	foreach($context['gallery_cat_list'] as $row) {
+		$totalpics = GetTotalPicturesByCATID($row['id_cat']);
 		echo '
-				<th scope="col" class="smalltext">', $txt['gallery_text_reorder'], '</th>
-				<th scope="col" class="smalltext last_th">', $txt['gallery_text_options'], '</th>
-				';
+			<div class="album-container grid size-12--palm size-6--lap-and-up">';
 
-		echo '</tr>
-		</thead>';
-
-
-		foreach($context['gallery_cat_list'] as $row)
-		{
-
-
-			$totalpics = GetTotalPicturesByCATID($row['id_cat']);
-
-			echo '<tr class="windowbg2">';
-
-			if ($row['image'] == '')
-				echo '<td colspan="2"><a href="', $scripturl, '?action=gallery;cat=' . $row['id_cat'] . '">' . parse_bbc($row['title']) . '</a></td><td>' . parse_bbc($row['description']) . '</td>';
-			else
-			{
-				echo '<td><a href="', $scripturl, '?action=gallery;cat=' . $row['id_cat'] . '"><img src="' . $row['image'] . '" border="0" alt="" /></a></td>';
-				echo '<td><a href="', $scripturl, '?action=gallery;cat=' . $row['id_cat'] . '">' . parse_bbc($row['title']) . '</a></td><td>' . parse_bbc($row['description']) . '</td>';
-			}
-
-
-
-			// Show total pictures in the category
-			echo '<td align="center">', $totalpics, '</td>';
-
-			// Show Edit Delete and Order category
-			if ($g_manage)
-			{
-				echo '<td><a href="' . $scripturl . '?action=gallery;sa=catup;cat=' . $row['id_cat'] . '">' . $txt['gallery_text_up'] . '</a>&nbsp;<a href="' . $scripturl . '?action=gallery;sa=catdown;cat=' . $row['id_cat'] . '">' . $txt['gallery_text_down'] . '</a></td>
-				<td><a href="' . $scripturl . '?action=gallery;sa=editcat;cat=' . $row['id_cat'] . '">' . $txt['gallery_text_edit'] . '</a>&nbsp;<a href="' . $scripturl . '?action=gallery;sa=deletecat;cat=' . $row['id_cat'] . '">' . $txt['gallery_text_delete'] . '</a>
-						<br />
-					<a href="' . $scripturl . '?action=gallery;sa=regen;cat=' . $row['id_cat'] . '">' . $txt['gallery_text_regeneratethumbnails'] . '</a>
-
-				</td>';
-			}
-
-
-			echo '</tr>';
-
-
-		}
-
-		echo '</table><br /><br /><br />';
-
-		// See if they are allowed to add catagories Main Index only
-		if ($g_manage)
-		{
 			echo '
-            <div class="cat_bar">
-		<h3 class="catbg centertext">
-        ', $txt['gallery_text_adminpanel'], '
-        </h3>
-</div>
+				<div class="grid size-12--palm size-3--lap-and-up">
+					<a href="', $scripturl, '?action=gallery;cat=' . $row['id_cat'] . '" class="album-logo">';
 
-            <table cellspacing="0" cellpadding="5" border="0" align="center" width="100%" class="tborder">
-					<tr class="windowbg2">
-			<td align="center"><a href="' . $scripturl . '?action=gallery;sa=addcat">' . $txt['gallery_text_addcategory'] . '</a>&nbsp;-&nbsp;
-			<a href="' . $scripturl . '?action=admin;area=gallery;sa=adminset">' . $txt['gallery_text_settings'] . '</a>';
+					echo file_get_contents($settings['theme_url'] . '/images/folder-images.svg');
 
+					echo '
+					</a>
+				</div>';
 
-			if (allowedTo('manage_permissions'))
-				echo '&nbsp;-&nbsp;<a href="' . $scripturl . '?action=admin;area=permissions">' . $txt['gallery_text_permissions'] . '</a>';
+			echo '
+				<div class="grid size-12--palm size-9--lap-and-up">
+					<h2>' . parse_bbc($row['title']) . '</h2>
+					<p>' . parse_bbc($row['description']) . '</p>
+					<p class="">' . $totalpics . ' Images</p>' .
+				'</div>';
 
+		echo '
+			</div>';
+	}
 
+	echo '</div>';
 
-			echo '<br />' . $txt['gallery_text_imgwaitapproval'] . '<b>' . $context['gallery_unapproved_pics'] . '</b>&nbsp;&nbsp;<a href="' . $scripturl . '?action=admin;area=gallery;sa=approvelist">' . $txt['gallery_text_imgcheckapproval'] . '</a>';
+	// If allowed to add categories
+	if ($g_manage) {
+		echo '
+		<div class="gallery-admin">
+			<div class="gallery-header">
+				<h3>', $txt['gallery_text_adminpanel'],'</h3>
+				<div class="gallery-menu">
+					<a href="' . $scripturl . '?action=gallery;sa=addcat">' . $txt['gallery_text_addcategory'] . '</a>
+					<a href="' . $scripturl . '?action=admin;area=gallery;sa=adminset">' . $txt['gallery_text_settings'] . '</a>';
 
+					if (allowedTo('manage_permissions')) {
+						echo '&nbsp;&nbsp;' . '<a href="' . $scripturl . '?action=admin;area=permissions">' . $txt['gallery_text_permissions'] . '</a>';
+					}
+				echo '
+				</div>
+			</div>
 
-			echo '<br />' . $txt['gallery_text_imgreported'] . '<b>' . $context['gallery_reported_pics'] . '</b>&nbsp;&nbsp;<a href="' . $scripturl . '?action=admin;area=gallery;sa=reportlist">' . $txt['gallery_text_imgcheckreported'] . '</a>';
+			<div class="gallery-status">';
+				echo $txt['gallery_text_imgwaitapproval'] . '<b>' . $context['gallery_unapproved_pics'] . '</b>&nbsp;&nbsp;<a href="' . $scripturl . '?action=admin;area=gallery;sa=approvelist">' . $txt['gallery_text_imgcheckapproval'] . '</a>';
+				echo '<br />' . $txt['gallery_text_imgreported'] . '<b>' . $context['gallery_reported_pics'] . '</b>&nbsp;&nbsp;<a href="' . $scripturl . '?action=admin;area=gallery;sa=reportlist">' . $txt['gallery_text_imgcheckreported'] . '</a>';
+			echo '
+				</div>';
+	}
 
-			echo '</td></tr></table><br /><br />';
-		}
-
+	echo '
+			<br>
+		</div>';
 
 	GalleryCopyright();
-
+	echo '</div>';
 }
 
 function template_image_listing()
@@ -160,13 +139,15 @@ function template_image_listing()
 	echo '
 		<div id="gallery">';
 
-	ShowTopGalleryBarNew();
-
-
 		$maxrowlevel = $modSettings['gallery_set_images_per_row'];
 		echo '
-      <div class="title_bar">
-				<h3 class="titlebg centertext">', $context['gallery_cat_name'], '</h3>
+      <div class="gallery-header">
+				<h3>', $context['gallery_cat_name'], '</h3>
+				<div class="gallery-menu">';
+				ShowGalleryMenu();
+
+			echo '
+				</div>
 			</div>';
 
 		$context['start'] = (int) $_REQUEST['start'];
@@ -187,7 +168,7 @@ function template_image_listing()
 		foreach($context['gallery_image_list'] as $row) {
 
 			echo '
-				<li class="grid size-12--palm size-6--lap-and-up size-3--desk-wide">';
+				<li class="grid size-12--palm size-6--lap-and-up size-4--desk-wide">';
 
 					echo '
 					<div class="gallery-image">
@@ -220,8 +201,9 @@ function template_image_listing()
 					echo $context['page_index'];
 		echo '
 				</div>
-				<div class="right">
-					<a href="' . $scripturl . '?action=gallery">' . $txt['gallery_text_returngallery'] . '</a>
+				<div class="right">';
+					ShowAlbumMenu();
+				echo '
 				</div>
 			</div>';
 
@@ -2161,6 +2143,40 @@ function ShowTopGalleryBarNew($title = '')
         </h3>
 		</div>',
 	DoToolBarStrip($context['gallery']['buttons'], 'top'), '<br />';
+}
+
+function ShowGalleryMenu() {
+		global $txt, $context;
+
+		$newimage = $context['gallery']['buttons']['add'];
+		$search = $context['gallery']['buttons']['search'];
+
+		echo '
+		<div class="gallery-menu">';
+
+			if ($context['gallery_catid'] > 0 || $context['gallery_picid'] > 0) {
+				echo '<a href="' . $scripturl . '?action=gallery"><span class="icon-reply"></span> Back</a>';
+			}
+
+			echo '
+				<a href="' . $newimage['url'] . '"><span class="icon-attach"></span> Add</a>
+				<a href="' . $search['url'] . '"><span class="icon-search"></span> Search</a>
+		</div>';
+}
+
+function ShowAlbumMenu() {
+	global $txt, $context;
+
+	$g_manage = allowedTo('smfgallery_manage');
+	$cat = $context['gallery_catid'];
+
+	if ($g_manage) {
+		echo '
+			<div class="album-menu">
+				<a href="' . $scripturl . '?action=gallery;sa=regen;cat=' . $cat . '">' . $txt['gallery_text_regeneratethumbnails'] . '</a>
+				<a href="' . $scripturl . '?action=gallery;sa=deletecat;cat=' . $cat . '">' . $txt['gallery_text_delete'] . '</a>
+			</div>';
+	}
 }
 
 
