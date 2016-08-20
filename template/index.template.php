@@ -222,9 +222,7 @@ function template_body_above() {
 	}
 
 	echo '
-	<div class="background__overlay"></div>
-
-
+	<div class="header-wrap">
 	<div id="header" class="grid-group content--wrapper">
 		<div class="grid" id="head-wrap">
 			<div class="logo">
@@ -245,6 +243,7 @@ function template_body_above() {
 		echo '
 		</div>
 
+	</div>
 	</div>
 	<div id="userbar">
 		<div id="user-wrap">
@@ -503,7 +502,7 @@ function template_button_strip_with_icons_and_text($button_strip, $direction = '
 			$hasActive = $key.(isset($value['active']) ? ' active' : '');
 			$hasCustom =  (isset($value['custom']) ? ' ' . $value['custom'] : '');
 
-			$buttons[] = '<a '.$hasId.' class="button button--primary button_strip_'.$hasActive.'" href="' . $value['url'] .'"' .$hasCustom. '>'.($value['icon'] ? '<i class="'.$value['icon'].'"></i>' : '').$txt[$value['text']].'</a>';
+			$buttons[] = '<a '.$hasId.' class="button button--primary button_strip_'.$hasActive.'" href="' . $value['url'] .'"' .$hasCustom. '>'.($value['icon'] ? '<i class="'.$value['icon'].'"></i>' : '').'<span>'.$txt[$value['text']].'</span></a>';
 
 		}
 	}

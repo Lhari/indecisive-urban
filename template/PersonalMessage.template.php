@@ -196,8 +196,8 @@ function template_folder()
 
 			// Show information about the poster of this message.
 			echo '
-		<div class="bordercolor grid size-12" id="msg', $message['id'], '">
-			<div class="clearfix ', !$is_first_post ? 'topborder ' : '', ($message['alternate'] == 0 ? '' : ''), ' largepadding">
+		<div class="bordercolor size-12" id="msg', $message['id'], '">
+			<div class="clearfix ', !$is_first_post ? 'topborder ' : '', ($message['alternate'] == 0 ? '' : ''), ' grid-group">
 				<div class="grid size-2 size-12--palm poster">
 					<h3 class="titlebg">', $message['member']['link'], '</h3>
 					<ul class="reset smalltext" id="msg_', $message['id'], '_extra_info" style="list-style: none;">';
@@ -257,6 +257,11 @@ function template_folder()
 
 				echo '</li>';
 
+				// Show their personal text?
+				if (!empty($settings['show_blurb']) && $message['member']['blurb'] != '')
+					echo '
+						<li class="blurb">', $message['member']['blurb'], '</li>';
+
 			// Show the profile, website, email address, and personal message buttons.
 			if ($settings['show_profile_buttons'])
 			{
@@ -281,10 +286,7 @@ function template_folder()
 			}
 
 
-			// Show their personal text?
-			if (!empty($settings['show_blurb']) && $message['member']['blurb'] != '')
-				echo '
-						<li class="margintop">', $message['member']['blurb'], '</li>';
+
 
 			// Any custom fields to show as icons?
 			/*if (!empty($message['member']['custom_fields']))
@@ -372,8 +374,37 @@ function template_folder()
 					<div class="flow_hidden">
 						<div class="keyinfo">
 							<h3 class="titlebg">
-								<strong>', $message['subject'], '</strong>
-							</h3>';
+								<strong>', $message['subject'], '</strong>';
+
+			echo '<span class="grid grid--last">';
+			// Show reply buttons if you have the permission to send PMs.
+			if ($context['can_send_pm'])
+			{
+				// You can't really reply if the member is gone.
+				if (!$message['member']['is_guest'])
+				{
+					// Were than more than one recipient you can reply to? (Only shown when not in conversation mode.)
+					if ($message['number_recipients'] > 1 && $context['display_mode'] != 2)
+						echo '
+							<a href="', $scripturl, '?action=pm;sa=send;f=', $context['folder'], $context['current_label_id'] != -1 ? ';l=' . $context['current_label_id'] : '', ';pmsg=', $message['id'], ';quote;u=all" class="icon-reply"></a>';
+
+						echo '
+							<a href="', $scripturl, '?action=pm;sa=send;f=', $context['folder'], $context['current_label_id'] != -1 ? ';l=' . $context['current_label_id'] : '', ';pmsg=', $message['id'], ';u=', $message['member']['id'], '" class="icon-reply"></a>
+							<a href="', $scripturl, '?action=pm;sa=send;f=', $context['folder'], $context['current_label_id'] != -1 ? ';l=' . $context['current_label_id'] : '', ';pmsg=', $message['id'], ';quote', $context['folder'] == 'sent' ? '' : ';u=' . $message['member']['id'], '" class="icon-quote"></a>';
+				}
+				// This is for "forwarding" - even if the member is gone.
+				else
+						echo '
+							<a href="', $scripturl, '?action=pm;sa=send;f=', $context['folder'], $context['current_label_id'] != -1 ? ';l=' . $context['current_label_id'] : '', ';pmsg=', $message['id'], ';quote">', $forward_button, '</a>';
+			}
+						echo '
+							<a href="', $scripturl, '?action=pm;sa=pmactions;pm_actions[', $message['id'], ']=delete;f=', $context['folder'], ';start=', $context['start'], $context['current_label_id'] != -1 ? ';l=' . $context['current_label_id'] : '', ';', $context['session_var'], '=', $context['session_id'], '" onclick="return confirm(\'', addslashes($txt['remove_message']), '?\');" class="icon-cancel-1"></a>';
+
+			if (empty($context['display_mode']))
+				echo '
+							<input style="vertical-align: middle;" type="checkbox" name="pms[]" id="deletedisplay', $message['id'], '" value="', $message['id'], '" onclick="document.getElementById(\'deletelisting', $message['id'], '\').checked = this.checked;" class="input_check" />';
+			echo '</span>';
+			echo '</h3>';
 
 			// Show who the message was sent to.
 			echo '
@@ -402,47 +433,10 @@ function template_folder()
 
 			echo '
 						</div>
-						<ul class="reset smalltext postingbuttons">';
-
-			// Show reply buttons if you have the permission to send PMs.
-			if ($context['can_send_pm'])
-			{
-				// You can't really reply if the member is gone.
-				if (!$message['member']['is_guest'])
-				{
-					// Were than more than one recipient you can reply to? (Only shown when not in conversation mode.)
-					if ($message['number_recipients'] > 1 && $context['display_mode'] != 2)
-						echo '
-							<li><a href="', $scripturl, '?action=pm;sa=send;f=', $context['folder'], $context['current_label_id'] != -1 ? ';l=' . $context['current_label_id'] : '', ';pmsg=', $message['id'], ';quote;u=all">', $reply_all_button, '</a></li>';
-
-					echo '
-							<li><a href="', $scripturl, '?action=pm;sa=send;f=', $context['folder'], $context['current_label_id'] != -1 ? ';l=' . $context['current_label_id'] : '', ';pmsg=', $message['id'], ';u=', $message['member']['id'], '">', $reply_button, '</a></li>
-							<li><a href="', $scripturl, '?action=pm;sa=send;f=', $context['folder'], $context['current_label_id'] != -1 ? ';l=' . $context['current_label_id'] : '', ';pmsg=', $message['id'], ';quote', $context['folder'] == 'sent' ? '' : ';u=' . $message['member']['id'], '">', $quote_button, '</a></li>';
-				}
-				// This is for "forwarding" - even if the member is gone.
-				else
-					echo '
-							<li><a href="', $scripturl, '?action=pm;sa=send;f=', $context['folder'], $context['current_label_id'] != -1 ? ';l=' . $context['current_label_id'] : '', ';pmsg=', $message['id'], ';quote">', $forward_button, '</a></li>';
-			}
-			echo '
-							<li><a href="', $scripturl, '?action=pm;sa=pmactions;pm_actions[', $message['id'], ']=delete;f=', $context['folder'], ';start=', $context['start'], $context['current_label_id'] != -1 ? ';l=' . $context['current_label_id'] : '', ';', $context['session_var'], '=', $context['session_id'], '" onclick="return confirm(\'', addslashes($txt['remove_message']), '?\');">', $delete_button, '</a></li>';
-
-			if (empty($context['display_mode']))
-				echo '
-							<li><input style="vertical-align: middle;" type="checkbox" name="pms[]" id="deletedisplay', $message['id'], '" value="', $message['id'], '" onclick="document.getElementById(\'deletelisting', $message['id'], '\').checked = this.checked;" class="input_check" /></li>';
-
-			echo '
-						</ul>
 					</div>
 					<div class="personalmessage">
-						<hr width="100%" size="1" class="hrcolor" />
-						', $message['body'], '
-					</div>';
 
-			if (!empty($modSettings['enableReportPM']) && $context['folder'] != 'sent')
-				echo '
-					<div class="reportlinks smalltext righttext">
-						<a href="', $scripturl, '?action=pm;sa=report;l=', $context['current_label_id'], ';pmsg=', $message['id'], '">', $txt['pm_report_to_admin'], '</a>
+						', $message['body'], '
 					</div>';
 
 			// Are there any custom profile fields for above the signature?
@@ -472,7 +466,7 @@ function template_folder()
 			// Show the member's signature?
 			if (!empty($message['member']['signature']) && empty($options['show_no_signatures']) && $context['signature_enabled'])
 				echo '
-						<div class="signature">', $message['member']['signature'], '</div>';
+						<div class="divider"></div><br /><div class="signature">', $message['member']['signature'], '</div>';
 
 			// Add an extra line at the bottom if we have labels enabled.
 			if ($context['folder'] != 'sent' && !empty($context['currently_using_labels']) && $context['display_mode'] != 2)
@@ -539,8 +533,11 @@ function template_folder()
 		</div>';
 
 		// Show a few buttons if we are in conversation mode and outputting the first message.
-		elseif ($context['display_mode'] == 2 && isset($conversation_buttons))
-			template_button_strip($conversation_buttons);
+		elseif ($context['display_mode'] == 2 && isset($conversation_buttons)) {
+			echo '<div class="grid-group grid--last">';
+			template_button_strip_with_icons_and_text($conversation_buttons);
+			echo '</div>';
+		}
 
 		echo '
 		<br />';
@@ -600,7 +597,7 @@ function template_subject_list()
 
 
 
-		echo '<div class="grid size-12">';
+		echo '<div class="grid size-12 private-message__content '.($i % 2 ? 'odd' : 'even').'">';
 
 
 		
@@ -636,9 +633,9 @@ function template_subject_list()
 
 	echo '
 
-		<div class="catbg flow_hidden smallpadding">
+		<div class="catbg flow_hidden smallpadding ">
 			<div class="left pagesection">', $txt['pages'], ': ', $context['page_index'], '</div>
-			<div class="right">&nbsp;';
+			<div class="grid-group grid--last">&nbsp;';
 
 	if ($context['show_delete'])
 	{

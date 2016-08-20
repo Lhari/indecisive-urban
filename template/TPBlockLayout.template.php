@@ -60,7 +60,7 @@ function template_tp_above()
 			$width = $width -2;
 
 	echo '		
-				<div id="tpcontentHeader" class="grid size-'.$width.'">';
+				<div id="tpcontentHeader" class="grid size-'.$width.' size-12--palm">';
 
   
 	if($context['TPortal']['centerpanel']==1) {
