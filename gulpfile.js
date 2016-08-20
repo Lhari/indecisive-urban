@@ -31,9 +31,9 @@ gulp.task('fonts', function() {
 
 gulp.task('scripts', function() {
   return gulp.src('source/scripts/*.js')
-    .pipe(plumber())
-    .pipe(jshint())
-    .pipe(jshint.reporter('jshint-stylish'))
+   // .pipe(plumber())
+   // .pipe(jshint())
+   // .pipe(jshint.reporter('jshint-stylish'))
     .pipe(concat('main.js'))
     .pipe(gulp.dest('template/scripts'))
     .pipe(rename({

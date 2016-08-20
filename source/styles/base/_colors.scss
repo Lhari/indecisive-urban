@@ -139,3 +139,51 @@ $class-warrior: #C79C6E;
 .class-background--warrior {
 	background-color: $class-warrior!important;
 }
+
+
+@include media(palm) {
+	.poster[data-class="death_knight"] .titlebg {
+		background: $class-death-knight;
+	}
+	.poster[data-class="demon_hunter"] .titlebg {
+		background: $class-demon-hunter;
+	}
+	.poster[data-class="druid"] .titlebg {
+		background: $class-druid;
+	}
+	.poster[data-class="hunter"] .titlebg {
+		background: $class-hunter;
+	}
+	.poster[data-class="mage"] .titlebg {
+		background: $class-mage;
+	}
+	.poster[data-class="monk"] .titlebg {
+		background: $class-monk;
+	}
+	.poster[data-class="paladin"] .titlebg {
+		background: $class-paladin;
+	}
+	.poster[data-class="priest"] .titlebg {
+		background: $class-priest;
+		a {
+			color: $color-dark;
+		}
+		
+	}
+	.poster[data-class="rogue"] .titlebg {
+		background: $class-rogue;
+		a {
+			color: $color-dark;
+		}
+	}
+	.poster[data-class="shaman"] .titlebg {
+		background: $class-shaman;
+	}
+		.poster[data-class="warlock"] .titlebg {
+		background: $class-warrior;
+	}
+	.poster[data-class="warrior"] .titlebg {
+		background: $class-warrior;
+	}
+}
+

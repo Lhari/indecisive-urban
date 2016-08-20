@@ -435,8 +435,8 @@ function template_main()
 
 	// Display the check boxes for all the standard options - if they are available to the user!
 	echo '
-					<div id="postMoreOptions" class="smalltext">
-						<ul class="post_options">
+					<div id="postMoreOptions" class="smalltext" style="margin-left: 22px;">
+						<ul class="post_options" style="list-style: none;">
 							', $context['can_notify'] ? '<li><input type="hidden" name="notify" value="0" /><label for="check_notify"><input type="checkbox" name="notify" id="check_notify"' . ($context['notify'] || !empty($options['auto_notify']) ? ' checked="checked"' : '') . ' value="1" class="input_check" /> ' . $txt['notify_replies'] . '</label></li>' : '', '
 							', $context['can_lock'] ? '<li><input type="hidden" name="lock" value="0" /><label for="check_lock"><input type="checkbox" name="lock" id="check_lock"' . ($context['locked'] ? ' checked="checked"' : '') . ' value="1" class="input_check" /> ' . $txt['lock_topic'] . '</label></li>' : '', '
 							<li><label for="check_back"><input type="checkbox" name="goback" id="check_back"' . ($context['back_to_topic'] || !empty($options['return_to_post']) ? ' checked="checked"' : '') . ' value="1" class="input_check" /> ' . $txt['back_to_topic'] . '</label></li>
@@ -452,7 +452,7 @@ function template_main()
 	if (!empty($context['current_attachments']))
 	{
 		echo '
-					<dl id="postAttachment">
+					<dl id="postAttachment" style="margin-left: 22px;">
 						<dt>
 							', $txt['attached'], ':
 						</dt>
@@ -473,7 +473,7 @@ function template_main()
 	if ($context['can_post_attachment'])
 	{
 		echo '
-					<dl id="postAttachment2">
+					<dl id="postAttachment2" style="margin-left: 22px;">
 						<dt>
 							', $txt['attach'], ':
 						</dt>
@@ -537,7 +537,7 @@ function template_main()
 
 	// Finally, the submit buttons.
 	echo '
-					<p id="post_confirm_buttons" class="buttons">
+					<p id="post_confirm_buttons" class="buttons" style="margin-top: 11px;">
 						', template_control_richedit_buttons($context['post_box_name']);
 
 	// Option to delete an event if user is editing one.
@@ -821,10 +821,8 @@ function template_main()
 		if ($context['can_quote']) 
 			echo '
 				<div class="quote_button grid size-6 align-right">
-					<a href="#postmodify" onclick="return insertQuoteFast(', $post['id'], ');">
-						<span>
-							<i class="icon-quote"></i>
-						</span>
+					<a href="#postmodify" onclick="return insertQuoteFast(', $post['id'], ');" class="button" style="margin-right: 0;">
+							<i class="icon-quote" style="padding: 0;"></i>
 					</a>
 				</div>
 				';

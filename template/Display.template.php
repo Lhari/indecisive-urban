@@ -221,12 +221,12 @@ if( $context['user']['is_guest'] )
 	//call_integration_hook('integrate_display_buttons', array(&$normal_buttons));
 	// Show the page index... "Pages: [1]".
 	echo '
-			<div class="pagesection left">
+			<div class="pagesection left is-hidden--palm">
 				<div class="nextlinks">', $context['previous_next'], '</div>
 				<div class="pagelinks">', $txt['pages'], ': ', $context['page_index'], !empty($modSettings['topbottomEnable']) ? $context['menu_separator'] . ' &nbsp;&nbsp;<a href="#lastPost"><strong>' . $txt['go_down'] . '</strong></a>' : '', '</div>
 			</div>';
 
-	echo '<div class="grid--last grid-group">';
+	echo '<div class="grid--last grid-group main-control">';
 	template_button_strip_with_icons_and_text($normal_buttons);
 	echo '</div>';
 	echo '</div>';
@@ -284,7 +284,7 @@ if( $context['user']['is_guest'] )
 
 		// Show information about the poster of this message.
 		echo '
-						<div class="poster grid size-2 size-12--palm">
+						<div class="poster grid size-2 size-12--palm" data-class="'.str_replace(' ', '_', strtolower($message['member']['options']['cust_class'])).'">
 							<h4 class="titlebg">';
 
 		// Show online and offline buttons?
@@ -296,7 +296,7 @@ if( $context['user']['is_guest'] )
 		echo '
 								', $message['member']['link'], '
 							</h4>
-							<ul class="reset smalltext" id="msg_', $message['id'], '_extra_info">';
+							<ul class="reset smalltext is-hidden--palm" id="msg_', $message['id'], '_extra_info">';
 
 		// Show the member's custom title, if they have one.
 		if (!empty($message['member']['title']))
@@ -475,8 +475,7 @@ if( $context['user']['is_guest'] )
 		// If this is the first post, (#0) just say when it was posted - otherwise give the reply #.
 		if ($message['can_approve'] || $context['can_reply'] || $message['can_modify'] || $message['can_remove'] || $context['can_split'] || $context['can_restore_msg'])
 			echo '
-								<ul class="forum__mini-menu">';
-
+								<ul class="forum__mini-menu js-edit-menu">';
 		// Maybe we can approve it, maybe we should?
 		if ($message['can_approve'])
 			echo '
@@ -755,7 +754,7 @@ if( $context['user']['is_guest'] )
 					<div class="pagelinks">', $txt['pages'], ': ', $context['page_index'], !empty($modSettings['topbottomEnable']) ? $context['menu_separator'] . ' &nbsp;&nbsp;<a href="#top"><strong>' . $txt['go_up'] . '</strong></a>' : '', '</div>
 				</div>';
 
-			echo '<div class="grid-group grid--last">';
+			echo '<div class="grid-group main-control grid--last">';
 				template_button_strip_with_icons_and_text($normal_buttons);
 			echo '</div>';
 		echo '</div>';
@@ -778,7 +777,7 @@ if( $context['user']['is_guest'] )
 			echo '<div class="grid size-2">&nbsp;</div>';
 			echo '
 			<a id="quickreply"></a>
-			<div class="tborder grid size-10" id="quickreplybox">
+			<div class="tborder grid size-10 size-12--palm" id="quickreplybox">
 				<div class="cat_bar">
 					<h3 class="titlebg">
 						<a href="javascript:oQuickReply.swap();">', $txt['quick_reply'], '</a>

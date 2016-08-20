@@ -3,7 +3,10 @@ input[type="submit"], input[type="button"], button {
 	border-right: 0;
 	outline: none;
 }
-.button, .buttons input[type="button"], .buttons input[type="submit"] {
+
+
+
+.button, .buttons input[type="button"], .buttons input[type="submit"], .spoiler_head {
 
 	//border: 1px solid rgba($color-light-gray, 0.7);
 	border-radius: 6px;
@@ -15,6 +18,8 @@ input[type="submit"], input[type="button"], button {
 	//box-shadow: inset 0 0 11px rgba(0,0,0,0.5);
 	border-top: 1px solid rgba($color-light, 0.3);
 	border-bottom: 1px solid rgba($color-dark, 0.1);
+	display: inline-block;
+	cursor: pointer;
 
 	&:hover {
 		background: $color-primary;
@@ -30,6 +35,10 @@ input[type="submit"], input[type="button"], button {
 			background:$color-teritary;
 		}
 	}
+}
+
+.spoiler_head {
+	margin: $spacing/2 0;
 }
 
 .buttons input[type="submit"]:first-of-type {
