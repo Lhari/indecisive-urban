@@ -308,7 +308,7 @@ function template_view_picture() {
 			<label>' . $txt['gallery_text_width'] . '</label> ' . $context['gallery_pic']['width'] . '<br />';
 
 		if (!empty($context['gallery_pic']['keywords'])) {
-			echo $txt['gallery_form_keywords'] . ' ';
+			echo '<label>' .  $txt['gallery_form_keywords'] . '</label> ';
 			for ($i = 0; $i < $keywordscount;$i++) {
 				echo '<a href="' . $scripturl . '?action=gallery;sa=search2;key=' . $keywords[$i] . '">' . $keywords[$i] . '</a>&nbsp;';
 			}

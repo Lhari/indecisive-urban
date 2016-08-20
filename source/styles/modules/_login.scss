@@ -1,7 +1,5 @@
 .login {
-	height: 100vh;
 	width: 100%;
-	position: absolute;
 	z-index: 1000;
 
 	.login__wrapper {
@@ -50,13 +48,13 @@
 
 	.login__password--wrapper, .login__username--wrapper {
 		position: relative;
-	
+
 		&:before {
 			position: absolute;
 			left: 6px;
 			top: 8px;
 			color: $color-dark;
-		}	
+		}
 	}
 
 	.login__password--wrapper {
