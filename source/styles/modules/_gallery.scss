@@ -82,6 +82,12 @@
   .gallery-admin {
     margin-bottom: $spacing;
   }
+
+  label {
+    margin: $spacing/2 0;
+    font-weight: bold;
+    display: block;
+  }
 }
 
 .gallery-status {
@@ -101,7 +107,6 @@
     position: relative;
 
     a {
-      font-size: 120px;
       color: $color-light;
 
       &:hover {
@@ -144,7 +149,49 @@
 
 .gallery-form {
   margin: $spacing 0 $spacing*2 0;
+
+  input[type="text"], input[type="submit"] {
+    margin: 0;
+  }
 }
+
+.gallery-view-image {
+  margin: $spacing 0 $spacing*2 0;
+
+  label {
+    display: inline-block !important;
+    &.fixed-width {
+      max-width: 180px;
+      width: 100%;
+    }
+  }
+
+  input[type="text"] {
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .image-header {
+    display: block;
+    height: 60px;
+
+    a {
+      line-height: 4;
+    }
+  }
+
+  @include media('palm') {
+    a {
+      display: none;
+    }
+  }
+}
+
+.select-category {
+  max-width: 250px;
+  width: 100%;
+}
+
 
 #gallery-grid {
   list-style: none;

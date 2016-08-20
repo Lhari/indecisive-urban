@@ -4,9 +4,11 @@ input[type="submit"], input[type="button"], button {
 	outline: none;
 }
 
+input[type="submit"] {
 
+}
 
-.button, .buttons input[type="button"], .buttons input[type="submit"], .spoiler_head {
+.button, .buttons input[type="button"], input[type="submit"], .spoiler_head {
 
 	//border: 1px solid rgba($color-light-gray, 0.7);
 	border-radius: 6px;

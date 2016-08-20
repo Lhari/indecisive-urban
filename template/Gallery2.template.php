@@ -185,625 +185,49 @@ function template_image_listing() {
 }
 
 function template_add_category() {
-	global $scripturl, $txt, $context, $settings;
-
-	// Load the spell checker?
-	if ($context['show_spellchecking']) {
-		echo '<script language="JavaScript" type="text/javascript" src="' . $settings['default_theme_url'] . '/scripts/spellcheck.js"></script>';
-	}
-
-	echo '
-		<div id="gallery">';
-
-		echo '
-      <div class="gallery-header">
-				<h3>', $txt['gallery_text_addcategory'], '</h3>
-				<div class="gallery-menu">';
-				ShowGalleryMenu();
-
-			echo '
-				</div>
-			</div>';
-
-	echo '
-	<div class="gallery-form grid-group">
-	<form method="post" name="catform" id="catform" action="' . $scripturl . '?action=gallery&sa=addcat2" accept-charset="', $context['character_set'], '" onsubmit="submitonce(this);">
-	<table border="0" cellpadding="0" cellspacing="0" width="100%">
-
-  <tr>
-    <td width="28%" class="windowbg2" align="right"><b>' . $txt['gallery_form_title'] .'</b>&nbsp;</td>
-    <td width="72%" class="windowbg2"><input type="text" name="title" size="64" maxlength="100" /></td>
-  </tr>
-  <tr>
-    <td width="28%"  valign="top" class="windowbg2" align="right"><b>' . $txt['gallery_form_description'] . '</b>&nbsp;</td>
-    <td width="72%"  class="windowbg2">
-     <table>
-   ';
-
-
-	if (!function_exists('getLanguages'))
-	{
-		// Showing BBC?
-	if ($context['show_bbc'])
-	{
-		echo '
-							<tr class="windowbg2">
-
-								<td colspan="2" align="center">
-									', template_control_richedit($context['post_box_name'], 'bbc'), '
-								</td>
-							</tr>';
-	}
-
-	// What about smileys?
-	if (!empty($context['smileys']['postform']))
-		echo '
-							<tr class="windowbg2">
-
-								<td colspan="2" align="center">
-									', template_control_richedit($context['post_box_name'], 'smileys'), '
-								</td>
-							</tr>';
-
-	// Show BBC buttons, smileys and textbox.
-	echo '
-							<tr class="windowbg2">
-
-								<td colspan="2" align="center">
-									', template_control_richedit($context['post_box_name'], 'message'), '
-								</td>
-							</tr>';
-	}
-	else
-	{
-		echo '
-								<tr class="windowbg2">
-		<td>';
-			// Showing BBC?
-		if ($context['show_bbc'])
-		{
-			echo '
-					<div id="bbcBox_message"></div>';
-		}
-
-		// What about smileys?
-		if (!empty($context['smileys']['postform']) || !empty($context['smileys']['popup']))
-			echo '
-					<div id="smileyBox_message"></div>';
-
-		// Show BBC buttons, smileys and textbox.
-		echo '
-					', template_control_richedit($context['post_box_name'], 'smileyBox_message', 'bbcBox_message');
-
-
-		echo '</td></tr>';
-	}
-
-
-   echo '</table>';
-
-
-   	if ($context['show_spellchecking'])
-   		echo '
-   									<br /><input type="button" value="', $txt['spell_check'], '" onclick="spellCheck(\'catform\', \'description\');" />';
-	echo '</td>
-	  </tr>
-	  <tr>
-	    <td width="28%"  class="windowbg2" align="right"><b>' . $txt['gallery_form_icon'] . '</b>&nbsp;</td>
-	    <td width="72%" class="windowbg2"><input type="text" name="image" size="64" maxlength="100" /></td>
-	  </tr>
-	  <tr>
-	    <td width="28%" colspan="2" align="center" class="windowbg2">
-	    <input type="submit" value="' . $txt['gallery_text_addcategory'] . '" name="submit" /></td>
-
-	  </tr>
-	</table>
-	</form>
-	</div>';
-
-	if ($context['show_spellchecking'])
-			echo '<form action="', $scripturl, '?action=spellcheck" method="post" accept-charset="', $context['character_set'], '" name="spell_form" id="spell_form" target="spellWindow"><input type="hidden" name="spellstring" value="" /></form>';
-
-
-	GalleryCopyright();
+	CategoryAdmin('add');
 }
 
 function template_edit_category() {
-	global $scripturl, $txt, $context, $settings;
-
-    ShowTopGalleryBarNew();
-
-	// Load the spell checker?
-	if ($context['show_spellchecking'])
-		echo '
-									<script language="JavaScript" type="text/javascript" src="' . $settings['default_theme_url'] . '/scripts/spellcheck.js"></script>';
-
-
-	echo '
-	<form method="post" name="catform" id="catform" action="' . $scripturl . '?action=gallery&sa=editcat2" accept-charset="', $context['character_set'], '" onsubmit="submitonce(this);">
-	<div class="cat_bar">
-			<h3 class="catbg centertext">
-	        ', $txt['gallery_text_editcategory'], '
-	        </h3>
-	</div>
-	<table border="0" cellpadding="0" cellspacing="0" width="100%">
-
-	  <tr>
-	    <td width="28%"  class="windowbg2" align="right"><b>' . $txt['gallery_form_title'] . '</b>&nbsp;</td>
-	    <td width="72%"  class="windowbg2"><input type="text" name="title" size="64" maxlength="100" value="' . $context['gallery_cat_edit']['title'] . '" /></td>
-	  </tr>
-	  <tr>
-	    <td width="28%"  valign="top" class="windowbg2" align="right"><b>' . $txt['gallery_form_description'] . '</b>&nbsp;</td>
-	    <td width="72%"  class="windowbg2">
-	     <table>
-   ';
-
-	if (!function_exists('getLanguages'))
-	{
-	// Showing BBC?
-	if ($context['show_bbc'])
-	{
-		echo '
-							<tr class="windowbg2">
-
-								<td colspan="2" align="center">
-									', template_control_richedit($context['post_box_name'], 'bbc'), '
-								</td>
-							</tr>';
-	}
-
-	// What about smileys?
-	if (!empty($context['smileys']['postform']))
-		echo '
-							<tr class="windowbg2">
-
-								<td colspan="2" align="center">
-									', template_control_richedit($context['post_box_name'], 'smileys'), '
-								</td>
-							</tr>';
-
-	// Show BBC buttons, smileys and textbox.
-	echo '
-							<tr class="windowbg2">
-
-								<td colspan="2" align="center">
-									', template_control_richedit($context['post_box_name'], 'message'), '
-								</td>
-							</tr>';
-	}
-	else
-	{
-		echo '
-								<tr class="windowbg2">
-		<td>';
-			// Showing BBC?
-		if ($context['show_bbc'])
-		{
-			echo '
-					<div id="bbcBox_message"></div>';
-		}
-
-		// What about smileys?
-		if (!empty($context['smileys']['postform']) || !empty($context['smileys']['popup']))
-			echo '
-					<div id="smileyBox_message"></div>';
-
-		// Show BBC buttons, smileys and textbox.
-		echo '
-					', template_control_richedit($context['post_box_name'], 'smileyBox_message', 'bbcBox_message');
-
-
-		echo '</td></tr>';
-	}
-
-
-   echo '</table>';
-
-
-
-   	if ($context['show_spellchecking'])
-   		echo '
-   									<br /><input type="button" value="', $txt['spell_check'], '" onclick="spellCheck(\'catform\', \'description\');" />';
-	echo '</td>
-	  </tr>
-	  <tr>
-	    <td width="28%" class="windowbg2" align="right"><b>' . $txt['gallery_form_icon'] . '</b>&nbsp;</td>
-	    <td width="72%"  class="windowbg2"><input type="text" name="image" size="64" maxlength="100" value="' . $context['gallery_cat_edit']['image'] . '" /></td>
-	  </tr>
-	  <tr>
-	    <td width="28%" colspan="2"  align="center" class="windowbg2">
-	    <input type="hidden" value="' . $context['gallery_cat_edit']['id_cat'] . '" name="catid" />
-	    <input type="submit" value="' . $txt['gallery_text_editcategory'] . '" name="submit" /></td>
-
-	  </tr>
-	</table>
-	</form>';
-
-	if ($context['show_spellchecking'])
-			echo '<form action="', $scripturl, '?action=spellcheck" method="post" accept-charset="', $context['character_set'], '" name="spell_form" id="spell_form" target="spellWindow"><input type="hidden" name="spellstring" value="" /></form>';
-
-
-	GalleryCopyright();
+	CategoryAdmin('edit');
 }
 
 function template_delete_category() {
 	global $scripturl, $txt, $context;
 
-    ShowTopGalleryBarNew();
+	echo '
+	<div id="gallery">
+		<div class="gallery-header">
+			<h3>', $txt['gallery_text_delcategory'], '</h3>
+			<div class="gallery-menu">' . ShowGalleryMenu() . '</div>
+		</div>';
 
 	echo '
-	<form method="post" action="' . $scripturl . '?action=gallery&sa=deletecat2" accept-charset="', $context['character_set'], '">
-	<div class="cat_bar">
-			<h3 class="catbg centertext">
-	        ', $txt['gallery_text_delcategory'], '
-	        </h3>
-	</div>
-	<table border="0" cellpadding="0" cellspacing="0" width="100%">
-	  <tr>
-	    <td width="28%" colspan="2" align="center" class="windowbg2">
-	    <b>', $txt['gallery_warn_category'], '</b>
-	    <br />
-	    <input type="hidden" value="' . $context['gallery_catid'] . '" name="catid" />
-	    <input type="submit" value="' . $txt['gallery_text_delcategory'] . '" name="submit" /></td>
-	  </tr>
-	</table>
+	<form class="gallery-form" method="post" action="' . $scripturl . '?action=gallery&sa=deletecat2" accept-charset="', $context['character_set'], '">
+		<table border="0" cellpadding="0" cellspacing="0" width="100%">
+		  <tr>
+		    <td width="28%" colspan="2" align="center" class="windowbg2">
+		    <b>', $txt['gallery_warn_category'], '</b>
+		    <br />
+		    <input type="hidden" value="' . $context['gallery_catid'] . '" name="catid" />
+		    <input type="submit" value="' . $txt['gallery_text_delcategory'] . '" name="submit" /></td>
+		  </tr>
+		</table>
 	</form>
 	';
 
 	GalleryCopyright();
 
+	echo '</div>';
+
 }
 
 function template_add_picture() {
-	global $scripturl, $modSettings,  $txt, $context, $settings;
-
-
-	ShowTopGalleryBarNew();
-
-
-	// Load the spell checker?
-	if ($context['show_spellchecking'])
-		echo '
-									<script language="JavaScript" type="text/javascript" src="' . $settings['default_theme_url'] . '/scripts/spellcheck.js"></script>';
-
-
-	echo '<form method="post" enctype="multipart/form-data" name="picform" id="picform" action="' . $scripturl . '?action=gallery&sa=add2" accept-charset="', $context['character_set'], '" onsubmit="submitonce(this);">
-	<div class="cat_bar">
-			<h3 class="catbg centertext">
-	        ', $txt['gallery_form_addpicture'], '
-	        </h3>
-	</div>
-	';
-
-  if (!empty($context['gallery_errors']))
-	  {
-		echo '<div class="errorbox" id="errors">
-						<dl>
-							<dt>
-								<strong style="" id="error_serious">' . $txt['gallery_errors_addpicture'] . '</strong>
-							</dt>
-							<dt class="error" id="error_list">';
-
-                            foreach($context['gallery_errors'] as $msg)
-                                echo $msg . '<br />';
-
-                            echo '
-							</dt>
-						</dl>
-					</div>';
-	}
-
-	echo '
-	<table border="0" cellpadding="0" cellspacing="0" width="100%">
-	  <tr class="windowbg2">
-	  	<td align="right"><b>' . $txt['gallery_form_title'] . '</b>&nbsp;</td>
-	  	<td><input type="text" name="title" tabindex="1" size="80" value="' . $context['gallery_pic_title'] . '" /></td>
-	  </tr>
-	  <tr class="windowbg2">
-	  	<td align="right"><b>' . $txt['gallery_form_category'] . '</b>&nbsp;</td>
-	  	<td><select name="cat">';
-
-
-	 foreach($context['gallery_cat_list'] as $row)
-	{
-		echo '<option value="' . $row['id_cat']  . '" ' . (($context['gallery_cat_id'] == $row['id_cat']) ? ' selected="selected"' : '') .'>' . $row['title'] . '</option>';
-	}
-
-
- echo '</select>
-  	</td>
-  </tr>
-  <tr class="windowbg2">
-  	<td align="right"><b>' . $txt['gallery_form_description'] . '</b>&nbsp;</td>
-  	<td>
-  	  <table>
-   ';
-
-
- 	if (!function_exists('getLanguages'))
-	{
-
-	// Showing BBC?
-		if ($context['show_bbc'])
-		{
-			echo '
-								<tr class="windowbg2">
-
-									<td colspan="2" align="center">
-										', template_control_richedit($context['post_box_name'], 'bbc'), '
-									</td>
-								</tr>';
-		}
-
-		// What about smileys?
-		if (!empty($context['smileys']['postform']))
-			echo '
-								<tr class="windowbg2">
-
-									<td colspan="2" align="center">
-										', template_control_richedit($context['post_box_name'], 'smileys'), '
-									</td>
-								</tr>';
-
-		// Show BBC buttons, smileys and textbox.
-		echo '
-								<tr class="windowbg2">
-
-									<td colspan="2" align="center">
-										', template_control_richedit($context['post_box_name'], 'message'), '
-									</td>
-								</tr>';
-	}
-	else
-	{
-		echo '
-								<tr class="windowbg2">
-		<td>';
-			// Showing BBC?
-		if ($context['show_bbc'])
-		{
-			echo '
-					<div id="bbcBox_message"></div>';
-		}
-
-		// What about smileys?
-		if (!empty($context['smileys']['postform']) || !empty($context['smileys']['popup']))
-			echo '
-					<div id="smileyBox_message"></div>';
-
-		// Show BBC buttons, smileys and textbox.
-		echo '
-					', template_control_richedit($context['post_box_name'], 'smileyBox_message', 'bbcBox_message');
-
-
-		echo '</td></tr>';
-	}
-
-
-   echo '</table>';
-
-     	if ($context['show_spellchecking'])
-     		echo '
-     									<br /><input type="button" value="', $txt['spell_check'], '" onclick="spellCheck(\'picform\', \'description\');" />';
-
-
-	echo '
-  	</td>
-  </tr>
-  <tr class="windowbg2">
-  	<td align="right"><b>' . $txt['gallery_form_keywords'] . '</b>&nbsp;</td>
-  	<td><input type="text" name="keywords" maxlength="100" size="100" value="' . $context['gallery_pic_keywords'] . '" /></td>
-  </tr>
-  <tr class="windowbg2">
-  	<td align="right" valign="top"><b>' . $txt['gallery_form_uploadpic'] . '</b>&nbsp;</td>
-
-    <td><input type="file" size="48" name="picture" />';
-
-  if(!empty($modSettings['gallery_max_width']))
- 	echo '<br />' . $txt['gallery_form_maxwidth'] .  $modSettings['gallery_max_width'] . $txt['gallery_form_pixels'];
-  if(!empty($modSettings['gallery_max_height']))
-  	echo '<br />' . $txt['gallery_form_maxheight'] .  $modSettings['gallery_max_height'] . $txt['gallery_form_pixels'];
-
- 	echo '
-    </td>
-  </tr>';
-
-  if(!empty($modSettings['gallery_commentchoice']))
-  {
-	echo '
-	   <tr class="windowbg2">
-		<td align="right"><b>' . $txt['gallery_form_additionaloptions'] . '</b>&nbsp;</td>
-		<td><input type="checkbox" name="allowcomments" checked="checked" /><b>' . $txt['gallery_form_allowcomments'] .'</b></td>
-	  </tr>';
-  }
-
-	echo '
-  <tr class="windowbg2">
-    <td width="28%" colspan="2"  align="center" class="windowbg2">
-
-    <input type="submit" value="' . $txt['gallery_form_addpicture'] . '" name="submit" /><br />';
-
-  	if (!allowedTo('smfgallery_autoapprove'))
-  		echo $txt['gallery_form_notapproved'];
-
-	echo '
-	    </td>
-	  </tr>
-	</table>
-
-		</form>
-		';
-
-	if ($context['show_spellchecking'])
-			echo '<form action="', $scripturl, '?action=spellcheck" method="post" accept-charset="', $context['character_set'], '" name="spell_form" id="spell_form" target="spellWindow"><input type="hidden" name="spellstring" value="" /></form>';
-
+	PictureAdmin('add');
 }
 
 function template_edit_picture() {
-	global $scripturl, $modSettings, $txt, $context, $settings;
-
-	ShowTopGalleryBarNew();
-
-	// Load the spell checker?
-	if ($context['show_spellchecking'])
-		echo '
-									<script language="JavaScript" type="text/javascript" src="' . $settings['default_theme_url'] . '/scripts/spellcheck.js"></script>';
-
-
-	echo '<form method="post" enctype="multipart/form-data" name="picform" id="picform" action="' . $scripturl . '?action=gallery&sa=edit2" accept-charset="', $context['character_set'], '" onsubmit="submitonce(this);">
-	<div class="cat_bar">
-			<h3 class="catbg centertext">
-	        ', $txt['gallery_form_addpicture'], '
-	        </h3>
-	</div>
-
-	<table border="0" cellpadding="0" cellspacing="0" width="100%">
-  <tr class="windowbg2">
-  	<td align="right"><b>' . $txt['gallery_form_title'] . '</b>&nbsp;</td>
-  	<td><input type="text" name="title" tabindex="1" size="80" value="' . $context['gallery_pic']['title'] . '" /></td>
-  </tr>
-  <tr class="windowbg2">
-  	<td align="right"><b>' . $txt['gallery_form_category'] . '</b>&nbsp;</td>
-  	<td><select name="cat">';
-
- 	foreach($context['gallery_cat_list'] as $row)
-	{
-		echo '<option value="' . $row['id_cat']  . '" ' . (($context['gallery_pic']['id_cat'] == $row['id_cat']) ? ' selected="selected"' : '') .'>' . $row['title'] . '</option>';
-	}
-
-
- echo '</select>
-  	</td>
-  </tr>
-  <tr class="windowbg2">
-  	<td align="right"><b>' . $txt['gallery_form_description'] . '</b>&nbsp;</td>
-  	<td>
-   <table>
-   ';
-
- if (!function_exists('getLanguages'))
-	{
-	// Showing BBC?
-	if ($context['show_bbc'])
-	{
-		echo '
-							<tr class="windowbg2">
-
-								<td colspan="2" align="center">
-									', template_control_richedit($context['post_box_name'], 'bbc'), '
-								</td>
-							</tr>';
-	}
-
-	// What about smileys?
-	if (!empty($context['smileys']['postform']))
-		echo '
-							<tr class="windowbg2">
-
-								<td colspan="2" align="center">
-									', template_control_richedit($context['post_box_name'], 'smileys'), '
-								</td>
-							</tr>';
-
-	// Show BBC buttons, smileys and textbox.
-	echo '
-							<tr class="windowbg2">
-
-								<td colspan="2" align="center">
-									', template_control_richedit($context['post_box_name'], 'message'), '
-								</td>
-							</tr>';
-	}
-	else
-	{
-		echo '
-								<tr class="windowbg2">
-		<td>';
-			// Showing BBC?
-		if ($context['show_bbc'])
-		{
-			echo '
-					<div id="bbcBox_message"></div>';
-		}
-
-		// What about smileys?
-		if (!empty($context['smileys']['postform']) || !empty($context['smileys']['popup']))
-			echo '
-					<div id="smileyBox_message"></div>';
-
-		// Show BBC buttons, smileys and textbox.
-		echo '
-					', template_control_richedit($context['post_box_name'], 'smileyBox_message', 'bbcBox_message');
-
-
-		echo '</td></tr>';
-	}
-
-
-
-   echo '</table>';
-
-
-     	if ($context['show_spellchecking'])
-     		echo '
-     									<br /><input type="button" value="', $txt['spell_check'], '" onclick="spellCheck(\'picform\', \'description\');" />';
-
-	echo '
-  	</td>
-  </tr>
-  <tr class="windowbg2">
-  	<td align="right"><b>' . $txt['gallery_form_keywords'] . '</b>&nbsp;</td>
-  	<td><input type="text" name="keywords" maxlength="100" size="100" value="' . $context['gallery_pic']['keywords'] . '" /></td>
-  </tr>
-  <tr class="windowbg2">
-  	<td align="right" valign="top"><b>' . $txt['gallery_form_uploadpic'] . '</b>&nbsp;</td>
-
-    <td><input type="file" size="48" name="picture" />';
-
-  if(!empty($modSettings['gallery_max_width']))
- 	echo '<br />' . $txt['gallery_form_maxwidth'] .  $modSettings['gallery_max_width'] . $txt['gallery_form_pixels'];
-  if(!empty($modSettings['gallery_max_height']))
-  	echo '<br />' . $txt['gallery_form_maxheight'] .  $modSettings['gallery_max_height'] . $txt['gallery_form_pixels'];
-
- echo '
-    </td>
-  </tr>';
-
-  if ($modSettings['gallery_commentchoice'])
-  {
-	echo '
-	   <tr class="windowbg2">
-		<td align="right"><b>' . $txt['gallery_form_additionaloptions'] . '</b>&nbsp;</td>
-		<td><input type="checkbox" name="allowcomments" ' . ($context['gallery_pic']['allowcomments'] ? 'checked="checked"' : '' ) . ' /><b>',$txt['gallery_form_allowcomments'],'</b></td>
-	  </tr>';
-  }
-
-	echo '
-  <tr class="windowbg2">
-    <td width="28%" colspan="2" align="center" class="windowbg2">
-	<input type="hidden" name="id" value="' . $context['gallery_pic']['id_picture'] . '" />
-    <input type="submit" value="' . $txt['gallery_form_editpicture'] . '" name="submit" /><br />';
-
-  	if (!allowedTo('smfgallery_autoapprove'))
-  		echo $txt['gallery_form_notapproved'];
-
-	echo '<div align="center"><br /><b>' . $txt['gallery_text_oldpicture'] . '</b><br />
-	<a href="' . $scripturl . '?action=gallery;sa=view;pic=' . $context['gallery_pic']['id_picture'] . '" target="blank"><img src="' . $modSettings['gallery_url'] . $context['gallery_pic']['thumbfilename']  . '" border="0" /></a><br />
-			<span class="smalltext">' . $txt['gallery_text_views']  . $context['gallery_pic']['views'] . '<br />
-			' . $txt['gallery_text_filesize']  . gallery_format_size($context['gallery_pic']['filesize'],2) . '<br />
-			' . $txt['gallery_text_date'] . $context['gallery_pic']['date'] . '<br />
-	</div>
-    </td>
-  </tr>
-	</table>
-
-		</form>
-	';
-
-	if ($context['show_spellchecking'])
-			echo '<form action="', $scripturl, '?action=spellcheck" method="post" accept-charset="', $context['character_set'], '" name="spell_form" id="spell_form" target="spellWindow"><input type="hidden" name="spellstring" value="" /></form>';
-
-
+	PictureAdmin('edit');
 }
 
 function template_view_picture() {
@@ -818,98 +242,45 @@ function template_view_picture() {
 	$keywords = explode(' ',$context['gallery_pic']['keywords']);
  	$keywordscount = count($keywords);
 
-
 	$previousImage = PreviousImage($context['gallery_pic']['id_picture'],$context['gallery_pic']['id_cat'],true);
 	$nextImage =  NextImage($context['gallery_pic']['id_picture'],$context['gallery_pic']['id_cat'],true);
 
-	ShowTopGalleryBarNew();
+	echo '
+		<div id="gallery">
+			<div class="gallery-header">
+				<h3>', "View Image", '</h3>
+				<div class="gallery-menu">' . ShowGalleryMenu() . '</div>
+			</div>';
 
+		echo '
+			<div class="gallery-view-image grid size-12">';
 
-	echo '<br /><table cellspacing="0" cellpadding="10" border="0" align="center" width="100%" class="tborder">
-			<tr class="catbg">
-				<td align="center">' . $context['gallery_pic']['title'] . '</td>
-			</tr>
-			<tr class="windowbg2">
-				<td align="center"><img width="100%" src="' . $modSettings['gallery_url'] . $context['gallery_pic']['filename']  . '" alt="' . $context['gallery_pic']['title']  . '" /></td>
-			</tr>
+		echo '
+			<img width="100%" src="' . $modSettings['gallery_url'] . $context['gallery_pic']['filename']  . '" alt="' . $context['gallery_pic']['title']  . '" />';
 
-			<tr class="windowbg2">
-			<td align="center"><b>';
-			$showSpacer = false;
-			if ($previousImage != $context['gallery_pic']['id_picture'])
-			{
-				$showSpacer = true;
-				echo '<a href="', $scripturl, '?action=gallery;sa=prev&id=', $context['gallery_pic']['id_picture'], '">', $txt['gallery_text_prev'], '</a>';
-			}
+		if ($previousImage != $context['gallery_pic']['id_picture']) {
+			echo '
+				<div class="left">
+					<a href="', $scripturl, '?action=gallery;sa=prev&id=', $context['gallery_pic']['id_picture'], '">', $txt['gallery_text_prev'], '</a>
+				</div>';
+		}
 
-			if ($nextImage  != $context['gallery_pic']['id_picture'])
-			{
-				if ($showSpacer == true)
-					echo ' | ';
-				echo '<a href="', $scripturl, '?action=gallery;sa=next&id=', $context['gallery_pic']['id_picture'], '">', $txt['gallery_text_next'], '</a>';
+		if ($nextImage  != $context['gallery_pic']['id_picture']) {
+			echo '
+				<div class="right">
+					<a href="', $scripturl, '?action=gallery;sa=next&id=', $context['gallery_pic']['id_picture'], '">', $txt['gallery_text_next'], '</a>
+				</div>';
+		}
 
-			}
-				echo '</b>
-			</td>
-			</tr>
+		echo '
+			</div>';
 
-			<tr class="windowbg2">
-
-				<td>
-				<b>' . $txt['gallery_form_description'] . ' </b>' . (parse_bbc($context['gallery_pic']['description'])  ). '
-				<hr />
-				' . $txt['gallery_text_picstats'] . '<br />
-
-				' . $txt['gallery_text_views'] . $context['gallery_pic']['views'] . '<br />
-				' . $txt['gallery_text_filesize']  . gallery_format_size($context['gallery_pic']['filesize'],2) . '<br />
-				'  . $txt['gallery_text_height'] . ' ' . $context['gallery_pic']['height']  . '  ' . $txt['gallery_text_width'] . ' ' . $context['gallery_pic']['width'] . '<br />
-				';
-
-				if (!empty($context['gallery_pic']['keywords']))
-				{
-
-					echo $txt['gallery_form_keywords'] . ' ';
-					for($i = 0; $i < $keywordscount;$i++)
-					{
-						echo '<a href="' . $scripturl . '?action=gallery;sa=search2;key=' . $keywords[$i] . '">' . $keywords[$i] . '</a>&nbsp;';
-					}
-					echo '<br />';
-
-				}
-
-
-
-
-				if ($context['gallery_pic']['real_name'] != '')
-					echo$txt['gallery_text_postedby'] . '<a href="' . $scripturl . '?action=profile;u=' . $context['gallery_pic']['id_member'] . '">'  . $context['gallery_pic']['real_name'] . '</a> ' . $txt['gallery_at'] . $context['gallery_pic']['date'] . '<br /><br />';
-				else
-					echo $txt['gallery_text_postedby'] . $txt['gallery_guest']  . $txt['gallery_at'] . $context['gallery_pic']['date'] . '<br /><br />';
-
-
-
-				// Show image linking codes
-				if ($modSettings['gallery_set_showcode_bbc_image']  || $modSettings['gallery_set_showcode_directlink'] || $modSettings['gallery_set_showcode_htmllink'])
-				{
-					echo '<b>',$txt['gallery_txt_image_linking'],'</b><br />
-					<table border="0">
-					';
-
-					if ($modSettings['gallery_set_showcode_bbc_image'])
-					{
-						echo '<tr><td width="30%">', $txt['gallery_txt_bbcimage'], '</td><td> <input type="text" value="[img]' . $modSettings['gallery_url'] . $context['gallery_pic']['filename']  . '[/img]" size="50" /></td></tr>';
-					}
-					if ($modSettings['gallery_set_showcode_directlink'])
-					{
-						echo '<tr><td width="30%">', $txt['gallery_txt_directlink'], '</td><td> <input type="text" value="' . $modSettings['gallery_url'] . $context['gallery_pic']['filename']  . '" size="50" /></td></tr>';
-					}
-					if ($modSettings['gallery_set_showcode_htmllink'])
-					{
-						echo '<tr><td width="30%">', $txt['gallery_set_showcode_htmllink'], '</td><td> <input type="text" value="<img src=&#34;' . $modSettings['gallery_url'] . $context['gallery_pic']['filename']  . '&#34; />" size="50" /></td></tr>';
-					}
-
-					echo '</table>';
-
-				}
+		// Image Title
+		echo '
+			<div class="gallery-view-image grid size-12">
+			<div class="image-header">
+				<div class="left"><h3>' . $context['gallery_pic']['title'] . '</h3></div>
+				<div class="right">';
 
 				// Show edit picture links if allowed
 				if ($g_manage)
@@ -919,139 +290,87 @@ function template_view_picture() {
 				if ($g_manage || $g_delete_own && $context['gallery_pic']['id_member'] == $id_member)
 					echo '&nbsp;<a href="' . $scripturl . '?action=gallery;sa=delete;pic=' . $context['gallery_pic']['id_picture'] . '">' . $txt['gallery_text_delete'] . '</a>';
 
-
-				// Show report picture link
-				if (allowedTo('smfgallery_report'))
-					echo '&nbsp;<a href="' . $scripturl . '?action=gallery;sa=report&id=' . $context['gallery_pic']['id_picture'] . '">' . $txt['gallery_text_reportpicture'] . '</a>';
-
-
-				echo '
-				</td>
-			</tr>';
-
-		// Display who is viewing the picture.
-		if (!empty($modSettings['gallery_who_viewing']))
-		{
-			echo '<tr>
-			<td align="center" class="windowbg2"><span class="smalltext">';
-
-			// Show just numbers...?
-			// show the actual people viewing the topic?
-			echo empty(
-				$context['view_members_list']) ? '0 ' . $txt['gallery_who_members'] : implode(', ', $context['view_members_list']) . (empty($context['view_num_hidden']) || $context['can_moderate_forum'] ? '' : ' (+ ' . $context['view_num_hidden'] . ' ' . $txt['gallery_who_hidden'] . ')');
-
-			// Now show how many guests are here too.
-			echo $txt['who_and'], @$context['view_num_guests'], ' ', @$context['view_num_guests'] == 1 ? $txt['guest'] : $txt['guests'], $txt['gallery_who_viewpicture'], '</span></td></tr>';
-		}
-
-	echo '
-		</table><br />';
-	//Check if allowed to display comments for this picture
-	if ($context['gallery_pic']['allowcomments'])
-	{
-	   $comment_count = $context['gallery_comment_count'];
-		//Show comments
 		echo '
-		<div class="cat_bar">
-		<h3 class="catbg">
-        ', $txt['gallery_text_comments'], ' (' . $comment_count . ')
-        </h3>
-  </div>
-        <table cellspacing="0" cellpadding="10" border="0" align="center" width="100%" class="tborder">
-			';
+			</div>
+		</div>';
 
-		if (allowedTo('smfgallery_comment'))
-		{
-			//Show Add Comment
-			echo '
-				<tr class="titlebg"><td colspan="2">
-				<a href="' . $scripturl . '?action=gallery;sa=comment&id=' . $context['gallery_pic']['id_picture'] . '">' . $txt['gallery_text_addcomment']  . '</a></td>
-				</tr>';
+		echo '<hr />';
+
+		// Image Details
+		if (!empty($context['gallery_pic']['description'])) {
+			echo '<label>' . $txt['gallery_form_description'] . ' </label>' . (parse_bbc($context['gallery_pic']['description'])  );
 		}
 
-		// Display all user comments
+		echo '
+			<label>' . $txt['gallery_text_views'] . '</label> ' . $context['gallery_pic']['views'] . '<br />
+			<label>' . $txt['gallery_text_filesize'] . '</label> ' . gallery_format_size($context['gallery_pic']['filesize'], 2) . '<br />
+			<label>' . $txt['gallery_text_height'] . '</label> ' .  $context['gallery_pic']['height']  . '<br />
+			<label>' . $txt['gallery_text_width'] . '</label> ' . $context['gallery_pic']['width'] . '<br />';
 
-		foreach($context['gallery_comment_list'] as $row)
-		{
-			echo '<tr class="windowbg">';
-			// Display member info
-			echo '<td width="10%" valign="top">';
-
-			if ($row['real_name'] != '')
-			{
-				echo '<a href="' . $scripturl . '?action=profile;u=' . $row['id_member'] . '">'  . $row['real_name'] . '</a><br />
-				<span class="smalltext">' . $txt['gallery_text_posts'] . $row['posts'] . '</span><br />';
-				// Display the users avatar
-	            $memCommID = $row['id_member'];
-	            loadMemberData($memCommID);
-				loadMemberContext($memCommID);
-
-
-				echo $memberContext[$memCommID]['avatar']['image'];
+		if (!empty($context['gallery_pic']['keywords'])) {
+			echo $txt['gallery_form_keywords'] . ' ';
+			for ($i = 0; $i < $keywordscount;$i++) {
+				echo '<a href="' . $scripturl . '?action=gallery;sa=search2;key=' . $keywords[$i] . '">' . $keywords[$i] . '</a>&nbsp;';
 			}
-			else
-				echo $txt['gallery_guest'] . '<br />';
-
-
-			echo '
-			</td>';
-			// Display the comment
-			echo '<td width="90%"><span class="smalltext">' . timeformat($row['date']) . '</span><hr />';
-
-			echo   parse_bbc($row['comment']);
-
-			// Check if the user is allowed to delete the comment.
-			if($g_manage)
-				echo '<br /><a href="' . $scripturl . '?action=gallery;sa=delcomment&id=' . $row['id_comment'] . '">' . $txt['gallery_text_delcomment'] .'</a>';
-
-
-			echo '</td>';
-			echo '</tr>';
+			echo '<br />';
 		}
 
-
-
-		// Show Add Comment link again if there are more than one comment
-		if( allowedTo('smfgallery_comment') && $comment_count != 0)
-		{
-		 // Show Add Comment
-			echo '
-				<tr class="titlebg">
-					<td colspan="2">
-					<a href="' . $scripturl . '?action=gallery;sa=comment&id=' . $context['gallery_pic']['id_picture'] . '">' . $txt['gallery_text_addcomment'] . '</a>
-					</td>
-				</tr>';
+		if ($context['gallery_pic']['real_name'] != '') {
+			echo '<label>' . $txt['gallery_text_postedby'] . '</label> <a href="' . $scripturl . '?action=profile;u=' . $context['gallery_pic']['id_member'] . '">'  . $context['gallery_pic']['real_name'] . '</a> ' . $txt['gallery_at'] . $context['gallery_pic']['date'] . '<br /><br />';
+		} else {
+			echo '<label>' . $txt['gallery_text_postedby'] . '</label> ' . $txt['gallery_guest']  . $txt['gallery_at'] . $context['gallery_pic']['date'] . '<br /><br />';
 		}
 
-		echo '</table><br />';
-	}
+		// Show image linking codes
+		if ($modSettings['gallery_set_showcode_bbc_image']  || $modSettings['gallery_set_showcode_directlink'] || $modSettings['gallery_set_showcode_htmllink']) {
+			echo '<h3>',$txt['gallery_txt_image_linking'],'</h3>';
 
+			if ($modSettings['gallery_set_showcode_bbc_image']) {
+				echo '
+					<label class="fixed-width">', $txt['gallery_txt_bbcimage'], '</label>
+					<input type="text" value="[img]' . $modSettings['gallery_url'] . $context['gallery_pic']['filename']  . '[/img]" size="50" /></br>';
+			}
 
-	// Link back to the gallery index
-	echo '<div align="center"><a href="', $scripturl, '?action=gallery">' . $txt['gallery_text_returngallery'] . '</a></div><br />';
+			if ($modSettings['gallery_set_showcode_directlink']) {
+				echo '
+					<label class="fixed-width">', $txt['gallery_txt_directlink'], '</label>
+					<input type="text" value="' . $modSettings['gallery_url'] . $context['gallery_pic']['filename']  . '" size="50" /></br>';
+			}
 
+			if ($modSettings['gallery_set_showcode_htmllink']){
+				echo '
+					<label class="fixed-width">', $txt['gallery_set_showcode_htmllink'], '</label>
+					<input type="text" value="<img src=&#34;' . $modSettings['gallery_url'] . $context['gallery_pic']['filename']  . '&#34; />" size="50" /></br>';
+			}
+		}
 
+		echo '
+			</div>';
 
 	GalleryCopyright();
+
+	echo '</div>';
 }
 
 function template_delete_picture() {
 	global $scripturl, $modSettings, $txt, $context;
 
-	ShowTopGalleryBarNew();
+	echo '
+		<div id="gallery">
+			<div class="gallery-header">
+				<h3>', $txt['gallery_form_delpicture'], '</h3>
+				<div class="gallery-menu">' . ShowGalleryMenu() . '</div>
+			</div>';
 
 	echo '
-	<form method="post" action="' . $scripturl . '?action=gallery&sa=delete2" accept-charset="', $context['character_set'], '">
-		<div class="cat_bar">
-			<h3 class="catbg centertext">', $txt['gallery_form_delpicture'], '</h3>
-		</div>
+	<form class="gallery-form" method="post" action="' . $scripturl . '?action=gallery&sa=delete2" accept-charset="', $context['character_set'], '">
 
 		<table border="0" cellpadding="0" cellspacing="0" width="100%">
 			<tr class="windowbg2">
 				<td width="28%" colspan="2" align="center" class="windowbg2">
 				' . $txt['gallery_warn_deletepicture'] . '
 				<br />
-				<div align="center"><br /><b>' . $txt['gallery_form_delpicture'] . '</b><br />
+				<div align="center"><br />
 					<a href="' . $scripturl . '?action=gallery;sa=view;pic=' . $context['gallery_pic']['id_picture'] . '" target="blank"><img src="' . $modSettings['gallery_url'] . $context['gallery_pic']['thumbfilename']  . '" border="0" /></a><br />
 					<span class="smalltext">' . $txt['gallery_text_views'] . $context['gallery_pic']['views'] . '<br />
 					' . $txt['gallery_text_filesize']  . gallery_format_size($context['gallery_pic']['filesize'],2) . '<br />
@@ -1066,6 +385,8 @@ function template_delete_picture() {
 	</form>';
 
 	GalleryCopyright();
+
+	echo '</div>';
 }
 
 function template_add_comment() {
@@ -1207,7 +528,7 @@ function template_manage_cats() {
 	global $scripturl, $txt, $context;
 
 	echo '
-	<table border="0" width="80%" cellspacing="0" align="center" cellpadding="4" class="tborder">
+	<table border="0" width="100%" cellspacing="0" align="center" cellpadding="4" class="tborder">
 		<tr class="titlebg">
 			<td>' . $txt['gallery_form_managecats'] . '</td>
 		</tr>
@@ -1217,8 +538,8 @@ function template_manage_cats() {
 			<br />';
 
 		// List all the catagories
-		echo '<table cellspacing="0" cellpadding="10" border="0" align="center" width="90%" class="tborder">
-				<tr class="titlebg">
+		echo '<table cellspacing="0" cellpadding="10" border="0" align="center" width="100%" style="margin:0;" class="tborder">
+				<tr class="">
 				<td>', $txt['gallery_text_galleryname'], '</td>
 				<td>', $txt['gallery_text_gallerydescription'], '</td>
 				<td>', $txt['gallery_text_totalimages'], '</td>
@@ -1683,43 +1004,35 @@ function GalleryCopyright() {
 function template_regenerate() {
 	global $scripturl, $context, $txt, $modSettings;
 
-    ShowTopGalleryBarNew();
+	echo '
+		<div id="gallery">
+			<div class="gallery-header">
+				<h3>', $txt['gallery_text_regeneratethumbnails2'], '</h3>
+				<div class="gallery-menu">' . ShowGalleryMenu() . '</div>
+			</div>';
 
-	echo '<div class="tborder">
-		<form method="post" action="' . $scripturl . '?action=gallery;sa=regen2">
-        <div class="cat_bar">
-		<h3 class="catbg centertext">
-        ', $txt['gallery_text_regeneratethumbnails2'], '
-        </h3>
-	</div>
+	echo '
+		<form class="gallery-form" method="post" action="' . $scripturl . '?action=gallery;sa=regen2">
+			<div class="text-center grid size-12">';
 
-		<table border="0" cellpadding="0" cellspacing="0" width="100%">
-		  <tr>
-			<td width="50%" class="windowbg2" align="right"><b>' . $txt['gallery_form_category']. '</b>&nbsp;</td>
-			<td width="50%" class="windowbg2">' . $context['gallery_cat_name']  . '</td>
-		</tr>
-		  <tr>
-			<td width="28%" colspan="2" class="windowbg2">
-			' . $txt['gallery_regen_notes'] . '
+	echo '
+		<strong>' . $txt['gallery_form_category'] . ' </strong>' . $context['gallery_cat_name'];
 
-				</td>
-		  </tr>
-		<tr>
-			<td width="28%" colspan="2"  align="center" class="windowbg2">
-			<b>',$txt['gallery_set_thumb_height'],'</b> ',$modSettings['gallery_thumb_height'],'<br />
-			<b>',$txt['gallery_set_thumb_width'],'</b> ',$modSettings['gallery_thumb_width'],'<br />
-			 <br />
-		    <hr />
+	echo '
+		<p><br>' . $txt['gallery_regen_notes'] . '</p><br>';
 
+	echo '
+		<strong>',$txt['gallery_set_thumb_height'],'</strong> ',$modSettings['gallery_thumb_height'],'<br />
+		<strong>',$txt['gallery_set_thumb_width'],'</strong> ',$modSettings['gallery_thumb_width'],'<br />
+		<br />
+		<hr />
+		<br />
+		<input type="hidden" value="' . $context['catid'] . '" name="id" />
+		<input type="submit" value="' . $txt['gallery_text_regeneratethumbnails2'] . '" name="submit" />
+		<br />';
 
-			<br />
-			<input type="hidden" value="' . $context['catid'] . '" name="id" />
-			<input type="submit" value="' . $txt['gallery_text_regeneratethumbnails2'] . '" name="submit" />
-			<br />
-			</td>
-		  </tr>
-		</table>
-		</form>
+		echo '
+			</form>
 		</div>';
 }
 
@@ -2020,6 +1333,7 @@ function ShowAlbumMenu() {
 		echo '
 			<div class="album-menu">
 				<a href="' . $scripturl . '?action=gallery;sa=regen;cat=' . $cat . '">' . $txt['gallery_text_regeneratethumbnails'] . '</a>
+				<a href="' . $scripturl . '?action=gallery;sa=editcat;cat=' . $cat . '">' . $txt['gallery_text_edit'] . '</a>
 				<a href="' . $scripturl . '?action=gallery;sa=deletecat;cat=' . $cat . '">' . $txt['gallery_text_delete'] . '</a>
 			</div>';
 	}
@@ -2073,6 +1387,168 @@ function ShowSearchBox() {
 
 	echo '
 		</form>';
+}
+
+function CategoryAdmin($actiontype) {
+	global $scripturl, $txt, $context, $settings;
+
+	$action = $actiontype . "cat2";
+	$buttontxt = $txt['gallery_text_' . $actiontype . 'category'];
+
+	echo '
+		<div id="gallery">';
+
+		echo '
+			<div class="gallery-header">
+				<h3>', $buttontxt, '</h3>
+				<div class="gallery-menu">' . ShowGalleryMenu() . '</div>
+			</div>';
+
+	echo '
+	<div class="gallery-form grid-group">
+		<div class="grid size-12">
+			<form method="post" name="catform" id="catform" action="' . $scripturl . '?action=gallery&sa=' . $action . '" accept-charset="', $context['character_set'], '" onsubmit="submitonce(this);">';
+
+	echo '
+		<label>' . $txt['gallery_form_title'] . '</label><br>
+		<input type="text" name="title" size="64" maxlength="100" value="' . $context['gallery_cat_edit']['title'] . '" /><br />
+		<label>' . $txt['gallery_form_description'] . '</label>';
+
+		// Showing BBC?
+	if ($context['show_bbc']) {
+		echo '<div id="bbcBox_message"></div>';
+	}
+
+	// What about smileys?
+	if (!empty($context['smileys']['postform']) || !empty($context['smileys']['popup']))
+		echo '<div id="smileyBox_message"></div>';
+
+	// Show BBC buttons, smileys and textbox.
+	echo '', template_control_richedit($context['post_box_name'], 'smileyBox_message', 'bbcBox_message');
+
+	echo '
+		<br>
+		<input type="hidden" value="' . $context['gallery_cat_edit']['id_cat'] . '" name="catid" />
+		<input type="submit" value="' . $buttontxt . '" name="submit" /></td>
+	</div>';
+
+	GalleryCopyright();
+
+	echo '</div>';
+}
+
+function PictureAdmin($actiontype) {
+	global $scripturl, $modSettings,  $txt, $context, $settings;
+
+	$action = $actiontype . "2";
+	$buttontxt = $txt['gallery_form_' . $actiontype . 'picture'];
+
+	echo '
+		<div id="gallery">
+			<div class="gallery-header">
+				<h3>', $buttontxt, '</h3>
+				<div class="gallery-menu">' . ShowGalleryMenu() . '</div>
+			</div>';
+
+		echo '
+			<form class="gallery-form" method="post" enctype="multipart/form-data" name="picform" id="picform" action="' . $scripturl . '?action=gallery&sa=' . $action . '" accept-charset="', $context['character_set'], '" onsubmit="submitonce(this);">';
+
+		// Display any errors preventing the image from being uploaded
+	  if (!empty($context['gallery_errors'])) {
+			echo '
+				<div class="errorbox" id="errors">
+					<strong style="" id="error_serious">' . $txt['gallery_errors_addpicture'] . '</strong>
+					<div class="error" id="error_list">';
+						foreach($context['gallery_errors'] as $msg) {
+							echo $msg . '<br />';
+						}
+			echo '
+				</div>
+			</div>';
+		}
+
+		// Container for the form fields
+		echo '<div class="grid size-12">';
+
+		// Image title
+		echo '
+			<label>' . $txt['gallery_form_title'] . '</label>
+			<input type="text" name="title" size="64" maxlength="100" value="' . $context['gallery_pic']['title'] . '" /><br />';
+
+		// Image Album (category)
+		echo '
+			<label>' . $txt['gallery_form_category'] . '</label>
+			<select class="select-category" name="cat">';
+
+			foreach($context['gallery_cat_list'] as $row) {
+	 			echo '<option value="' . $row['id_cat']  . '" ' . (($context['gallery_pic']['id_cat'] == $row['id_cat']) ? ' selected="selected"' : '') .'>' . $row['title'] . '</option>';
+	 		}
+
+			echo '</select><br>';
+
+		// Image Description
+		echo '
+			<label>' . $txt['gallery_form_description'] . '</label>';
+
+		// Showing BBC?
+		if ($context['show_bbc']) {
+			echo '<div id="bbcBox_message"></div>';
+		}
+
+		// What about smileys?
+		if (!empty($context['smileys']['postform']) || !empty($context['smileys']['popup']))
+			echo '<div id="smileyBox_message"></div>';
+
+		// Show BBC buttons, smileys and textbox.
+		echo '', template_control_richedit($context['post_box_name'], 'smileyBox_message', 'bbcBox_message');
+
+		// Image Keywords
+		echo '
+			<label>' . $txt['gallery_form_keywords'] . '</label>
+			<input type="text" name="keywords" maxlength="100" size="100" value="' . $context['gallery_pic']['keywords'] . '" /><br>';
+
+		// Image Upload
+		echo '
+			<label>' . $txt['gallery_form_uploadpic'] . '</label>
+			<input type="file" size="48" name="picture" />';
+
+		if(!empty($modSettings['gallery_max_width'])) {
+			echo '<br />' . $txt['gallery_form_maxwidth'] .  $modSettings['gallery_max_width'] . $txt['gallery_form_pixels'];
+		}
+
+	  if(!empty($modSettings['gallery_max_height'])) {
+			echo '<br />' . $txt['gallery_form_maxheight'] .  $modSettings['gallery_max_height'] . $txt['gallery_form_pixels'];
+		}
+
+		// Allow commments
+		if(!empty($modSettings['gallery_commentchoice'])) {
+			echo '
+				<label>' . $txt['gallery_form_keywords'] . '</label>
+				<input type="checkbox" name="allowcomments" ' . ($context['gallery_pic']['allowcomments'] ? 'checked="checked"' : '' ) . ' />
+				<strong>',$txt['gallery_form_allowcomments'],'</strong>';
+		}
+
+		// Add Picture
+		echo '
+			<br><br>
+			<input type="hidden" name="id" value="' . $context['gallery_pic']['id_picture'] . '" />
+			<input type="submit" value="' . $buttontxt . '" name="submit" /><br />';
+
+		// Approved?
+		if (!allowedTo('smfgallery_autoapprove')) echo $txt['gallery_form_notapproved'];
+
+		// Old Picture (when editing)
+		if ($actiontype=="edit") {
+			echo '
+				<label>' . $txt['gallery_text_oldpicture'] . '</label>
+				<a href="' . $scripturl . '?action=gallery;sa=view;pic=' . $context['gallery_pic']['id_picture'] . '" target="blank">
+					<img src="' . $modSettings['gallery_url'] . $context['gallery_pic']['thumbfilename']  . '" border="0" />
+				</a>';
+		}
+
+		echo '
+			</form>
+		</div>';
 }
 
 ?>

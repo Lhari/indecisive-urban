@@ -161,6 +161,9 @@
   column-gap: 1.6em;
 }
 
+.text-center {
+  text-align: center;
+}
 // Misc. Helpers
 //
 // The `dummy` class is only for presentational purposes.
@@ -208,9 +211,9 @@
 //
 // Styleguide 6.5
 
-.embed-container { 
+.embed-container {
   height: 0;
-  height: auto; 
+  height: auto;
   margin-bottom: $spacing;
   max-width: 100%;
   overflow: hidden;
@@ -219,15 +222,15 @@
 
   iframe,
   object,
-  embed { 
+  embed {
     border: 0;
-    height: 100%; 
+    height: 100%;
     left: 0;
-    position: absolute; 
-    top: 0; 
-    width: 100%; 
+    position: absolute;
+    top: 0;
+    width: 100%;
   }
-} 
+}
 
 
 // Read More
