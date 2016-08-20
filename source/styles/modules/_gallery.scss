@@ -32,7 +32,7 @@
      width: 200px;
      background: none;
      border: none;
-     background-color: transparent;
+     background-color: rgba(0,0,0,0.5);
 
      &:focus {
        outline:none;
@@ -140,6 +140,10 @@
     }
   }
 
+}
+
+.gallery-form {
+  margin: $spacing 0 $spacing*2 0;
 }
 
 #gallery-grid {

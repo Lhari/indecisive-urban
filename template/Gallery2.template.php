@@ -188,18 +188,26 @@ function template_add_category() {
 	global $scripturl, $txt, $context, $settings;
 
 	// Load the spell checker?
-	if ($context['show_spellchecking'])
-		echo '
-									<script language="JavaScript" type="text/javascript" src="' . $settings['default_theme_url'] . '/scripts/spellcheck.js"></script>';
-
+	if ($context['show_spellchecking']) {
+		echo '<script language="JavaScript" type="text/javascript" src="' . $settings['default_theme_url'] . '/scripts/spellcheck.js"></script>';
+	}
 
 	echo '
+		<div id="gallery">';
+
+		echo '
+      <div class="gallery-header">
+				<h3>', $txt['gallery_text_addcategory'], '</h3>
+				<div class="gallery-menu">';
+				ShowGalleryMenu();
+
+			echo '
+				</div>
+			</div>';
+
+	echo '
+	<div class="gallery-form grid-group">
 	<form method="post" name="catform" id="catform" action="' . $scripturl . '?action=gallery&sa=addcat2" accept-charset="', $context['character_set'], '" onsubmit="submitonce(this);">
-	<div class="cat_bar">
-			<h3 class="catbg centertext">
-	        ', $txt['gallery_text_addcategory'], '
-	        </h3>
-	</div>
 	<table border="0" cellpadding="0" cellspacing="0" width="100%">
 
   <tr>
@@ -290,7 +298,8 @@ function template_add_category() {
 
 	  </tr>
 	</table>
-	</form>';
+	</form>
+	</div>';
 
 	if ($context['show_spellchecking'])
 			echo '<form action="', $scripturl, '?action=spellcheck" method="post" accept-charset="', $context['character_set'], '" name="spell_form" id="spell_form" target="spellWindow"><input type="hidden" name="spellstring" value="" /></form>';
@@ -1570,88 +1579,35 @@ function template_search_results() {
 	// Check if GD is installed if not we will not show the thumbnails
 	$GD_Installed = function_exists('imagecreate');
 
+	echo '
+		<div id="gallery">';
 
+	echo '
+		<div class="gallery-header">
+			<h3>', $txt['gallery_searchresults'], '</h3>
+			<div class="gallery-menu">';
+			ShowGalleryMenu();
 
-	ShowTopGalleryBarNew();
+	echo '
+		</div>
+	</div>';
 
+	ListGalleryImages($context['gallery_search_results']);
 
-	$maxrowlevel = $modSettings['gallery_set_images_per_row'];
-	echo '<br />
+	echo '
+		<div class="gallery-footer">
+			<div class="pagelinks left">';
 
-	<div class="cat_bar">
-			<h3 class="catbg centertext">
-	        ', $txt['gallery_searchresults'], '
-	        </h3>
-	</div>
+	echo $txt['gallery_text_pages'];
+	$context['page_index'] = constructPageIndex($scripturl . '?action=gallery;sa=myimages;u=' . $userid, $context['start'], $totalPics, $modSettings['gallery_set_images_per_page']);
+	echo $context['page_index'];
 
-    <table class="table_list">
-         ';
+	echo '
+		</div>
+	</div>';
 
-	$rowlevel = 0;
-
-
-
-    $styleclass = 'windowbg';
-
-    foreach($context['gallery_search_results'] as $row)
-	{
-			if ($rowlevel == 0)
-				echo '<tr class="' . $styleclass . '">';
-
-			echo '<td align="center"><a href="' . $scripturl . '?action=gallery;sa=view;pic=' . $row['id_picture'] . '">
-			<img ' . ($GD_Installed == true ?  'src="' . $modSettings['gallery_url'] . $row['thumbfilename'] . '" ' : 'src="' . $modSettings['gallery_url'] . $row['filename'] . '" height="78" width="120" ')  . ' border="0" alt="' . $row['title'] . '" /></a><br />';
-			echo '<span class="smalltext">' . $txt['gallery_text_views'] . $row['views'] . '<br />';
-			echo $txt['gallery_text_filesize'] . gallery_format_size($row['filesize'], 2) . '<br />';
-			echo $txt['gallery_text_date'] . timeformat($row['date']) . '<br />';
-			echo $txt['gallery_text_comments'] . ' (<a href="' . $scripturl . '?action=gallery;sa=view;pic=' . $row['id_picture'] . '">' . $row['commenttotal'] . '</a>)<br />';
-			if ($row['real_name'] != '')
-				echo $txt['gallery_text_by'] . ' <a href="' . $scripturl . '?action=profile;u=' . $row['id_member'] . '">'  . $row['real_name'] . '</a><br />';
-			else
-				echo $txt['gallery_text_by'] . $txt['gallery_guest'] . '<br />';
-			if ($g_manage)
-				echo '&nbsp;<a href="' . $scripturl . '?action=gallery;sa=unapprove;pic=' . $row['id_picture'] . '">' . $txt['gallery_text_unapprove'] . '</a>';
-			if ($g_manage || $g_edit_own && $row['id_member'] == $id_member)
-				echo '&nbsp;<a href="' . $scripturl . '?action=gallery;sa=edit;pic=' . $row['id_picture'] . '">' . $txt['gallery_text_edit'] . '</a>';
-			if ($g_manage || $g_delete_own && $row['id_member'] == $id_member)
-				echo '&nbsp;<a href="' . $scripturl . '?action=gallery;sa=delete;pic=' . $row['id_picture'] . '">' . $txt['gallery_text_delete'] . '</a>';
-
-			echo '</span></td>';
-
-
-			if ($rowlevel < ($maxrowlevel-1))
-				$rowlevel++;
-			else
-			{
-				echo '</tr>';
-				$rowlevel = 0;
-			}
-
-
-			if ($styleclass == 'windowbg')
-				$styleclass = 'windowbg2';
-			else
-				$styleclass = 'windowbg';
-
-
-	}
-		if($rowlevel !=0)
-		{
-			echo '<td colspan="' . ($maxrowlevel - $rowlevel) . '"> </td>';
-			echo '</tr>';
-		}
-
-
-		//Show return to gallery link and Show add picture if they can
-		echo '
-				<tr class="titlebg"><td align="center" colspan="' . $maxrowlevel . '">';
-				if ($g_add)
-				echo '<a href="' . $scripturl . '?action=gallery;sa=add">' . $txt['gallery_text_addpicture'] . '</a>&nbsp; - &nbsp;';
-
-				echo '
-				<a href="' . $scripturl . '?action=gallery">' . $txt['gallery_text_returngallery'] . '</a></td>
-			</tr>
-		</table>';
-
+	// Footer padding
+	echo '<br /><br />';
 
 	GalleryCopyright();
 }
@@ -2009,6 +1965,7 @@ function template_convertgallery() {
 
 }
 
+// Custom Functions for Indecisive Theme
 function ShowTopGalleryBarNew($title = '') {
 	global $txt, $context;
 		echo '
