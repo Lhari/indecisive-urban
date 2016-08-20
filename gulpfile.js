@@ -49,7 +49,7 @@ gulp.task('root', function() {
 
 gulp.task('watch', function() {
   gulp.watch('source/styles/*/**', ['css']);
-  gulp.watch('source/scripts/*/**', ['scripts']);
+  gulp.watch('source/scripts/*.js', ['scripts']);
   gulp.watch('source/font/*/**', ['fonts']);
   gulp.watch('root/*/**', ['root'])
 });

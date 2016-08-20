@@ -16,9 +16,7 @@ branding free option is purchased.
 #############################################
 */
 
-
-function template_mainview()
-{
+function template_mainview() {
 	global $scripturl, $txt, $context, $modSettings, $settings;
 
 
@@ -55,7 +53,7 @@ function template_mainview()
 			<div class="album-container grid size-12--palm size-6--lap-and-up">';
 
 			echo '
-				<div class="grid size-12--palm size-3--lap-and-up">
+				<div class="grid size-12--palm size-3--lap size-2--desk">
 					<a href="', $scripturl, '?action=gallery;cat=' . $row['id_cat'] . '" class="album-logo">';
 
 					echo file_get_contents($settings['theme_url'] . '/images/folder-images.svg');
@@ -65,7 +63,7 @@ function template_mainview()
 				</div>';
 
 			echo '
-				<div class="grid size-12--palm size-9--lap-and-up">
+				<div class="grid size-12--palm size-9--lap size-10--desk">
 					<h2>' . parse_bbc($row['title']) . '</h2>
 					<p>' . parse_bbc($row['description']) . '</p>
 					<p class="">' . $totalpics . ' Images</p>' .
@@ -109,8 +107,7 @@ function template_mainview()
 	echo '</div>';
 }
 
-function template_image_listing()
-{
+function template_image_listing() {
 	global $scripturl,  $txt, $context, $modSettings, $id_member;
 
 	// Permissions if they are allowed to edit or delete their own gallery pictures.
@@ -162,36 +159,7 @@ function template_image_listing()
 			echo '<b>',$txt['gallery_nopicsincategory'],'</b>';
 		}
 
-		echo '
-			<ul id="gallery-grid" class="grid-group">';
-
-		foreach($context['gallery_image_list'] as $row) {
-
-			echo '
-				<li class="grid size-12--palm size-6--lap-and-up size-4--desk-wide">';
-
-					echo '
-					<div class="gallery-image">
-						<div class="middle-image">
-
-							<img src="' . $modSettings['gallery_url'] . $row['thumbfilename'] . '" alt=""' . $row['title'] . ' />
-
-							<div class="overlay">
-								<div class="title top">' . $row['title'] . '</div>
-
-								<a class="view-image" href="' . $scripturl . '?action=gallery;sa=view;pic=' . $row['id_picture'] . '">
-									<span class="icon-eye-1"></span>
-								</a>
-
-								<div class="title bottom">' . $row['views'] . ' Views</div>
-							</div>
-						</div>
-					</div>';
-
-			echo '</li>';
-		}
-
-		echo '</ul>';
+		ListGalleryImages($context['gallery_image_list']);
 
 		echo
 			'<div class="gallery-footer">
@@ -216,8 +184,7 @@ function template_image_listing()
 	echo '</div>';
 }
 
-function template_add_category()
-{
+function template_add_category() {
 	global $scripturl, $txt, $context, $settings;
 
 	// Load the spell checker?
@@ -227,13 +194,13 @@ function template_add_category()
 
 
 	echo '
-<form method="post" name="catform" id="catform" action="' . $scripturl . '?action=gallery&sa=addcat2" accept-charset="', $context['character_set'], '" onsubmit="submitonce(this);">
-<div class="cat_bar">
-		<h3 class="catbg centertext">
-        ', $txt['gallery_text_addcategory'], '
-        </h3>
-</div>
-<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<form method="post" name="catform" id="catform" action="' . $scripturl . '?action=gallery&sa=addcat2" accept-charset="', $context['character_set'], '" onsubmit="submitonce(this);">
+	<div class="cat_bar">
+			<h3 class="catbg centertext">
+	        ', $txt['gallery_text_addcategory'], '
+	        </h3>
+	</div>
+	<table border="0" cellpadding="0" cellspacing="0" width="100%">
 
   <tr>
     <td width="28%" class="windowbg2" align="right"><b>' . $txt['gallery_form_title'] .'</b>&nbsp;</td>
@@ -248,7 +215,7 @@ function template_add_category()
 
 	if (!function_exists('getLanguages'))
 	{
-// Showing BBC?
+		// Showing BBC?
 	if ($context['show_bbc'])
 	{
 		echo '
@@ -311,19 +278,19 @@ function template_add_category()
    	if ($context['show_spellchecking'])
    		echo '
    									<br /><input type="button" value="', $txt['spell_check'], '" onclick="spellCheck(\'catform\', \'description\');" />';
-echo '</td>
-  </tr>
-  <tr>
-    <td width="28%"  class="windowbg2" align="right"><b>' . $txt['gallery_form_icon'] . '</b>&nbsp;</td>
-    <td width="72%" class="windowbg2"><input type="text" name="image" size="64" maxlength="100" /></td>
-  </tr>
-  <tr>
-    <td width="28%" colspan="2" align="center" class="windowbg2">
-    <input type="submit" value="' . $txt['gallery_text_addcategory'] . '" name="submit" /></td>
+	echo '</td>
+	  </tr>
+	  <tr>
+	    <td width="28%"  class="windowbg2" align="right"><b>' . $txt['gallery_form_icon'] . '</b>&nbsp;</td>
+	    <td width="72%" class="windowbg2"><input type="text" name="image" size="64" maxlength="100" /></td>
+	  </tr>
+	  <tr>
+	    <td width="28%" colspan="2" align="center" class="windowbg2">
+	    <input type="submit" value="' . $txt['gallery_text_addcategory'] . '" name="submit" /></td>
 
-  </tr>
-</table>
-</form>';
+	  </tr>
+	</table>
+	</form>';
 
 	if ($context['show_spellchecking'])
 			echo '<form action="', $scripturl, '?action=spellcheck" method="post" accept-charset="', $context['character_set'], '" name="spell_form" id="spell_form" target="spellWindow"><input type="hidden" name="spellstring" value="" /></form>';
@@ -332,8 +299,7 @@ echo '</td>
 	GalleryCopyright();
 }
 
-function template_edit_category()
-{
+function template_edit_category() {
 	global $scripturl, $txt, $context, $settings;
 
     ShowTopGalleryBarNew();
@@ -345,27 +311,27 @@ function template_edit_category()
 
 
 	echo '
-<form method="post" name="catform" id="catform" action="' . $scripturl . '?action=gallery&sa=editcat2" accept-charset="', $context['character_set'], '" onsubmit="submitonce(this);">
-<div class="cat_bar">
-		<h3 class="catbg centertext">
-        ', $txt['gallery_text_editcategory'], '
-        </h3>
-</div>
-<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<form method="post" name="catform" id="catform" action="' . $scripturl . '?action=gallery&sa=editcat2" accept-charset="', $context['character_set'], '" onsubmit="submitonce(this);">
+	<div class="cat_bar">
+			<h3 class="catbg centertext">
+	        ', $txt['gallery_text_editcategory'], '
+	        </h3>
+	</div>
+	<table border="0" cellpadding="0" cellspacing="0" width="100%">
 
-  <tr>
-    <td width="28%"  class="windowbg2" align="right"><b>' . $txt['gallery_form_title'] . '</b>&nbsp;</td>
-    <td width="72%"  class="windowbg2"><input type="text" name="title" size="64" maxlength="100" value="' . $context['gallery_cat_edit']['title'] . '" /></td>
-  </tr>
-  <tr>
-    <td width="28%"  valign="top" class="windowbg2" align="right"><b>' . $txt['gallery_form_description'] . '</b>&nbsp;</td>
-    <td width="72%"  class="windowbg2">
-     <table>
+	  <tr>
+	    <td width="28%"  class="windowbg2" align="right"><b>' . $txt['gallery_form_title'] . '</b>&nbsp;</td>
+	    <td width="72%"  class="windowbg2"><input type="text" name="title" size="64" maxlength="100" value="' . $context['gallery_cat_edit']['title'] . '" /></td>
+	  </tr>
+	  <tr>
+	    <td width="28%"  valign="top" class="windowbg2" align="right"><b>' . $txt['gallery_form_description'] . '</b>&nbsp;</td>
+	    <td width="72%"  class="windowbg2">
+	     <table>
    ';
 
 	if (!function_exists('getLanguages'))
 	{
-// Showing BBC?
+	// Showing BBC?
 	if ($context['show_bbc'])
 	{
 		echo '
@@ -429,20 +395,20 @@ function template_edit_category()
    	if ($context['show_spellchecking'])
    		echo '
    									<br /><input type="button" value="', $txt['spell_check'], '" onclick="spellCheck(\'catform\', \'description\');" />';
-echo '</td>
-  </tr>
-  <tr>
-    <td width="28%" class="windowbg2" align="right"><b>' . $txt['gallery_form_icon'] . '</b>&nbsp;</td>
-    <td width="72%"  class="windowbg2"><input type="text" name="image" size="64" maxlength="100" value="' . $context['gallery_cat_edit']['image'] . '" /></td>
-  </tr>
-  <tr>
-    <td width="28%" colspan="2"  align="center" class="windowbg2">
-    <input type="hidden" value="' . $context['gallery_cat_edit']['id_cat'] . '" name="catid" />
-    <input type="submit" value="' . $txt['gallery_text_editcategory'] . '" name="submit" /></td>
+	echo '</td>
+	  </tr>
+	  <tr>
+	    <td width="28%" class="windowbg2" align="right"><b>' . $txt['gallery_form_icon'] . '</b>&nbsp;</td>
+	    <td width="72%"  class="windowbg2"><input type="text" name="image" size="64" maxlength="100" value="' . $context['gallery_cat_edit']['image'] . '" /></td>
+	  </tr>
+	  <tr>
+	    <td width="28%" colspan="2"  align="center" class="windowbg2">
+	    <input type="hidden" value="' . $context['gallery_cat_edit']['id_cat'] . '" name="catid" />
+	    <input type="submit" value="' . $txt['gallery_text_editcategory'] . '" name="submit" /></td>
 
-  </tr>
-</table>
-</form>';
+	  </tr>
+	</table>
+	</form>';
 
 	if ($context['show_spellchecking'])
 			echo '<form action="', $scripturl, '?action=spellcheck" method="post" accept-charset="', $context['character_set'], '" name="spell_form" id="spell_form" target="spellWindow"><input type="hidden" name="spellstring" value="" /></form>';
@@ -451,37 +417,35 @@ echo '</td>
 	GalleryCopyright();
 }
 
-function template_delete_category()
-{
+function template_delete_category() {
 	global $scripturl, $txt, $context;
 
     ShowTopGalleryBarNew();
 
 	echo '
-<form method="post" action="' . $scripturl . '?action=gallery&sa=deletecat2" accept-charset="', $context['character_set'], '">
-<div class="cat_bar">
-		<h3 class="catbg centertext">
-        ', $txt['gallery_text_delcategory'], '
-        </h3>
-</div>
-<table border="0" cellpadding="0" cellspacing="0" width="100%">
-  <tr>
-    <td width="28%" colspan="2" align="center" class="windowbg2">
-    <b>', $txt['gallery_warn_category'], '</b>
-    <br />
-    <input type="hidden" value="' . $context['gallery_catid'] . '" name="catid" />
-    <input type="submit" value="' . $txt['gallery_text_delcategory'] . '" name="submit" /></td>
-  </tr>
-</table>
-</form>
-';
+	<form method="post" action="' . $scripturl . '?action=gallery&sa=deletecat2" accept-charset="', $context['character_set'], '">
+	<div class="cat_bar">
+			<h3 class="catbg centertext">
+	        ', $txt['gallery_text_delcategory'], '
+	        </h3>
+	</div>
+	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	  <tr>
+	    <td width="28%" colspan="2" align="center" class="windowbg2">
+	    <b>', $txt['gallery_warn_category'], '</b>
+	    <br />
+	    <input type="hidden" value="' . $context['gallery_catid'] . '" name="catid" />
+	    <input type="submit" value="' . $txt['gallery_text_delcategory'] . '" name="submit" /></td>
+	  </tr>
+	</table>
+	</form>
+	';
 
 	GalleryCopyright();
 
 }
 
-function template_add_picture()
-{
+function template_add_picture() {
 	global $scripturl, $modSettings,  $txt, $context, $settings;
 
 
@@ -495,16 +459,16 @@ function template_add_picture()
 
 
 	echo '<form method="post" enctype="multipart/form-data" name="picform" id="picform" action="' . $scripturl . '?action=gallery&sa=add2" accept-charset="', $context['character_set'], '" onsubmit="submitonce(this);">
-<div class="cat_bar">
-		<h3 class="catbg centertext">
-        ', $txt['gallery_form_addpicture'], '
-        </h3>
-</div>
-';
+	<div class="cat_bar">
+			<h3 class="catbg centertext">
+	        ', $txt['gallery_form_addpicture'], '
+	        </h3>
+	</div>
+	';
 
   if (!empty($context['gallery_errors']))
-  {
-	echo '<div class="errorbox" id="errors">
+	  {
+		echo '<div class="errorbox" id="errors">
 						<dl>
 							<dt>
 								<strong style="" id="error_serious">' . $txt['gallery_errors_addpicture'] . '</strong>
@@ -518,17 +482,17 @@ function template_add_picture()
 							</dt>
 						</dl>
 					</div>';
-}
+	}
 
-echo '
-<table border="0" cellpadding="0" cellspacing="0" width="100%">
-  <tr class="windowbg2">
-  	<td align="right"><b>' . $txt['gallery_form_title'] . '</b>&nbsp;</td>
-  	<td><input type="text" name="title" tabindex="1" size="80" value="' . $context['gallery_pic_title'] . '" /></td>
-  </tr>
-  <tr class="windowbg2">
-  	<td align="right"><b>' . $txt['gallery_form_category'] . '</b>&nbsp;</td>
-  	<td><select name="cat">';
+	echo '
+	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	  <tr class="windowbg2">
+	  	<td align="right"><b>' . $txt['gallery_form_title'] . '</b>&nbsp;</td>
+	  	<td><input type="text" name="title" tabindex="1" size="80" value="' . $context['gallery_pic_title'] . '" /></td>
+	  </tr>
+	  <tr class="windowbg2">
+	  	<td align="right"><b>' . $txt['gallery_form_category'] . '</b>&nbsp;</td>
+	  	<td><select name="cat">';
 
 
 	 foreach($context['gallery_cat_list'] as $row)
@@ -614,7 +578,7 @@ echo '
      									<br /><input type="button" value="', $txt['spell_check'], '" onclick="spellCheck(\'picform\', \'description\');" />';
 
 
-echo '
+	echo '
   	</td>
   </tr>
   <tr class="windowbg2">
@@ -631,7 +595,7 @@ echo '
   if(!empty($modSettings['gallery_max_height']))
   	echo '<br />' . $txt['gallery_form_maxheight'] .  $modSettings['gallery_max_height'] . $txt['gallery_form_pixels'];
 
- echo '
+ 	echo '
     </td>
   </tr>';
 
@@ -644,7 +608,7 @@ echo '
 	  </tr>';
   }
 
-echo '
+	echo '
   <tr class="windowbg2">
     <td width="28%" colspan="2"  align="center" class="windowbg2">
 
@@ -653,21 +617,20 @@ echo '
   	if (!allowedTo('smfgallery_autoapprove'))
   		echo $txt['gallery_form_notapproved'];
 
-echo '
-    </td>
-  </tr>
-</table>
+	echo '
+	    </td>
+	  </tr>
+	</table>
 
 		</form>
-';
+		';
 
 	if ($context['show_spellchecking'])
 			echo '<form action="', $scripturl, '?action=spellcheck" method="post" accept-charset="', $context['character_set'], '" name="spell_form" id="spell_form" target="spellWindow"><input type="hidden" name="spellstring" value="" /></form>';
 
 }
 
-function template_edit_picture()
-{
+function template_edit_picture() {
 	global $scripturl, $modSettings, $txt, $context, $settings;
 
 	ShowTopGalleryBarNew();
@@ -679,13 +642,13 @@ function template_edit_picture()
 
 
 	echo '<form method="post" enctype="multipart/form-data" name="picform" id="picform" action="' . $scripturl . '?action=gallery&sa=edit2" accept-charset="', $context['character_set'], '" onsubmit="submitonce(this);">
-<div class="cat_bar">
-		<h3 class="catbg centertext">
-        ', $txt['gallery_form_addpicture'], '
-        </h3>
-</div>
+	<div class="cat_bar">
+			<h3 class="catbg centertext">
+	        ', $txt['gallery_form_addpicture'], '
+	        </h3>
+	</div>
 
-<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<table border="0" cellpadding="0" cellspacing="0" width="100%">
   <tr class="windowbg2">
   	<td align="right"><b>' . $txt['gallery_form_title'] . '</b>&nbsp;</td>
   	<td><input type="text" name="title" tabindex="1" size="80" value="' . $context['gallery_pic']['title'] . '" /></td>
@@ -711,7 +674,7 @@ function template_edit_picture()
 
  if (!function_exists('getLanguages'))
 	{
-// Showing BBC?
+	// Showing BBC?
 	if ($context['show_bbc'])
 	{
 		echo '
@@ -776,7 +739,7 @@ function template_edit_picture()
      		echo '
      									<br /><input type="button" value="', $txt['spell_check'], '" onclick="spellCheck(\'picform\', \'description\');" />';
 
-echo '
+	echo '
   	</td>
   </tr>
   <tr class="windowbg2">
@@ -806,7 +769,7 @@ echo '
 	  </tr>';
   }
 
-echo '
+	echo '
   <tr class="windowbg2">
     <td width="28%" colspan="2" align="center" class="windowbg2">
 	<input type="hidden" name="id" value="' . $context['gallery_pic']['id_picture'] . '" />
@@ -815,18 +778,18 @@ echo '
   	if (!allowedTo('smfgallery_autoapprove'))
   		echo $txt['gallery_form_notapproved'];
 
-echo '<div align="center"><br /><b>' . $txt['gallery_text_oldpicture'] . '</b><br />
-<a href="' . $scripturl . '?action=gallery;sa=view;pic=' . $context['gallery_pic']['id_picture'] . '" target="blank"><img src="' . $modSettings['gallery_url'] . $context['gallery_pic']['thumbfilename']  . '" border="0" /></a><br />
+	echo '<div align="center"><br /><b>' . $txt['gallery_text_oldpicture'] . '</b><br />
+	<a href="' . $scripturl . '?action=gallery;sa=view;pic=' . $context['gallery_pic']['id_picture'] . '" target="blank"><img src="' . $modSettings['gallery_url'] . $context['gallery_pic']['thumbfilename']  . '" border="0" /></a><br />
 			<span class="smalltext">' . $txt['gallery_text_views']  . $context['gallery_pic']['views'] . '<br />
 			' . $txt['gallery_text_filesize']  . gallery_format_size($context['gallery_pic']['filesize'],2) . '<br />
 			' . $txt['gallery_text_date'] . $context['gallery_pic']['date'] . '<br />
 	</div>
     </td>
   </tr>
-</table>
+	</table>
 
 		</form>
-';
+	';
 
 	if ($context['show_spellchecking'])
 			echo '<form action="', $scripturl, '?action=spellcheck" method="post" accept-charset="', $context['character_set'], '" name="spell_form" id="spell_form" target="spellWindow"><input type="hidden" name="spellstring" value="" /></form>';
@@ -834,8 +797,7 @@ echo '<div align="center"><br /><b>' . $txt['gallery_text_oldpicture'] . '</b><b
 
 }
 
-function template_view_picture()
-{
+function template_view_picture() {
 	global $scripturl, $context, $txt,  $id_member, $modSettings, $memberContext;
 
 	// Load permissions
@@ -862,7 +824,7 @@ function template_view_picture()
 				<td align="center"><img width="100%" src="' . $modSettings['gallery_url'] . $context['gallery_pic']['filename']  . '" alt="' . $context['gallery_pic']['title']  . '" /></td>
 			</tr>
 
-<tr class="windowbg2">
+			<tr class="windowbg2">
 			<td align="center"><b>';
 			$showSpacer = false;
 			if ($previousImage != $context['gallery_pic']['id_picture'])
@@ -973,7 +935,7 @@ function template_view_picture()
 			echo $txt['who_and'], @$context['view_num_guests'], ' ', @$context['view_num_guests'] == 1 ? $txt['guest'] : $txt['guests'], $txt['gallery_who_viewpicture'], '</span></td></tr>';
 		}
 
-echo '
+	echo '
 		</table><br />';
 	//Check if allowed to display comments for this picture
 	if ($context['gallery_pic']['allowcomments'])
@@ -981,7 +943,7 @@ echo '
 	   $comment_count = $context['gallery_comment_count'];
 		//Show comments
 		echo '
-<div class="cat_bar">
+		<div class="cat_bar">
 		<h3 class="catbg">
         ', $txt['gallery_text_comments'], ' (' . $comment_count . ')
         </h3>
@@ -1064,46 +1026,40 @@ echo '
 	GalleryCopyright();
 }
 
-function template_delete_picture()
-{
+function template_delete_picture() {
 	global $scripturl, $modSettings, $txt, $context;
 
 	ShowTopGalleryBarNew();
 
 	echo '
 	<form method="post" action="' . $scripturl . '?action=gallery&sa=delete2" accept-charset="', $context['character_set'], '">
-    <div class="cat_bar">
-		<h3 class="catbg centertext">
-        ', $txt['gallery_form_delpicture'], '
-        </h3>
-</div>
-<table border="0" cellpadding="0" cellspacing="0" width="100%">
+		<div class="cat_bar">
+			<h3 class="catbg centertext">', $txt['gallery_form_delpicture'], '</h3>
+		</div>
 
-  <tr class="windowbg2">
-    <td width="28%" colspan="2" align="center" class="windowbg2">
-	' . $txt['gallery_warn_deletepicture'] . '
-	<br />
-<div align="center"><br /><b>' . $txt['gallery_form_delpicture'] . '</b><br />
-<a href="' . $scripturl . '?action=gallery;sa=view;pic=' . $context['gallery_pic']['id_picture'] . '" target="blank"><img src="' . $modSettings['gallery_url'] . $context['gallery_pic']['thumbfilename']  . '" border="0" /></a><br />
-			<span class="smalltext">' . $txt['gallery_text_views'] . $context['gallery_pic']['views'] . '<br />
-			' . $txt['gallery_text_filesize']  . gallery_format_size($context['gallery_pic']['filesize'],2) . '<br />
-			' . $txt['gallery_text_date'] . $context['gallery_pic']['date'] . '<br />
-			' . $txt['gallery_text_comments'] . ' (<a href="' . $scripturl . '?action=gallery;sa=view;pic=' .  $context['gallery_pic']['id_picture'] . '" target="blank">' .  $context['gallery_pic']['commenttotal'] . '</a>)<br />
-	</div><br />
-	<input type="hidden" name="id" value="' . $context['gallery_pic']['id_picture'] . '" />
-    <input type="submit" value="' . $txt['gallery_form_delpicture'] . '" name="submit" /><br />
-    </td>
-  </tr>
-</table>
-
-		</form>
-';
+		<table border="0" cellpadding="0" cellspacing="0" width="100%">
+			<tr class="windowbg2">
+				<td width="28%" colspan="2" align="center" class="windowbg2">
+				' . $txt['gallery_warn_deletepicture'] . '
+				<br />
+				<div align="center"><br /><b>' . $txt['gallery_form_delpicture'] . '</b><br />
+					<a href="' . $scripturl . '?action=gallery;sa=view;pic=' . $context['gallery_pic']['id_picture'] . '" target="blank"><img src="' . $modSettings['gallery_url'] . $context['gallery_pic']['thumbfilename']  . '" border="0" /></a><br />
+					<span class="smalltext">' . $txt['gallery_text_views'] . $context['gallery_pic']['views'] . '<br />
+					' . $txt['gallery_text_filesize']  . gallery_format_size($context['gallery_pic']['filesize'],2) . '<br />
+					' . $txt['gallery_text_date'] . $context['gallery_pic']['date'] . '<br />
+					' . $txt['gallery_text_comments'] . ' (<a href="' . $scripturl . '?action=gallery;sa=view;pic=' .  $context['gallery_pic']['id_picture'] . '" target="blank">' .  $context['gallery_pic']['commenttotal'] . '</a>)<br />
+				</div><br />
+				<input type="hidden" name="id" value="' . $context['gallery_pic']['id_picture'] . '" />
+				<input type="submit" value="' . $txt['gallery_form_delpicture'] . '" name="submit" /><br />
+				</td>
+			</tr>
+		</table>
+	</form>';
 
 	GalleryCopyright();
 }
 
-function template_add_comment()
-{
+function template_add_comment() {
 	global $context, $scripturl, $txt,$settings;
 
 	ShowTopGalleryBarNew();
@@ -1115,15 +1071,14 @@ function template_add_comment()
 
 
 	echo '
-<form method="post" name="cprofile" id="cprofile" action="' . $scripturl . '?action=gallery&sa=comment2" accept-charset="', $context['character_set'], '" onsubmit="submitonce(this);">
-<div class="cat_bar">
-		<h3 class="catbg centertext">
-        ', $txt['gallery_text_addcomment'], '
-        </h3>
-</div>
+	<form method="post" name="cprofile" id="cprofile" action="' . $scripturl . '?action=gallery&sa=comment2" accept-charset="', $context['character_set'], '" onsubmit="submitonce(this);">
+	<div class="cat_bar">
+			<h3 class="catbg centertext">
+	        ', $txt['gallery_text_addcomment'], '
+	        </h3>
+	</div>
 
-<table border="0" cellpadding="0" cellspacing="0"  width="100%">
-';
+	<table border="0" cellpadding="0" cellspacing="0"  width="100%">';
 
 
 	if (!function_exists('getLanguages'))
@@ -1185,20 +1140,20 @@ function template_add_comment()
 	}
 
 
-echo '
-  <tr>
-    <td width="28%" colspan="2" align="center" class="windowbg2">
-    <input type="hidden" name="id" value="' . $context['gallery_pic_id'] . '" />';
-   	if ($context['show_spellchecking'])
-   		echo '
-   									<input type="button" value="', $txt['spell_check'], '" onclick="spellCheck(\'cprofile\', \'message\');" />';
+	echo '
+	  <tr>
+	    <td width="28%" colspan="2" align="center" class="windowbg2">
+	    <input type="hidden" name="id" value="' . $context['gallery_pic_id'] . '" />';
+	   	if ($context['show_spellchecking'])
+	   		echo '
+	   									<input type="button" value="', $txt['spell_check'], '" onclick="spellCheck(\'cprofile\', \'message\');" />';
 
-echo '
-    <input type="submit" value="' . $txt['gallery_text_addcomment'] . '" name="submit" /></td>
+	echo '
+	    <input type="submit" value="' . $txt['gallery_text_addcomment'] . '" name="submit" /></td>
 
-  </tr>
-</table>
-</form>';
+	  </tr>
+	</table>
+	</form>';
 
 
 	if ($context['show_spellchecking'])
@@ -1210,41 +1165,39 @@ echo '
 	GalleryCopyright();
 }
 
-function template_report_picture()
-{
+function template_report_picture() {
 	global $scripturl, $context, $txt;
 
     ShowTopGalleryBarNew();
 
 	echo '
-<form method="post" name="cprofile" id="cprofile" action="' . $scripturl . '?action=gallery;sa=report2" accept-charset="', $context['character_set'], '">
-<div class="cat_bar">
-		<h3 class="catbg centertext">
-        ', $txt['gallery_form_reportpicture'], '
-        </h3>
-</div>
-<table border="0" cellpadding="0" cellspacing="0"  width="100%">
-  <tr>
-    <td width="28%"  valign="top" class="windowbg2" align="right"><b>' . $txt['gallery_form_comment'] . '</b>&nbsp;</td>
-    <td width="72%" class="windowbg2"><textarea rows="6" name="comment" cols="54"></textarea></td>
-  </tr>
-  <tr>
-    <td width="28%" colspan="2"  align="center" class="windowbg2">
-    <input type="hidden" name="id" value="' . $context['gallery_pic_id'] . '" />
-    <input type="submit" value="' . $txt['gallery_form_reportpicture'] . '" name="submit" /></td>
+	<form method="post" name="cprofile" id="cprofile" action="' . $scripturl . '?action=gallery;sa=report2" accept-charset="', $context['character_set'], '">
+	<div class="cat_bar">
+			<h3 class="catbg centertext">
+	        ', $txt['gallery_form_reportpicture'], '
+	        </h3>
+	</div>
+	<table border="0" cellpadding="0" cellspacing="0"  width="100%">
+	  <tr>
+	    <td width="28%"  valign="top" class="windowbg2" align="right"><b>' . $txt['gallery_form_comment'] . '</b>&nbsp;</td>
+	    <td width="72%" class="windowbg2"><textarea rows="6" name="comment" cols="54"></textarea></td>
+	  </tr>
+	  <tr>
+	    <td width="28%" colspan="2"  align="center" class="windowbg2">
+	    <input type="hidden" name="id" value="' . $context['gallery_pic_id'] . '" />
+	    <input type="submit" value="' . $txt['gallery_form_reportpicture'] . '" name="submit" /></td>
 
-  </tr>
-</table>
-</form>';
+	  </tr>
+	</table>
+	</form>';
 
 	GalleryCopyright();
 }
 
-function template_manage_cats()
-{
+function template_manage_cats() {
 	global $scripturl, $txt, $context;
 
-echo '
+	echo '
 	<table border="0" width="80%" cellspacing="0" align="center" cellpadding="4" class="tborder">
 		<tr class="titlebg">
 			<td>' . $txt['gallery_form_managecats'] . '</td>
@@ -1313,20 +1266,19 @@ echo '
 	<input type="hidden" name="bn" value="PP-DonationsBF">
 	<input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-butcc-donate.gif" border="0" name="submit" alt="Make payments with PayPal - it is fast, free and secure!">
 	<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
-</form>
-<br />You can also upgrade to the SMF Gallery Pro edition at <a href="http://www.smfhacks.com/smf-gallery-pro.php" target="blank">http://www.smfhacks.com/smf-gallery-pro.php</a>
-</td>
-</tr>
-</table>';
+	</form>
+	<br />You can also upgrade to the SMF Gallery Pro edition at <a href="http://www.smfhacks.com/smf-gallery-pro.php" target="blank">http://www.smfhacks.com/smf-gallery-pro.php</a>
+	</td>
+	</tr>
+	</table>';
 
 	GalleryCopyright();
 }
 
-function template_settings()
-{
+function template_settings() {
 	global $scripturl, $modSettings, $txt, $context;
 
-echo '
+	echo '
 	<table border="0" width="80%" cellspacing="0" align="center" cellpadding="4" class="tborder">
 		<tr class="titlebg">
 			<td>' . $txt['gallery_text_settings'] . '</td>
@@ -1388,43 +1340,42 @@ echo '
 
 			</td>
 		</tr>
-<tr class="windowbg"><td><b>Has SMF Gallery helped you?</b> Then support the developers:<br />
-    <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-	<input type="hidden" name="cmd" value="_xclick">
-	<input type="hidden" name="business" value="sales@visualbasiczone.com">
-	<input type="hidden" name="item_name" value="SMF Gallery">
-	<input type="hidden" name="no_shipping" value="1">
-	<input type="hidden" name="no_note" value="1">
-	<input type="hidden" name="currency_code" value="USD">
-	<input type="hidden" name="tax" value="0">
-	<input type="hidden" name="bn" value="PP-DonationsBF">
-	<input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-butcc-donate.gif" border="0" name="submit" alt="Make payments with PayPal - it is fast, free and secure!" />
-	<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
-</form>
-<br />You can also upgrade to the SMF Gallery Pro edition at <a href="http://www.smfhacks.com/smf-gallery-pro.php" target="blank">http://www.smfhacks.com/smf-gallery-pro.php</a>
-			<br />
-			<table>
-				<tr>
-				<td>
-				<a href="http://www.chitika.com/publishers/apply?refid=vbgamer46"><img src="http://www.smfhacks.com/chitika250x250.png" border="0"></a>
-				</td>
-				</table>
+	<tr class="windowbg"><td><b>Has SMF Gallery helped you?</b> Then support the developers:<br />
+	    <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+		<input type="hidden" name="cmd" value="_xclick">
+		<input type="hidden" name="business" value="sales@visualbasiczone.com">
+		<input type="hidden" name="item_name" value="SMF Gallery">
+		<input type="hidden" name="no_shipping" value="1">
+		<input type="hidden" name="no_note" value="1">
+		<input type="hidden" name="currency_code" value="USD">
+		<input type="hidden" name="tax" value="0">
+		<input type="hidden" name="bn" value="PP-DonationsBF">
+		<input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-butcc-donate.gif" border="0" name="submit" alt="Make payments with PayPal - it is fast, free and secure!" />
+		<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+	</form>
+	<br />You can also upgrade to the SMF Gallery Pro edition at <a href="http://www.smfhacks.com/smf-gallery-pro.php" target="blank">http://www.smfhacks.com/smf-gallery-pro.php</a>
+				<br />
+				<table>
+					<tr>
+					<td>
+					<a href="http://www.chitika.com/publishers/apply?refid=vbgamer46"><img src="http://www.smfhacks.com/chitika250x250.png" border="0"></a>
+					</td>
+					</table>
 
-</td>
-</tr>
-</table>';
+	</td>
+	</tr>
+	</table>';
 
 	GalleryCopyright();
 }
 
-function template_approvelist()
-{
+function template_approvelist() {
 	global $scripturl, $modSettings, $txt, $context;
 
 	// Check if GD is installed if not we will not show the thumbnails
 	$GD_Installed = function_exists('imagecreate');
 
-echo '
+	echo '
 	<table border="0" width="80%" cellspacing="0" align="center" cellpadding="4" class="tborder">
 		<tr class="titlebg">
 			<td>' . $txt['gallery_form_approveimages'] . '</td>
@@ -1469,35 +1420,34 @@ echo '
 			}
 
 
-echo '
-			</table>
-			</td>
-		</tr>
-<tr class="windowbg"><td><b>Has SMF Gallery helped you?</b> <br />
-    <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-	<input type="hidden" name="cmd" value="_xclick">
-	<input type="hidden" name="business" value="sales@visualbasiczone.com">
-	<input type="hidden" name="item_name" value="SMF Gallery">
-	<input type="hidden" name="no_shipping" value="1">
-	<input type="hidden" name="no_note" value="1">
-	<input type="hidden" name="currency_code" value="USD">
-	<input type="hidden" name="tax" value="0">
-	<input type="hidden" name="bn" value="PP-DonationsBF">
-	<input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-butcc-donate.gif" border="0" name="submit" alt="Make payments with PayPal - it is fast, free and secure!">
-	<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
-</form>
-<br />You can also upgrade to the SMF Gallery Pro edition at <a href="http://www.smfhacks.com/smf-gallery-pro.php" target="blank">http://www.smfhacks.com/smf-gallery-pro.php</a>
-</td>
-</tr>
-</table>';
+	echo '
+				</table>
+				</td>
+			</tr>
+	<tr class="windowbg"><td><b>Has SMF Gallery helped you?</b> <br />
+	    <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+		<input type="hidden" name="cmd" value="_xclick">
+		<input type="hidden" name="business" value="sales@visualbasiczone.com">
+		<input type="hidden" name="item_name" value="SMF Gallery">
+		<input type="hidden" name="no_shipping" value="1">
+		<input type="hidden" name="no_note" value="1">
+		<input type="hidden" name="currency_code" value="USD">
+		<input type="hidden" name="tax" value="0">
+		<input type="hidden" name="bn" value="PP-DonationsBF">
+		<input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-butcc-donate.gif" border="0" name="submit" alt="Make payments with PayPal - it is fast, free and secure!">
+		<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+	</form>
+	<br />You can also upgrade to the SMF Gallery Pro edition at <a href="http://www.smfhacks.com/smf-gallery-pro.php" target="blank">http://www.smfhacks.com/smf-gallery-pro.php</a>
+	</td>
+	</tr>
+	</table>';
 
 	GalleryCopyright();
 }
 
-function template_reportlist()
-{
+function template_reportlist() {
 	global $scripturl, $txt, $context;
-echo '
+	echo '
 
 	<table border="0" width="80%" cellspacing="0" align="center" cellpadding="4" class="tborder">
 		<tr class="titlebg">
@@ -1541,70 +1491,73 @@ echo '
 			}
 
 
-echo '
-			</table>
-			</td>
-		</tr>
-<tr class="windowbg"><td><b>Has SMF Gallery helped you?</b> Then support the developers:<br />
-    <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-	<input type="hidden" name="cmd" value="_xclick" />
-	<input type="hidden" name="business" value="sales@visualbasiczone.com" />
-	<input type="hidden" name="item_name" value="SMF Gallery" />
-	<input type="hidden" name="no_shipping" value="1" />
-	<input type="hidden" name="no_note" value="1" />
-	<input type="hidden" name="currency_code" value="USD" />
-	<input type="hidden" name="tax" value="0" />
-	<input type="hidden" name="bn" value="PP-DonationsBF" />
-	<input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-butcc-donate.gif" border="0" name="submit" alt="Make payments with PayPal - it is fast, free and secure!" />
-	<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
-</form>
-<br />You can also upgrade to the SMF Gallery Pro edition at <a href="http://www.smfhacks.com/smf-gallery-pro.php" target="blank">http://www.smfhacks.com/smf-gallery-pro.php</a>
-</td>
-</tr>
-</table>';
+	echo '
+				</table>
+				</td>
+			</tr>
+	<tr class="windowbg"><td><b>Has SMF Gallery helped you?</b> Then support the developers:<br />
+	    <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+		<input type="hidden" name="cmd" value="_xclick" />
+		<input type="hidden" name="business" value="sales@visualbasiczone.com" />
+		<input type="hidden" name="item_name" value="SMF Gallery" />
+		<input type="hidden" name="no_shipping" value="1" />
+		<input type="hidden" name="no_note" value="1" />
+		<input type="hidden" name="currency_code" value="USD" />
+		<input type="hidden" name="tax" value="0" />
+		<input type="hidden" name="bn" value="PP-DonationsBF" />
+		<input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-butcc-donate.gif" border="0" name="submit" alt="Make payments with PayPal - it is fast, free and secure!" />
+		<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+	</form>
+	<br />You can also upgrade to the SMF Gallery Pro edition at <a href="http://www.smfhacks.com/smf-gallery-pro.php" target="blank">http://www.smfhacks.com/smf-gallery-pro.php</a>
+	</td>
+	</tr>
+	</table>';
 
 	GalleryCopyright();
 }
 
-function template_search()
-{
+function template_search() {
 	global $scripturl, $txt, $context;
 
-	ShowTopGalleryBarNew();
-
+	echo '
+		<div id="gallery">';
 
 	echo '
-<form method="post" action="' . $scripturl . '?action=gallery;sa=search2" accept-charset="', $context['character_set'], '">
-<div class="cat_bar">
-		<h3 class="catbg centertext">
-        ', $txt['gallery_search_pic'], '
-        </h3>
-</div>
-<table border="0" cellpadding="0" cellspacing="0" width="100%"  class="tborder" align="center">
-  <tr class="windowbg2">
-    <td width="50%"  align="right"><b>' . $txt['gallery_search_for'] . '</b>&nbsp;</td>
-    <td width="50%"><input type="text" name="searchfor" />
-    </td>
-  </tr>
-  <tr class="windowbg2" align="center">
-  	<td colspan="2"><input type="checkbox" name="searchtitle" checked="checked" />', $txt['gallery_search_title'], '&nbsp;<input type="checkbox" name="searchdescription" checked="checked" />' . $txt['gallery_search_description'] . '<br />
-  	<input type="checkbox" name="searchkeywords" />', $txt['gallery_search_keyword'], '</td>
-  </tr>
-  <tr>
-    <td width="100%" colspan="2" align="center" class="windowbg2">
-    <input type="submit" value="', $txt['gallery_search'], '" name="submit" /></td>
+		<div class="gallery-header">
+			<h3>', $txt['gallery_search_pic'], '</h3>
+			<div class="gallery-menu">';
+			ShowGalleryMenu();
 
-  </tr>
-</table>
-</form>';
+	echo '
+		</div>
+	</div>';
 
+	echo '
+		<form method="post" action="' . $scripturl . '?action=gallery;sa=search2" accept-charset="', $context['character_set'], '">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%"  class="tborder" align="center">
+			  <tr class="windowbg2">
+			    <td width="50%"  align="right"><b>' . $txt['gallery_search_for'] . '</b>&nbsp;</td>
+			    <td width="50%"><input type="text" name="searchfor" />
+			    </td>
+			  </tr>
+			  <tr class="windowbg2" align="center">
+			  	<td colspan="2"><input type="checkbox" name="searchtitle" checked="checked" />', $txt['gallery_search_title'], '&nbsp;<input type="checkbox" name="searchdescription" checked="checked" />' . $txt['gallery_search_description'] . '<br />
+			  	<input type="checkbox" name="searchkeywords" />', $txt['gallery_search_keyword'], '</td>
+			  </tr>
+			  <tr>
+			    <td width="100%" colspan="2" align="center" class="windowbg2">
+			    <input type="submit" value="', $txt['gallery_search'], '" name="submit" /></td>
+
+			  </tr>
+			</table>
+		</form>';
 
 	GalleryCopyright();
 
+	echo '</div>';
 }
 
-function template_search_results()
-{
+function template_search_results() {
 	global $context, $id_member, $modSettings, $scripturl, $txt;
 
 	// Get the permissions for the user
@@ -1625,11 +1578,11 @@ function template_search_results()
 	$maxrowlevel = $modSettings['gallery_set_images_per_row'];
 	echo '<br />
 
-<div class="cat_bar">
-		<h3 class="catbg centertext">
-        ', $txt['gallery_searchresults'], '
-        </h3>
-</div>
+	<div class="cat_bar">
+			<h3 class="catbg centertext">
+	        ', $txt['gallery_searchresults'], '
+	        </h3>
+	</div>
 
     <table class="table_list">
          ';
@@ -1703,8 +1656,7 @@ function template_search_results()
 	GalleryCopyright();
 }
 
-function template_myimages()
-{
+function template_myimages() {
 	global $context, $id_member, $modSettings,  $scripturl, $txt;
 
 	// Get the permissions for the user
@@ -1716,118 +1668,50 @@ function template_myimages()
 	// Check if GD is installed if not we will not show the thumbnails
 	$GD_Installed = function_exists('imagecreate');
 
+	echo '<div id="gallery">';
 
-	ShowTopGalleryBarNew();
+	//ShowTopGalleryBarNew();
+	echo '
+		<div class="gallery-header">
+			<h3>', $context['gallery_usergallery_name'], ' Images</h3>
+			<div class="gallery-menu">';
+			ShowGalleryMenu();
 
+		echo '
+			</div>
+		</div>';
 
 	$maxrowlevel = $modSettings['gallery_set_images_per_row'];
-	echo '<br />
-
-    <div class="cat_bar">
-		<h3 class="catbg centertext">
-        ', $context['gallery_usergallery_name'], '
-        </h3>
-</div>
-
-    <table class="table_list">
-        ';
-
 	$rowlevel = 0;
 	$userid = $context['gallery_userid'];
-
-
 	$context['start'] = (int) $_REQUEST['start'];
-
-
 	$totalPics = $context['gallery_totalpic'];
+  $styleclass = 'windowbg';
 
+	ListGalleryImages($context['gallery_my_images']);
 
+	echo '
+		<div class="gallery-footer">
+			<div class="pagelinks left">';
 
-    $styleclass = 'windowbg';
+	echo $txt['gallery_text_pages'];
+	$context['page_index'] = constructPageIndex($scripturl . '?action=gallery;sa=myimages;u=' . $userid, $context['start'], $totalPics, $modSettings['gallery_set_images_per_page']);
+	echo $context['page_index'];
 
-	foreach($context['gallery_my_images'] as $row)
-	{
-			if($rowlevel == 0)
-				echo '<tr class="' . $styleclass . '">';
+	echo '
+		</div>
+	</div>';
 
-			echo '<td align="center"><a href="' . $scripturl . '?action=gallery;sa=view;pic=' . $row['id_picture'] . '">
-			<img ' . ($GD_Installed == true ?  'src="' . $modSettings['gallery_url'] . $row['thumbfilename'] . '" ' : 'src="' . $modSettings['gallery_url'] . $row['filename'] . '" height="78" width="120" ')  . ' border="0" alt="' . $row['title'] . '" /></a><br />';
-			if($id_member == $userid)
-			{
-				if($row['approved'] == 1)
-					echo '<b>' . $txt['gallery_myimages_app'] . '</b><br />';
-				else
-					echo '<b>' . $txt['gallery_myimages_notapp'] . '</b><br />';
-			}
-
-			echo '<span class="smalltext">' . $txt['gallery_text_views'] . $row['views'] . '<br />';
-			echo $txt['gallery_text_filesize'] . gallery_format_size($row['filesize'], 2) . '<br />';
-			echo $txt['gallery_text_date'] . timeformat($row['date']) . '<br />';
-			echo $txt['gallery_text_comments'] . ' (<a href="' . $scripturl . '?action=gallery;sa=view;pic=' . $row['id_picture'] . '">' . $row['commenttotal'] . '</a>)<br />';
-			echo $txt['gallery_text_by'] . ' <a href="' . $scripturl . '?action=profile;u=' . $row['id_member'] . '">'  . $row['real_name'] . '</a><br />';
-			if($g_manage)
-				echo '&nbsp;<a href="' . $scripturl . '?action=gallery;sa=unapprove;pic=' . $row['id_picture'] . '">' . $txt['gallery_text_unapprove'] . '</a>';
-			if($g_manage || $g_edit_own && $row['id_member'] == $id_member)
-				echo '&nbsp;<a href="' . $scripturl . '?action=gallery;sa=edit;pic=' . $row['id_picture'] . '">' . $txt['gallery_text_edit'] . '</a>';
-			if($g_manage || $g_delete_own && $row['id_member'] == $id_member)
-				echo '&nbsp;<a href="' . $scripturl . '?action=gallery;sa=delete;pic=' . $row['id_picture'] . '">' . $txt['gallery_text_delete'] . '</a>';
-
-			echo '</span></td>';
-
-
-			if($rowlevel < ($maxrowlevel-1))
-				$rowlevel++;
-			else
-			{
-				echo '</tr>';
-				$rowlevel = 0;
-			}
-
-
-			if ($styleclass == 'windowbg')
-				$styleclass = 'windowbg2';
-			else
-				$styleclass = 'windowbg';
-
-
-
-	}
-		if($rowlevel !=0)
-		{
-			echo '<td colspan="' . ($maxrowlevel - $rowlevel) . '"> </td>';
-			echo '</tr>';
-		}
-
-			echo '<tr class="titlebg">
-					<td align="left" colspan="' . $maxrowlevel . '">
-					' . $txt['gallery_text_pages'];
-
-					$context['page_index'] = constructPageIndex($scripturl . '?action=gallery;sa=myimages;u=' . $userid, $context['start'], $totalPics, $modSettings['gallery_set_images_per_page']);
-
-					echo $context['page_index'];
-
-
-			echo '
-					</td>
-				</tr>';
-		// Show return to gallery link and Show add picture if they can
-		echo '
-				<tr class="titlebg"><td align="center" colspan="' . $maxrowlevel . '">';
-				if ($g_add)
-				echo '<a href="' . $scripturl . '?action=gallery;sa=add">' . $txt['gallery_text_addpicture'] . '</a>&nbsp; - &nbsp;';
-
-				echo '
-				<a href="' . $scripturl . '?action=gallery">' . $txt['gallery_text_returngallery'] . '</a></td>
-			</tr>
-		</table>';
-
+	// Footer padding
+	echo '<br /><br />';
 
 	GalleryCopyright();
 
+	echo '</div>';
+
 }
 
-function GalleryCopyright()
-{
+function GalleryCopyright() {
 	// Purchase copyright removal
 	// http://www.smfhacks.com/copyright_removal.php
 
@@ -1840,8 +1724,7 @@ function GalleryCopyright()
 
 }
 
-function template_regenerate()
-{
+function template_regenerate() {
 	global $scripturl, $context, $txt, $modSettings;
 
     ShowTopGalleryBarNew();
@@ -1852,7 +1735,7 @@ function template_regenerate()
 		<h3 class="catbg centertext">
         ', $txt['gallery_text_regeneratethumbnails2'], '
         </h3>
-</div>
+	</div>
 
 		<table border="0" cellpadding="0" cellspacing="0" width="100%">
 		  <tr>
@@ -1884,8 +1767,7 @@ function template_regenerate()
 		</div>';
 }
 
-function template_regenerate2()
-{
+function template_regenerate2() {
 	global $scripturl, $context, $txt;
 
 	if (empty($context['continue_countdown']))
@@ -1938,8 +1820,7 @@ function template_regenerate2()
 
 }
 
-function template_gallerycopyright()
-{
+function template_gallerycopyright() {
 	global $txt, $scripturl, $context, $boardurl, $modSettings;
 
     $modID = 19;
@@ -1953,7 +1834,7 @@ function template_gallerycopyright()
         ', $txt['gallery_txt_copyrightremoval'], '
         </h3>
   </div>
-<table border="0" width="100%" cellspacing="0" align="center" cellpadding="4" class="tborder">
+	<table border="0" width="100%" cellspacing="0" align="center" cellpadding="4" class="tborder">
 	<tr class="windowbg2">
 		<td valign="top" align="right">',$txt['gallery_txt_copyrightkey'],'</td>
 		<td><input type="text" name="gallery_copyrightkey" size="50" value="' . $modSettings['gallery_copyrightkey'] . '" />
@@ -1976,8 +1857,7 @@ function template_gallerycopyright()
 
 }
 
-function template_importconvert()
-{
+function template_importconvert() {
     global $context, $scripturl;
 
 
@@ -1991,7 +1871,7 @@ function template_importconvert()
 		$context['continue_post_data'] ='';
 
         if (!empty($context['import_step_title']))
-echo '<b>' . $context['import_step_title']. '</b><br />';
+	echo '<b>' . $context['import_step_title']. '</b><br />';
 
 		if (!empty($context['continue_percent']))
 		echo '
@@ -2026,8 +1906,7 @@ echo '<b>' . $context['import_step_title']. '</b><br />';
 	// ]]></script>';
 }
 
-function template_import_welcomeaeva()
-{
+function template_import_welcomeaeva() {
     global $AevaSettings, $txt, $scripturl;
 
     echo '
@@ -2065,8 +1944,7 @@ function template_import_welcomeaeva()
 		';
 }
 
-function template_import_completeaeva()
-{
+function template_import_completeaeva() {
     global $txt, $scripturl, $context, $boardurl;
 
 
@@ -2094,8 +1972,7 @@ function template_import_completeaeva()
 
 }
 
-function template_convertgallery()
-{
+function template_convertgallery() {
     global $txt, $scripturl, $context;
 
     echo '
@@ -2132,8 +2009,7 @@ function template_convertgallery()
 
 }
 
-function ShowTopGalleryBarNew($title = '')
-{
+function ShowTopGalleryBarNew($title = '') {
 	global $txt, $context;
 		echo '
 
@@ -2146,22 +2022,35 @@ function ShowTopGalleryBarNew($title = '')
 }
 
 function ShowGalleryMenu() {
-		global $txt, $context;
+		global $context;
 
 		$newimage = $context['gallery']['buttons']['add'];
 		$search = $context['gallery']['buttons']['search'];
+		$myimages = $context['gallery']['buttons']['mylisting'];
+		$currenturl = $_SERVER['REQUEST_URI'];
 
-		echo '
-		<div class="gallery-menu">';
+		echo '<div class="gallery-menu">';
 
-			if ($context['gallery_catid'] > 0 || $context['gallery_picid'] > 0) {
+			// Hide option to go back when already on the main gallery page
+			if (strpos($currenturl, 'sa=')) {
 				echo '<a href="' . $scripturl . '?action=gallery"><span class="icon-reply"></span> Back</a>';
 			}
 
+			// Hide "My Images" link when already viewing the page
+			if (!strpos($currenturl, 'sa=myimages')) {
+				echo '<a href="' . $myimages['url'] . '"><span class="icon-picture-3"></span> My Images</a>';
+			}
+
+			// The add image link will show on all pages
 			echo '
-				<a href="' . $newimage['url'] . '"><span class="icon-attach"></span> Add</a>
-				<a href="' . $search['url'] . '"><span class="icon-search"></span> Search</a>
-		</div>';
+				<a href="' . $newimage['url'] . '"><span class="icon-attach"></span> Add</a>';
+
+			// Hide "Search" link when already viewing the page
+			if (!strpos($currenturl, 'sa=search')) {
+				ShowSearchBox();
+			}
+
+		echo '</div>';
 }
 
 function ShowAlbumMenu() {
@@ -2179,5 +2068,54 @@ function ShowAlbumMenu() {
 	}
 }
 
+function ListGalleryImages($imagelist) {
+	global $modSettings, $scripturl;
+
+	echo '
+		<ul id="gallery-grid" class="grid-group">';
+
+	foreach($imagelist as $row) {
+		echo '
+			<li class="grid size-12--palm size-6--lap-and-up size-4--desk-wide">';
+
+				echo '
+				<div class="gallery-image">
+					<div class="middle-image">
+
+						<img src="' . $modSettings['gallery_url'] . $row['thumbfilename'] . '" alt=""' . $row['title'] . ' />
+
+						<div class="overlay">
+							<div class="title top">' . $row['title'] . '</div>
+
+							<a class="view-image" href="' . $scripturl . '?action=gallery;sa=view;pic=' . $row['id_picture'] . '">
+								<span class="icon-eye-1"></span>
+							</a>
+
+							<div class="title bottom">' . $row['views'] . ' Views</div>
+						</div>
+					</div>
+				</div>';
+
+		echo '</li>';
+	}
+
+	echo '</ul>';
+}
+
+function ShowSearchBox() {
+	global $txt, $context, $scripturl;
+
+	echo '<a id="gallery-search-button" onclick="ShowSearchBox()" href="javascript:void(0)"><span class="icon-search"></span> Search</a>';
+
+	echo '
+		<form id="gallery-search-form" class="hidden" method="post" action="' . $scripturl . '?action=gallery;sa=search2" accept-charset="', $context['character_set'], '">';
+
+	echo '
+			<span class="icon-search"></span>
+			<input onblur="HideSearchBox()" type="text" name="searchfor" value="" />';
+
+	echo '
+		</form>';
+}
 
 ?>

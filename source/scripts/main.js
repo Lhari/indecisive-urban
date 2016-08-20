@@ -124,7 +124,7 @@ jQuery(document).ready(function($) {
             $('.js-worldrank').html('#'+str.world_rank);
 
         $('.js-ranks').fadeIn(600);
-       
+
      });
 
 
@@ -453,4 +453,22 @@ jQuery(document).ready(function($) {
             fn.apply(scope, arguments);
         };
     }
+
 });
+
+// Gallery
+function ShowSearchBox() {
+	$('#gallery-search-button').addClass("hidden");
+
+	var searchForm = $('#gallery-search-form');
+	searchForm.removeClass("hidden");
+	searchForm.find("input").focus();
+}
+
+function HideSearchBox() {
+	var searchForm = $('#gallery-search-form');
+	searchForm.addClass("hidden");
+	searchForm.find("input").val('');
+
+	$('#gallery-search-button').removeClass("hidden");
+}
