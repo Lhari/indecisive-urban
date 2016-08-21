@@ -1,26 +1,6 @@
 jQuery(document).ready(function($) {
 
 	var offcanvas, login;
-<<<<<<< HEAD
-
-	// calendar
-	HideEmptyDays()
-
-  $('.spoiler_head').click(function() {
-
-    if($(this).next('.spoiler_body').hasClass('active')) {
-
-        $(this).next('.spoiler_body').slideUp();
-        $(this).next('.spoiler_body').removeClass('active');
-        $(this).html('Show content');
-
-    } else {
-        $(this).next('.spoiler_body').slideDown();
-        $(this).next('.spoiler_body').addClass('active');
-        $(this).html('Hide content');
-    }
- })
-=======
     
       $('.link-current').click(function() {
         $('.breadcrumb').toggleClass('open');
@@ -43,7 +23,7 @@ jQuery(document).ready(function($) {
             $(this).html('Hide content');
         }
      })
->>>>>>> origin/admin-section
+
 
   $('.modifybutton').click(function() {
       setTimeout(function() {
