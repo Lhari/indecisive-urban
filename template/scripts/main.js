@@ -129,7 +129,6 @@ jQuery(document).ready(function($) {
 		}
 	});
 
-
     // Script for getting realm ranks
 
     $.ajax({
