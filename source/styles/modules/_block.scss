@@ -21,6 +21,10 @@
 	}
 
 }
+// Weird padding bug in menu
+span.topslice + div {
+    padding: 0!important;
+}
 
 .windowbg > div {
 	padding: 0;
@@ -38,6 +42,30 @@
 	}
 	i:before {
 		transform: rotate(90deg);
+	}
+
+	@include media(palm) {
+		height: auto;
+		margin-bottom: $spacing/2;
+
+		li {
+			display: block;
+			width: 100%;
+			text-align: center;
+			cursor: pointer;
+
+			i {
+				display: none;
+			}
+		}
+
+		&.open li {
+		    display: block !important;
+		}
+
+		.link-previous {
+			display: none;
+		}
 	}
 }
 

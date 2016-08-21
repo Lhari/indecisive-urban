@@ -23,6 +23,7 @@
 
 	@include media('palm') {
 	    margin-top: 1.75rem;
+      padding-right: $spacing/2;
 	}
 
 	.extra-spacing {
