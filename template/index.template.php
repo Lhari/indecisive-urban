@@ -104,7 +104,7 @@ function template_html_above()
 
 	// Here comes the JavaScript bits!
 	echo '
-	<script src="https://code.jquery.com/jquery-3.0.0.min.js"   integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
+	<script src="//code.jquery.com/jquery-3.0.0.min.js"   integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="', $settings['default_theme_url'], '/scripts/script.js?fin20"></script>
 	<script type="text/javascript" src="', $settings['theme_url'], '/scripts/main.js?fin20"></script>
 
@@ -333,13 +333,14 @@ function theme_linktree($force_show = false)
 	<div class="grid size-12 breadcrumb">';
 		//if($_SERVER['REQUEST_URI'] != '/') {
 		echo '<ul>';
-
+			echo '<li class="link-title">You are here:&nbsp;</li>';
 
 	// Each tree item has a URL and name. Some may have extra_before and extra_after.
 	foreach ($context['linktree'] as $link_num => $tree)
 	{
+
 		echo '
-			<li', ($link_num == count($context['linktree']) - 1) ? ' class="last"' : '', '>';
+			<li', ($link_num == count($context['linktree']) - 1) ? ' class="link-current"' : ' class="link-previous"', '>';
 
 		// Show something before the link?
 		if (isset($tree['extra_before']))
@@ -349,9 +350,17 @@ function theme_linktree($force_show = false)
 			$tree['name'] = 'Home';
 
 		// Show the link, including a URL if it should have one.
-		echo $settings['linktree_link'] && isset($tree['url']) ? '
 
-				<a href="' . $tree['url'] . '"><span>' . $tree['name'] . '</span></a>' : '<span>' . $tree['name'] . '</span>';
+
+		if($settings['linktree_link'] && isset($tree['url'])) {
+			if($link_num != count($context['linktree']) - 1) {
+				echo '<a href="' . $tree['url'] . '"><span>' . $tree['name'] . '</span></a>';
+			} else {
+				echo '<span>' . $tree['name'] . '</span>';
+			}
+		} else {
+			echo '<span>' . $tree['name'] . '</span>';
+		}
 
 		// Show something after the link...?
 		if (isset($tree['extra_after']))
@@ -386,11 +395,11 @@ function template_menu()
 
 			<li class="offcanvas__search">
 				<div class="grid size-3">
-					<a href="/" class="icon-home-1"></a>
+					<a href="/" tabindex="-1" class="icon-home-1"></a>
 				</div>
 				<div class="grid size-9 offcanvas__search--wrapper">
 					<?php echo '<form action="', $scripturl, '?action=search2" method="post" accept-charset="', $context['character_set'], '">'; ?>
-							<?php echo '<div class="form__wrapper icon-search"><input class="icon-search" type="text" name="search" value="', $txt['search'], '..." onfocus="this.value = \'\';" onblur="if(this.value==\'\') this.value=\'', $txt['search'], '...\';" /></div>'; ?>
+							<?php echo '<div class="form__wrapper icon-search"><input class="icon-search" tabindex="-1" type="text" name="search" value="', $txt['search'], '..." onfocus="this.value = \'\';" onblur="if(this.value==\'\') this.value=\'', $txt['search'], '...\';" /></div>'; ?>
 					</form>
 				</div>
 			</li>
@@ -411,9 +420,9 @@ function template_menu()
 							<li class="'.($button['active_button'] ? 'active' : '').(!empty($button['sub_buttons']) ? ' has-children' : '').' list">';
 
 							if(!empty($button['sub_buttons']))
-								echo '<a class="icon-up-open">'.ucfirst(strtolower($button['title'])).'</a>';
+								echo '<a tabindex="-1" class="icon-up-open">'.ucfirst(strtolower($button['title'])).'</a>';
 							else
-								echo '<a href="'.$button['href'].'">'.ucfirst(strtolower($button['title'])).'</a>';
+								echo '<a tabindex="-1" href="'.$button['href'].'">'.ucfirst(strtolower($button['title'])).'</a>';
 
 
 
@@ -422,20 +431,20 @@ function template_menu()
 					echo '<ul class="offcanvas__nav js-offcanvas-level-1">';
 
 						if(strstr(strtolower($button['title']), 'admin'))
-							echo '<li><a href="'.$button['href'].'">Admin Center</a></li>';
+							echo '<li><a tabindex="-1" href="'.$button['href'].'">Admin Center</a></li>';
 
 						if(strstr(strtolower($button['title']), 'media'))
-							echo '<li><a href="'.$button['href'].'">Gallery</a></li>';
+							echo '<li><a tabindex="-1" href="'.$button['href'].'">Gallery</a></li>';
 
 						if(strstr(strtolower($button['title']), 'tinyportal'))
-							echo '<li><a href="'.$button['href'].'">Tinyportal Admin</a></li>';
+							echo '<li><a tabindex="-1" href="'.$button['href'].'">Tinyportal Admin</a></li>';
 
 					foreach ($button['sub_buttons'] as $subact => $sbutton) {
 						if($sbutton['href'] != '#top' && (!strstr(strtolower($button['title'], 'media')) && strtolower($sbutton['title']) != 'home' ) ) {
 
 							echo '
 							<li>
-								<a href="', $sbutton['href'], '">'.ucwords(strtolower($sbutton['title'])).'</a>
+								<a tabindex="-1" href="', $sbutton['href'], '">'.ucwords(strtolower($sbutton['title'])).'</a>
 							</li>';
 						}
 					}
@@ -458,13 +467,13 @@ function template_menu()
 					echo '<div class="usermenu loggedIn">';
 					if ($context['allow_pm']) {
 					echo '
-						<a class="grid size-4" href="/pm/"><i class="icon-mail">';
+						<a tabindex="-1" class="grid size-4" href="/pm/"><i class="icon-mail">';
 						if($context['user']['unread_messages'] > 0)
 							echo '<span class="messages__unread">'.$context['user']['unread_messages'].'</span>';
 						echo '</i></a></span>';
 					}
-					echo '<a class="grid size-4" href="'.$moveElement['Profile'].'"><i class="icon-user-1"></i></a>';
-					echo '<a class="grid size-4" href="'.$moveElement['Logout'].'"><i class="icon-logout-1"></i></a>';
+					echo '<a tabindex="-1" class="grid size-4" href="'.$moveElement['Profile'].'"><i class="icon-user-1"></i></a>';
+					echo '<a tabindex="-1" class="grid size-4" href="'.$moveElement['Logout'].'"><i class="icon-logout-1"></i></a>';
 					echo '</div>';
 				}
 

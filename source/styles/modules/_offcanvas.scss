@@ -9,6 +9,10 @@
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   padding: 0 11px;
+
+  @include media(palm) {
+  	padding: 0;
+  }
 }
 
 .oncanvas__overlay {

@@ -1,6 +1,54 @@
 jQuery(document).ready(function($) {
 
 	var offcanvas, login;
+    
+      $('.link-current').click(function() {
+        $('.breadcrumb').toggleClass('open');
+      })
+
+      $('.link-title').click(function() {
+        $('.breadcrumb').toggleClass('open');
+      })
+      $('.spoiler_head').click(function() {
+
+        if($(this).next('.spoiler_body').hasClass('active')) {
+
+            $(this).next('.spoiler_body').slideUp();
+            $(this).next('.spoiler_body').removeClass('active');
+            $(this).html('Show content');
+         
+        } else {
+            $(this).next('.spoiler_body').slideDown();
+            $(this).next('.spoiler_body').addClass('active');
+            $(this).html('Hide content');
+        }
+     })
+
+
+	// calendar
+	HideEmptyDays()
+
+	$('.link-current').click(function() {
+	  $('.breadcrumb').toggleClass('open');
+	})
+
+	$('.link-title').click(function() {
+	  $('.breadcrumb').toggleClass('open');
+	})
+	$('.spoiler_head').click(function() {
+
+	  if($(this).next('.spoiler_body').hasClass('active')) {
+
+	      $(this).next('.spoiler_body').slideUp();
+	      $(this).next('.spoiler_body').removeClass('active');
+	      $(this).html('Show content');
+
+	  } else {
+	      $(this).next('.spoiler_body').slideDown();
+	      $(this).next('.spoiler_body').addClass('active');
+	      $(this).html('Hide content');
+	  }
+	})
 
   $('.modifybutton').click(function() {
       setTimeout(function() {
@@ -106,7 +154,6 @@ jQuery(document).ready(function($) {
 			$(ele).removeClass('loading');
 		}
 	});
-
 
     // Script for getting realm ranks
 
@@ -471,6 +518,18 @@ function HideSearchBox() {
 	searchForm.find("input").val('');
 
 	$('#gallery-search-button').removeClass("hidden");
+}
+
+// calendar
+function HideEmptyDays() {
+	var days = $("#calendar").find("td.windowbg.days");
+
+	days.each(function(day) {
+		var element = $(days[day]);
+		var hasContents = element.html().trim() ? true : false;
+
+		if (hasContents) element.addClass("show-border");
+	});
 }
 
 // The purpose of this code is to fix the height of overflow: auto blocks, because some browsers can't figure it out for themselves.

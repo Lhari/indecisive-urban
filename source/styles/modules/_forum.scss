@@ -203,6 +203,11 @@ blockquote {
 }
 
 @include media(palm) {
+
+	.post {
+		clear: both;
+	}
+
 	.poster .titlebg {
 		background-image: none;
 		box-shadow: none;
@@ -249,10 +254,6 @@ blockquote {
 		img {
 			display: none;
 		}
-	}
-
-	.breadcrumb {
-		height: auto!important;
 	}
 
 	.main-control {

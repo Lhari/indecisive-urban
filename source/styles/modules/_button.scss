@@ -27,6 +27,11 @@ input[type="submit"] {
 		background: $color-primary;
 		color: $color-light;
 
+		@include media(palm) {
+			background: none;
+			color: $color-primary;
+		}
+
 	}
 	i {
 		padding-right: $spacing/2;

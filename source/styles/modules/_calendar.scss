@@ -1,0 +1,34 @@
+#calendar {
+  .header {
+    display: block;
+    text-align: center;
+  }
+
+  .floatright {
+    float:right;
+  }
+  .floatleft {
+    float:left;
+  }
+  .smalltext {
+    font-size:$font-size-medium-small;
+  }
+}
+
+#calendar_navigation {
+  text-align: left;
+}
+
+.calendar_table {
+  .days {
+    // border: 1px solid $color-light;
+  }
+}
+
+.hide-border {
+  border: none !important;
+}
+
+.show-border {
+  border: 1px solid $color-light;
+}
