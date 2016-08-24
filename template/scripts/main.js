@@ -1,185 +1,169 @@
 jQuery(document).ready(function($) {
 
-	var offcanvas, login;
-    
-      $('.link-current').click(function() {
-        $('.breadcrumb').toggleClass('open');
-      })
+    var offcanvas, login;
 
-      $('.link-title').click(function() {
+    $('.link-current').click(function() {
         $('.breadcrumb').toggleClass('open');
-      })
-      $('.spoiler_head').click(function() {
+    })
 
-        if($(this).next('.spoiler_body').hasClass('active')) {
+    $('.link-title').click(function() {
+        $('.breadcrumb').toggleClass('open');
+    })
+    $('.spoiler_head').click(function() {
+
+        if ($(this).next('.spoiler_body').hasClass('active')) {
 
             $(this).next('.spoiler_body').slideUp();
             $(this).next('.spoiler_body').removeClass('active');
             $(this).html('Show content');
-         
+
         } else {
             $(this).next('.spoiler_body').slideDown();
             $(this).next('.spoiler_body').addClass('active');
             $(this).html('Hide content');
         }
-     })
+    })
 
 
-	// calendar
-	HideEmptyDays()
+    $('.modifybutton').click(function() {
+        setTimeout(function() {
+            loadQuickEdit();
+        }, 300)
 
-	$('.link-current').click(function() {
-	  $('.breadcrumb').toggleClass('open');
-	})
+    });
 
-	$('.link-title').click(function() {
-	  $('.breadcrumb').toggleClass('open');
-	})
-	$('.spoiler_head').click(function() {
+		// calendar
+		HideEmptyDays();
 
-	  if($(this).next('.spoiler_body').hasClass('active')) {
+    function loadQuickEdit() {
+        $('#quick_edit_body_container .button--accept').click(function() {
+            $('.modified-pre-text').addClass('is-hidden');
+            $('.modified').removeClass('is-hidden');
+        });
+    }
 
-	      $(this).next('.spoiler_body').slideUp();
-	      $(this).next('.spoiler_body').removeClass('active');
-	      $(this).html('Show content');
+    $('[data-openChild]').click(function(e) {
+        e.preventDefault();
+        var element = $(this).data('openchild');
 
-	  } else {
-	      $(this).next('.spoiler_body').slideDown();
-	      $(this).next('.spoiler_body').addClass('active');
-	      $(this).html('Hide content');
-	  }
-	})
+        $(this).find('.icon-up-open').toggleClass('open');
 
-  $('.modifybutton').click(function() {
-      setTimeout(function() {
-          loadQuickEdit();
-      }, 300)
+        $('[data-childOf=' + element + ']').slideToggle();
+    })
 
-  })
+    $('.js-recent-time').each(function(k, v) {
+        var options = {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            month: 'short',
+            day: 'numeric'
+        };
+        date = new Date($(v).data('timestamp') * 1000).toLocaleDateString('en-GB', options);
 
-  function loadQuickEdit() {
-      $('#quick_edit_body_container .button--accept').click(function() {
-          $('.modified-pre-text').addClass('is-hidden');
-          $('.modified').removeClass('is-hidden');
-      });
-  }
+        $(v).html(date);
+    })
 
-  $('[data-openChild]').click(function(e) {
-      e.preventDefault();
-      var element = $(this).data('openchild');
+    $('.js-offcanvas__toggle').click(function() {
 
-      $(this).find('.icon-up-open').toggleClass('open');
+        offcanvas = true;
 
-      $('[data-childOf='+element+']').slideToggle();
-  })
+        $('.offcanvas').toggleClass('offcanvas--right');
+        $('html').toggleClass('is-offcanvas');
+        $('body').toggleClass('noscroll');
+        $('.js-overlay').fadeToggle();
+    })
 
-	$('.js-recent-time').each(function(k, v) {
-		var options = {hour: '2-digit', minute: '2-digit', second: '2-digit', month: 'short', day: 'numeric' };
-		date = new Date($(v).data('timestamp')*1000).toLocaleDateString('en-GB', options);
+    $('.js-overlay').click(function() {
 
-		$(v).html(date);
-	})
+        if (login) {
+            $('.js-login').fadeToggle();
+            $('.js-overlay').fadeToggle();
+            $('body').toggleClass('noscroll');
 
-	$('.js-offcanvas__toggle').click(function() {
+        }
 
-		offcanvas = true;
+        if (offcanvas) {
+            $('.offcanvas').toggleClass('offcanvas--right');
+            $('html').toggleClass('is-offcanvas');
+            $('body').toggleClass('noscroll');
+            $('.js-overlay').fadeToggle();
 
-		$('.offcanvas').toggleClass('offcanvas--right');
-		$('html').toggleClass('is-offcanvas');
-		$('body').toggleClass('noscroll');
-		$('.js-overlay').fadeToggle();
-	})
+            offcanvas = false;
+        }
 
-	$('.js-overlay').click(function(){
+    })
 
-		if(login) {
-			$('.js-login').fadeToggle();
-			$('.js-overlay').fadeToggle();
-			$('body').toggleClass('noscroll');
+    $('.js-login__toggle').click(function() {
 
-		}
+        login = true;
 
-		if(offcanvas) {
-			$('.offcanvas').toggleClass('offcanvas--right');
-			$('html').toggleClass('is-offcanvas');
-			$('body').toggleClass('noscroll');
-			$('.js-overlay').fadeToggle();
-
-			offcanvas = false;
-		}
-
-	})
-
-	$('.js-login__toggle').click(function() {
-
-		login = true;
-
-		$('.js-login').fadeToggle();
-		$('.js-overlay').fadeToggle();
-		$('body').toggleClass('noscroll');
+        $('.js-login').fadeToggle();
+        $('.js-overlay').fadeToggle();
+        $('body').toggleClass('noscroll');
 
 
 
-	})
+    })
 
-	$('.offcanvas .has-children a').click(function(e) {
+    $('.offcanvas .has-children a').click(function(e) {
 
-		if($(this).hasClass('icon-up-open'))
-			e.preventDefault();
-		$(this).next('ul').slideToggle(299);
-		if($(this).hasClass('open')) {
+        if ($(this).hasClass('icon-up-open'))
+            e.preventDefault();
+        $(this).next('ul').slideToggle(299);
+        if ($(this).hasClass('open')) {
 
-			element = $(this);
+            element = $(this);
 
-			setTimeout(function(el) {
-				$(element).toggleClass('open');
-			}, 300);
-		} else {
-			$(this).toggleClass('open');
-		}
+            setTimeout(function(el) {
+                $(element).toggleClass('open');
+            }, 300);
+        } else {
+            $(this).toggleClass('open');
+        }
 
 
-	})
+    })
 
-	$('.js-register').click(function() {
-		location.href = "/?action=register";
-	})
+    $('.js-register').click(function() {
+        location.href = "/?action=register";
+    })
 
-	var bLazy = new Blazy({
-		selector: '.article_inner img', // article images
-		offset: 300,
-		success: function(ele) {
+    var bLazy = new Blazy({
+        selector: '.article_inner img', // article images
+        offset: 300,
+        success: function(ele) {
             $(ele).parent().css('background-image', 'none');
-			$(ele).addClass('fpsc');
-			$(ele).removeClass('loading');
-		}
-	});
+            $(ele).addClass('fpsc');
+            $(ele).removeClass('loading');
+        }
+    });
 
     // Script for getting realm ranks
 
     $.ajax({
         url: "/getRealmRank.php",
-       method: "GET",
-     }).done(function( msg ) {
-        var str =  jQuery.parseJSON( msg );
+        method: "GET",
+    }).done(function(msg) {
+        var str = jQuery.parseJSON(msg);
 
-        if(typeof $('.js-realmrank').html() !== 'undefined')
-            $('.js-realmrank').html('#'+str.realm_rank);
-        if(typeof $('.js-arearank').html() !== 'undefined')
-            $('.js-arearank').html('#'+str.area_rank);
-        if(typeof $('.js-worldrank').html() !== 'undefined')
-            $('.js-worldrank').html('#'+str.world_rank);
+        if (typeof $('.js-realmrank').html() !== 'undefined')
+            $('.js-realmrank').html('#' + str.realm_rank);
+        if (typeof $('.js-arearank').html() !== 'undefined')
+            $('.js-arearank').html('#' + str.area_rank);
+        if (typeof $('.js-worldrank').html() !== 'undefined')
+            $('.js-worldrank').html('#' + str.world_rank);
 
         $('.js-ranks').fadeIn(600);
 
-     });
+    });
 
 
 
-     $('#postMoreExpandLink').click(function() {
+    $('#postMoreExpandLink').click(function() {
         $(this).toggleClass('open');
         $(this).toggleClass('closed');
-     })
+    })
 })
 
 
@@ -387,7 +371,7 @@ jQuery(document).ready(function($) {
                                     handleSource(source, _attrSrcset, options.srcset);
                                 });
                             }
-                        // or background-image
+                            // or background-image
                         } else {
                             ele.style.backgroundImage = 'url("' + src + '")';
                         }
@@ -505,31 +489,31 @@ jQuery(document).ready(function($) {
 
 // Gallery
 function ShowSearchBox() {
-	$('#gallery-search-button').addClass("hidden");
+    $('#gallery-search-button').addClass("hidden");
 
-	var searchForm = $('#gallery-search-form');
-	searchForm.removeClass("hidden");
-	searchForm.find("input").focus();
+    var searchForm = $('#gallery-search-form');
+    searchForm.removeClass("hidden");
+    searchForm.find("input").focus();
 }
 
 function HideSearchBox() {
-	var searchForm = $('#gallery-search-form');
-	searchForm.addClass("hidden");
-	searchForm.find("input").val('');
+    var searchForm = $('#gallery-search-form');
+    searchForm.addClass("hidden");
+    searchForm.find("input").val('');
 
-	$('#gallery-search-button').removeClass("hidden");
+    $('#gallery-search-button').removeClass("hidden");
 }
 
 // calendar
 function HideEmptyDays() {
-	var days = $("#calendar").find("td.windowbg.days");
+    var days = $("#calendar").find("td.windowbg.days");
 
-	days.each(function(day) {
-		var element = $(days[day]);
-		var hasContents = element.html().trim() ? true : false;
+    days.each(function(day) {
+        var element = $(days[day]);
+        var hasContents = element.html().trim() ? true : false;
 
-		if (hasContents) element.addClass("show-border");
-	});
+        if (hasContents) element.addClass("show-border");
+    });
 }
 
 // The purpose of this code is to fix the height of overflow: auto blocks, because some browsers can't figure it out for themselves.
