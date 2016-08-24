@@ -114,7 +114,7 @@ function template_main()
 						<span id="preview_subject">', empty($context['preview_subject']) ? '' : $context['preview_subject'], '</span>
 					</h3>
 				</div>
-				<div class="windowbg">
+				<div class="grid size-12 windowbg">
 					<span class="topslice"><span></span></span>
 					<div class="content">
 						<div class="post" id="preview_body">
@@ -810,7 +810,7 @@ function template_main()
 
 
 
-		<div class="<?php echo ($post['alternate'] == 0 ? 'windowbg' : 'windowbg2'); ?>  core_posts divider">
+		<div class="grid size-12 <?php echo ($post['alternate'] == 0 ? 'windowbg' : 'windowbg2'); ?>  core_posts divider">
 			<div class="content" id="msg' <?php echo $post['id']; ?>">
 			<div class="grid-group">
 				<div class="grid size-6">
@@ -1034,7 +1034,7 @@ function template_announce()
 			<div class="information">
 				', $txt['announce_desc'], '
 			</div>
-			<div class="windowbg2">
+			<div class="windowbg2 grid size-12">
 				<span class="topslice"><span></span></span>
 				<div class="content">
 					<p>
@@ -1075,7 +1075,7 @@ function template_announcement_send()
 	echo '
 	<div id="announcement">
 		<form action="' . $scripturl . '?action=announce;sa=send" method="post" accept-charset="', $context['character_set'], '" name="autoSubmit" id="autoSubmit">
-			<div class="windowbg2">
+			<div class="windowbg2 grid size-12">
 				<span class="topslice"><span></span></span>
 				<div class="content">
 					<p>', $txt['announce_sending'], ' <a href="', $scripturl, '?topic=', $context['current_topic'], '.0" target="_blank" class="new_win">', $context['topic_subject'], '</a></p>

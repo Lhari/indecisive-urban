@@ -28,107 +28,6 @@ function template_main()
 			<a id="top"></a>
 			<a id="msg', $context['first_message'], '"></a>', $context['first_new_message'] ? '<a id="new"></a>' : '';
 
-	// Is this topic also a poll?
-	if ($context['is_poll'])
-	{
-		echo '
-			<div id="poll">
-				<div class="cat_bar">
-					<h3 class="catbg">
-						<span class="ie6_header floatleft"><img src="', $settings['images_url'], '/topic/', $context['poll']['is_locked'] ? 'normal_poll_locked' : 'normal_poll', '.gif" alt="" class="icon" /> ', $txt['poll'], '</span>
-					</h3>
-				</div>
-				<div class="windowbg">
-					<span class="topslice"><span></span></span>
-					<div class="content" id="poll_options">
-						<h4 id="pollquestion">
-							', $context['poll']['question'], '
-						</h4>';
-
-		// Are they not allowed to vote but allowed to view the options?
-		if ($context['poll']['show_results'] || !$context['allow_vote'])
-		{
-			echo '
-					<dl class="options">';
-
-			// Show each option with its corresponding percentage bar.
-			foreach ($context['poll']['options'] as $option)
-			{
-				echo '
-						<dt class="middletext', $option['voted_this'] ? ' voted' : '', '">', $option['option'], '</dt>
-						<dd class="middletext statsbar', $option['voted_this'] ? ' voted' : '', '">';
-
-				if ($context['allow_poll_view'])
-					echo '
-							', $option['bar_ndt'], '
-							<span class="percentage">', $option['votes'], ' (', $option['percent'], '%)</span>';
-
-				echo '
-						</dd>';
-			}
-
-			echo '
-					</dl>';
-
-			if ($context['allow_poll_view'])
-				echo '
-						<p><strong>', $txt['poll_total_voters'], ':</strong> ', $context['poll']['total_votes'], '</p>';
-		}
-		// They are allowed to vote! Go to it!
-		else
-		{
-			echo '
-						<form action="', $scripturl, '?action=vote;topic=', $context['current_topic'], '.', $context['start'], ';poll=', $context['poll']['id'], '" method="post" accept-charset="', $context['character_set'], '">';
-
-			// Show a warning if they are allowed more than one option.
-			if ($context['poll']['allowed_warning'])
-				echo '
-							<p class="smallpadding">', $context['poll']['allowed_warning'], '</p>';
-
-			echo '
-							<ul class="reset options">';
-
-			// Show each option with its button - a radio likely.
-			foreach ($context['poll']['options'] as $option)
-				echo '
-								<li class="middletext">', $option['vote_button'], ' <label for="', $option['id'], '">', $option['option'], '</label></li>';
-
-			echo '
-							</ul>
-							<div class="submitbutton">
-								<input type="submit" value="', $txt['poll_vote'], '" class="button_submit" />
-								<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-							</div>
-						</form>';
-		}
-
-		// Is the clock ticking?
-		if (!empty($context['poll']['expire_time']))
-			echo '
-						<p><strong>', ($context['poll']['is_expired'] ? $txt['poll_expired_on'] : $txt['poll_expires_on']), ':</strong> ', $context['poll']['expire_time'], '</p>';
-
-		echo '
-					</div>
-					<span class="botslice"><span></span></span>
-				</div>
-			</div>
-			<div id="pollmoderation">';
-
-		// Build the poll moderation button array.
-		$poll_buttons = array(
-			'vote' => array('test' => 'allow_return_vote', 'text' => 'poll_return_vote', 'image' => 'poll_options.gif', 'lang' => true, 'url' => $scripturl . '?topic=' . $context['current_topic'] . '.' . $context['start']),
-			'results' => array('test' => 'show_view_results_button', 'text' => 'poll_results', 'image' => 'poll_results.gif', 'lang' => true, 'url' => $scripturl . '?topic=' . $context['current_topic'] . '.' . $context['start'] . ';viewresults'),
-			'change_vote' => array('test' => 'allow_change_vote', 'text' => 'poll_change_vote', 'image' => 'poll_change_vote.gif', 'lang' => true, 'url' => $scripturl . '?action=vote;topic=' . $context['current_topic'] . '.' . $context['start'] . ';poll=' . $context['poll']['id'] . ';' . $context['session_var'] . '=' . $context['session_id']),
-			'lock' => array('test' => 'allow_lock_poll', 'text' => (!$context['poll']['is_locked'] ? 'poll_lock' : 'poll_unlock'), 'image' => 'poll_lock.gif', 'lang' => true, 'url' => $scripturl . '?action=lockvoting;topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id']),
-			'edit' => array('test' => 'allow_edit_poll', 'text' => 'poll_edit', 'image' => 'poll_edit.gif', 'lang' => true, 'url' => $scripturl . '?action=editpoll;topic=' . $context['current_topic'] . '.' . $context['start']),
-			'remove_poll' => array('test' => 'can_remove_poll', 'text' => 'poll_remove', 'image' => 'admin_remove_poll.gif', 'lang' => true, 'custom' => 'onclick="return confirm(\'' . $txt['poll_remove_warn'] . '\');"', 'url' => $scripturl . '?action=removepoll;topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id']),
-		);
-
-		template_button_strip($poll_buttons);
-
-		echo '
-			</div>';
-	}
 
 	// Does this topic have some events linked to it?
 	if (!empty($context['linked_calendar_events']))
@@ -216,6 +115,112 @@ if( $context['user']['is_guest'] )
 
 	theme_linktree();
 
+
+	/* Begin Poll code */
+
+
+	// Is this topic also a poll?
+	if ($context['is_poll'])
+	{
+		echo '
+			<div id="poll" class="poll grid size-12">
+				<div class="cat_bar">
+					<h3 class="titlebg">
+						'.$txt['poll'].': '.$context['poll']['question'].'
+					</h3>
+				</div>
+				<div class="windowbg">
+					<span class="topslice"><span></span></span>
+					<div class="content" id="poll_options">';
+
+		// Are they not allowed to vote but allowed to view the options?
+		if ($context['poll']['show_results'] || !$context['allow_vote'])
+		{
+			echo '
+					<dl class="options grid size-12">';
+
+			// Show each option with its corresponding percentage bar.
+			foreach ($context['poll']['options'] as $option)
+			{
+				echo '
+						<dt class="middletext', $option['voted_this'] ? ' voted' : '', '">', $option['option'], '</dt>
+						<dd class="middletext statsbar', $option['voted_this'] ? ' voted' : '', '">';
+
+				if ($context['allow_poll_view'])
+					echo '
+							', $option['bar_ndt'], '
+							<span class="percentage">', $option['votes'], ' (', $option['percent'], '%)</span>';
+
+				echo '
+						</dd>';
+			}
+
+			echo '
+					</dl>';
+
+			if ($context['allow_poll_view'])
+				echo '
+						<p><strong>', $txt['poll_total_voters'], ':</strong> ', $context['poll']['total_votes'], '</p>';
+		}
+		// They are allowed to vote! Go to it!
+		else
+		{
+			echo '
+						<form action="', $scripturl, '?action=vote;topic=', $context['current_topic'], '.', $context['start'], ';poll=', $context['poll']['id'], '" method="post" accept-charset="', $context['character_set'], '">';
+
+			// Show a warning if they are allowed more than one option.
+			if ($context['poll']['allowed_warning'])
+				echo '
+							<p class="smallpadding">', $context['poll']['allowed_warning'], '</p>';
+
+			echo '
+							<ul class="reset options">';
+
+			// Show each option with its button - a radio likely.
+			foreach ($context['poll']['options'] as $option)
+				echo '
+								<li class="middletext">', $option['vote_button'], ' <label for="', $option['id'], '">', $option['option'], '</label></li>';
+
+			echo '
+							</ul>
+							<div class="submitbutton">
+								<input type="submit" value="', $txt['poll_vote'], '" class="button_submit" />
+								<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
+							</div>
+						</form>';
+		}
+
+		// Is the clock ticking?
+		if (!empty($context['poll']['expire_time']))
+			echo '
+						<p><strong>', ($context['poll']['is_expired'] ? $txt['poll_expired_on'] : $txt['poll_expires_on']), ':</strong> ', $context['poll']['expire_time'], '</p>';
+
+		echo '
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+			</div>
+			<div id="pollmoderation">';
+
+		// Build the poll moderation button array.
+		$poll_buttons = array(
+			'vote' => array('test' => 'allow_return_vote', 'text' => 'poll_return_vote', 'image' => 'poll_options.gif', 'lang' => true, 'url' => $scripturl . '?topic=' . $context['current_topic'] . '.' . $context['start']),
+			'results' => array('test' => 'show_view_results_button', 'text' => 'poll_results', 'image' => 'poll_results.gif', 'lang' => true, 'url' => $scripturl . '?topic=' . $context['current_topic'] . '.' . $context['start'] . ';viewresults'),
+			'change_vote' => array('test' => 'allow_change_vote', 'text' => 'poll_change_vote', 'image' => 'poll_change_vote.gif', 'lang' => true, 'url' => $scripturl . '?action=vote;topic=' . $context['current_topic'] . '.' . $context['start'] . ';poll=' . $context['poll']['id'] . ';' . $context['session_var'] . '=' . $context['session_id']),
+			'lock' => array('test' => 'allow_lock_poll', 'text' => (!$context['poll']['is_locked'] ? 'poll_lock' : 'poll_unlock'), 'image' => 'poll_lock.gif', 'lang' => true, 'url' => $scripturl . '?action=lockvoting;topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id']),
+			'edit' => array('test' => 'allow_edit_poll', 'text' => 'poll_edit', 'image' => 'poll_edit.gif', 'lang' => true, 'url' => $scripturl . '?action=editpoll;topic=' . $context['current_topic'] . '.' . $context['start']),
+			'remove_poll' => array('test' => 'can_remove_poll', 'text' => 'poll_remove', 'image' => 'admin_remove_poll.gif', 'lang' => true, 'custom' => 'onclick="return confirm(\'' . $txt['poll_remove_warn'] . '\');"', 'url' => $scripturl . '?action=removepoll;topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id']),
+		);
+
+		template_button_strip_with_icons_and_text($poll_buttons);
+
+		echo '
+			</div>';
+	}
+
+	/* End Poll code */
+
+
 	echo '<div class="grid size-12 controls">';
 
 	//call_integration_hook('integrate_display_buttons', array(&$normal_buttons));
@@ -231,7 +236,6 @@ if( $context['user']['is_guest'] )
 	echo '</div>';
 	echo '</div>';
 	echo '</div>';
-
 
 	if (!empty($settings['display_who_viewing']))
 	{
@@ -983,5 +987,6 @@ if( $context['user']['is_guest'] )
 	echo '
 				// ]]></script>';
 }
+
 
 ?>

@@ -333,7 +333,7 @@ function theme_linktree($force_show = false)
 	<div class="grid size-12 breadcrumb">';
 		//if($_SERVER['REQUEST_URI'] != '/') {
 		echo '<ul>';
-			echo '<li class="link-title">You are here:&nbsp;</li>';
+			echo '<li class="link-title">Viewing:&nbsp;</li>';
 
 	// Each tree item has a URL and name. Some may have extra_before and extra_after.
 	foreach ($context['linktree'] as $link_num => $tree)
