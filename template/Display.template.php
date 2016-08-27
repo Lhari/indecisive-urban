@@ -218,54 +218,6 @@ if( $context['user']['is_guest'] )
 			</div>';
 	}
 
-	// Show the topic information - icon, subject, etc.
-	echo '
-			<div id="forumposts">
-				<div class="cat_bar">
-					<h3 class="titlebg">
-						', $txt['topic'], ': ', $context['subject'], ' &nbsp;(', $txt['read'], ' ', $context['num_views'], ' ', $txt['times'], ')
-					</h3>
-				</div>';
-
-
-
-	// Build the normal button array.
-	$normal_buttons = array(
-		'add_poll' => array(
-			'test' => 'can_add_poll',
-			'icon' => 'icon-chart-bar-3',
-			'text' => 'add_poll',
-			'image' => 'add_poll.gif',
-			'lang' => true, 'url' => $scripturl . '?action=editpoll;add;topic=' . $context['current_topic'] . '.' . $context['start']
-		),
-		'notify' => array(
-			'test' => 'can_mark_notify',
-			'icon' => 'icon-bell',
-			'text' => $context['is_marked_notify'] ? 'unnotify' : 'notify',
-			'image' => ($context['is_marked_notify'] ? 'un' : '') . 'notify.gif', 'lang' => true, 'custom' => 'onclick="return confirm(\'' . ($context['is_marked_notify'] ? $txt['notification_disable_topic'] : $txt['notification_enable_topic']) . '\');"',
-			'url' => $scripturl . '?action=notify;sa=' . ($context['is_marked_notify'] ? 'off' : 'on') . ';topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id']
-		),
-		'mark_unread' => array(
-			'test' => 'can_mark_unread',
-			'icon' => 'icon-mail',
-			'text' => 'mark_unread',
-			'image' => 'markunread.gif',
-			'lang' => true,
-			'url' => $scripturl . '?action=markasread;sa=topic;t=' . $context['mark_unread_time'] . ';topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id']
-		),
-		'reply' => array(
-			'test' => 'can_reply',
-			'icon' => 'icon-reply',
-			'text' => 'reply',
-			'image' => 'reply.gif',
-			'lang' => true,
-			'url' => $scripturl . '?action=post;topic=' . $context['current_topic'] . '.' . $context['start'] . ';last_msg=' . $context['topic_last_message'], 'active' => true
-		)
-	);
-
-	/*
-	Excluded buttons
-
 	/* End Poll code */
 
 
@@ -1035,10 +987,3 @@ if( $context['user']['is_guest'] )
 	echo '
 				// ]]></script>';
 }
-
-<<<<<<< HEAD
-?>
-=======
-
-?>
->>>>>>> refs/remotes/origin/board-panel
