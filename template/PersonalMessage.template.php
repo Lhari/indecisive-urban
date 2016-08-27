@@ -1135,7 +1135,7 @@ function template_send()
 			<span class="floatright">', $txt['on'], ': ', $context['quoted_message']['time'], '</span>
 		</h3>
 	</div>
-	<div class="windowbg2">
+	<div class="grid size-12">
 		<span class="topslice"><span></span></span>
 		<div class="content">
 			', $context['quoted_message']['body'], '

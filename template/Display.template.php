@@ -28,28 +28,116 @@ function template_main()
 			<a id="top"></a>
 			<a id="msg', $context['first_message'], '"></a>', $context['first_new_message'] ? '<a id="new"></a>' : '';
 
+
+	// Does this topic have some events linked to it?
+	if (!empty($context['linked_calendar_events']))
+	{
+		echo '
+			<div class="linked_events">
+				<div class="title_bar">
+					<h3 class="titlebg headerpadding">', $txt['calendar_linked_events'], '</h3>
+				</div>
+				<div class="windowbg">
+					<span class="topslice"><span></span></span>
+					<div class="content">
+						<ul class="reset">';
+
+		foreach ($context['linked_calendar_events'] as $event)
+			echo '
+							<li>
+								', ($event['can_edit'] ? '<a href="' . $event['modify_href'] . '"> <img src="' . $settings['images_url'] . '/icons/modify_small.gif" alt="" title="' . $txt['modify'] . '" class="edit_event" /></a> ' : ''), '<strong>', $event['title'], '</strong>: ', $event['start_date'], ($event['start_date'] != $event['end_date'] ? ' - ' . $event['end_date'] : ''), '
+							</li>';
+
+		echo '
+						</ul>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+			</div>';
+	}
+	// Show the topic information - icon, subject, etc.
+	echo '
+			<div id="forumposts">
+				<div class="cat_bar">
+					<h3 class="titlebg">
+						<img src="', $settings['images_url'], '/topic/', $context['class'], '.gif" align="bottom" alt="" />
+						', $txt['topic'], ': ', $context['subject'], ' &nbsp;(', $txt['read'], ' ', $context['num_views'], ' ', $txt['times'], ')
+					</h3>
+				</div>';
+
+
+
+	// Build the normal button array.
+	$normal_buttons = array(
+		'add_poll' => array(
+			'test' => 'can_add_poll',
+			'icon' => 'icon-chart-bar-2',
+			'text' => 'add_poll',
+			'image' => 'add_poll.gif',
+			'lang' => true, 'url' => $scripturl . '?action=editpoll;add;topic=' . $context['current_topic'] . '.' . $context['start']
+		),
+		'notify' => array(
+			'test' => 'can_mark_notify',
+			'icon' => 'icon-bell',
+			'text' => $context['is_marked_notify'] ? 'unnotify' : 'notify',
+			'image' => ($context['is_marked_notify'] ? 'un' : '') . 'notify.gif', 'lang' => true, 'custom' => 'onclick="return confirm(\'' . ($context['is_marked_notify'] ? $txt['notification_disable_topic'] : $txt['notification_enable_topic']) . '\');"',
+			'url' => $scripturl . '?action=notify;sa=' . ($context['is_marked_notify'] ? 'off' : 'on') . ';topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id']
+		),
+		'mark_unread' => array(
+			'test' => 'can_mark_unread',
+			'icon' => 'icon-mail',
+			'text' => 'mark_unread',
+			'image' => 'markunread.gif',
+			'lang' => true,
+			'url' => $scripturl . '?action=markasread;sa=topic;t=' . $context['mark_unread_time'] . ';topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id']
+		),
+		'reply' => array(
+			'test' => 'can_reply',
+			'icon' => 'icon-reply',
+			'text' => 'reply',
+			'image' => 'reply.gif',
+			'lang' => true,
+			'url' => $scripturl . '?action=post;topic=' . $context['current_topic'] . '.' . $context['start'] . ';last_msg=' . $context['topic_last_message'], 'active' => true
+		)
+	);
+
+	/*
+	Excluded buttons
+
+	'send' => array('test' => 'can_send_topic', 'text' => 'send_topic', 'image' => 'sendtopic.gif', 'lang' => true, 'url' => $scripturl . '?action=emailuser;sa=sendtopic;topic=' . $context['current_topic'] . '.0'),
+	'print' => array('text' => 'print', 'image' => 'print.gif', 'lang' => true, 'custom' => 'rel="new_win nofollow"', 'url' => $scripturl . '?action=printpage;topic=' . $context['current_topic'] . '.0'),
+	*/
+
+if( $context['user']['is_guest'] )
+		unset( $normal_buttons['print'] );
+
+	echo '<div class="grid-group">';
+
+	theme_linktree();
+
+
+	/* Begin Poll code */
+
+
 	// Is this topic also a poll?
 	if ($context['is_poll'])
 	{
 		echo '
-			<div id="poll">
+			<div id="poll" class="poll grid size-12">
 				<div class="cat_bar">
-					<h3 class="catbg">
-						<span class="ie6_header floatleft"><img src="', $settings['images_url'], '/topic/', $context['poll']['is_locked'] ? 'normal_poll_locked' : 'normal_poll', '.gif" alt="" class="icon" /> ', $txt['poll'], '</span>
+					<h3 class="titlebg">
+						'.$txt['poll'].': '.$context['poll']['question'].'
 					</h3>
 				</div>
 				<div class="windowbg">
 					<span class="topslice"><span></span></span>
-					<div class="content" id="poll_options">
-						<h4 id="pollquestion">
-							', $context['poll']['question'], '
-						</h4>';
+					<div class="content" id="poll_options">';
 
 		// Are they not allowed to vote but allowed to view the options?
 		if ($context['poll']['show_results'] || !$context['allow_vote'])
 		{
 			echo '
-					<dl class="options">';
+					<dl class="options grid size-12">';
 
 			// Show each option with its corresponding percentage bar.
 			foreach ($context['poll']['options'] as $option)
@@ -124,38 +212,12 @@ function template_main()
 			'remove_poll' => array('test' => 'can_remove_poll', 'text' => 'poll_remove', 'image' => 'admin_remove_poll.gif', 'lang' => true, 'custom' => 'onclick="return confirm(\'' . $txt['poll_remove_warn'] . '\');"', 'url' => $scripturl . '?action=removepoll;topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id']),
 		);
 
-		template_button_strip($poll_buttons);
+		template_button_strip_with_icons_and_text($poll_buttons);
 
 		echo '
 			</div>';
 	}
 
-	// Does this topic have some events linked to it?
-	if (!empty($context['linked_calendar_events']))
-	{
-		echo '
-			<div class="linked_events">
-				<div class="title_bar">
-					<h3 class="titlebg headerpadding">', $txt['calendar_linked_events'], '</h3>
-				</div>
-				<div class="windowbg">
-					<span class="topslice"><span></span></span>
-					<div class="content">
-						<ul class="reset">';
-
-		foreach ($context['linked_calendar_events'] as $event)
-			echo '
-							<li>
-								', ($event['can_edit'] ? '<a href="' . $event['modify_href'] . '"> <img src="' . $settings['images_url'] . '/icons/modify_small.gif" alt="" title="' . $txt['modify'] . '" class="edit_event" /></a> ' : ''), '<strong>', $event['title'], '</strong>: ', $event['start_date'], ($event['start_date'] != $event['end_date'] ? ' - ' . $event['end_date'] : ''), '
-							</li>';
-
-		echo '
-						</ul>
-					</div>
-					<span class="botslice"><span></span></span>
-				</div>
-			</div>';
-	}
 	// Show the topic information - icon, subject, etc.
 	echo '
 			<div id="forumposts">
@@ -204,16 +266,8 @@ function template_main()
 	/*
 	Excluded buttons
 
-	'send' => array('test' => 'can_send_topic', 'text' => 'send_topic', 'image' => 'sendtopic.gif', 'lang' => true, 'url' => $scripturl . '?action=emailuser;sa=sendtopic;topic=' . $context['current_topic'] . '.0'),
-	'print' => array('text' => 'print', 'image' => 'print.gif', 'lang' => true, 'custom' => 'rel="new_win nofollow"', 'url' => $scripturl . '?action=printpage;topic=' . $context['current_topic'] . '.0'),
-	*/
+	/* End Poll code */
 
-if( $context['user']['is_guest'] )
-		unset( $normal_buttons['print'] );
-
-	echo '<div class="grid-group">';
-
-	theme_linktree();
 
 	echo '<div class="grid size-12 controls">';
 
@@ -230,7 +284,6 @@ if( $context['user']['is_guest'] )
 	echo '</div>';
 	echo '</div>';
 	echo '</div>';
-
 
 	if (!empty($settings['display_who_viewing']))
 	{
@@ -983,4 +1036,9 @@ if( $context['user']['is_guest'] )
 				// ]]></script>';
 }
 
+<<<<<<< HEAD
 ?>
+=======
+
+?>
+>>>>>>> refs/remotes/origin/board-panel
