@@ -1,31 +1,17 @@
-input[type="submit"], input[type="button"], button {
-	border-left: 0;
-	border-right: 0;
-	outline: none;
-}
-
-input[type="submit"] {
-
-}
 
 .button, .buttons input[type="button"], input[type="submit"], .spoiler_head {
-
-	//border: 1px solid rgba($color-light-gray, 0.7);
-	border-radius: 6px;
-	padding: $spacing/4 $spacing/2;
+	padding: $spacing/3 $spacing/2;
 	margin: 0 $spacing/2;
-	color: $color-light;
+	color: $color-light-gray;
 	transition: all 300ms ease;
-	background: lighten($color-dark-gray, 10%);
-	//box-shadow: inset 0 0 11px rgba(0,0,0,0.5);
-	border-top: 1px solid rgba($color-light, 0.3);
-	border-bottom: 1px solid rgba($color-dark, 0.1);
 	display: inline-block;
 	cursor: pointer;
+	font-weight: 600;
+	background: none;
+	border: none;
 
 	&:hover {
-		background: $color-primary;
-		color: $color-light;
+		color: $color-primary;
 
 		@include media(palm) {
 			background: none;
@@ -34,7 +20,8 @@ input[type="submit"] {
 
 	}
 	i {
-		padding-right: $spacing/2;
+		color: $color-primary;
+		padding-right: $spacing/3;
 	}
 
 	&--accept {
@@ -54,6 +41,21 @@ input[type="submit"] {
 	}
 }
 
+input[type="submit"], input[type="button"], button {
+	border-left: 0;
+	border-right: 0;
+	outline: none;
+	background-color: #BF7300;
+	color: $color-light;
+	text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.4);
+	border-radius: 4px;
+
+	&:hover {
+		background-color: $color-teritary;
+		color: $color-light;
+	}
+}
+
 .button--secondary {
 	background: ligthen($color-dark-gray, 5%);
 
@@ -64,12 +66,12 @@ input[type="submit"] {
 }
 
 .admin-button .button {
-	background: lighten($color-dark-gray, 5%);
+	i {
+		color: $color-teritary;
+	}
 
 	&:hover {
-		color: $color-light;
-		background-color: $color-primary;
-
+		color: $color-teritary;
 	}
 }
 
