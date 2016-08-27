@@ -60,7 +60,6 @@ function template_main()
 			<div id="forumposts">
 				<div class="cat_bar">
 					<h3 class="titlebg">
-						<img src="', $settings['images_url'], '/topic/', $context['class'], '.gif" align="bottom" alt="" />
 						', $txt['topic'], ': ', $context['subject'], ' &nbsp;(', $txt['read'], ' ', $context['num_views'], ' ', $txt['times'], ')
 					</h3>
 				</div>';
@@ -71,7 +70,7 @@ function template_main()
 	$normal_buttons = array(
 		'add_poll' => array(
 			'test' => 'can_add_poll',
-			'icon' => 'icon-chart-bar-2',
+			'icon' => 'icon-chart-bar-3',
 			'text' => 'add_poll',
 			'image' => 'add_poll.gif',
 			'lang' => true, 'url' => $scripturl . '?action=editpoll;add;topic=' . $context['current_topic'] . '.' . $context['start']
