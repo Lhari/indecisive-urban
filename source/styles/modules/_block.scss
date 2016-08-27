@@ -77,3 +77,11 @@ span.topslice + div {
 .controls {
 	min-height: $spacing*2;
 }
+
+#forumposts .controls {
+	padding-bottom: $spacing;
+}
+
+.pagesection {
+	line-height: 2.5;
+}

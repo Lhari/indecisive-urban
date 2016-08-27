@@ -161,18 +161,17 @@ function template_main()
 			<div id="forumposts">
 				<div class="cat_bar">
 					<h3 class="titlebg">
-						<img src="', $settings['images_url'], '/topic/', $context['class'], '.gif" align="bottom" alt="" />
 						', $txt['topic'], ': ', $context['subject'], ' &nbsp;(', $txt['read'], ' ', $context['num_views'], ' ', $txt['times'], ')
 					</h3>
 				</div>';
 
-				
+
 
 	// Build the normal button array.
 	$normal_buttons = array(
 		'add_poll' => array(
 			'test' => 'can_add_poll',
-			'icon' => 'icon-chart-bar-2',
+			'icon' => 'icon-chart-bar-3',
 			'text' => 'add_poll',
 			'image' => 'add_poll.gif',
 			'lang' => true, 'url' => $scripturl . '?action=editpoll;add;topic=' . $context['current_topic'] . '.' . $context['start']
@@ -304,7 +303,7 @@ if( $context['user']['is_guest'] )
 								<li class="title">', $message['member']['title'], '</li>';
 
 		// Show the member's primary group (like 'Administrator') if they have one.
-		echo '<li class="membergroup">';					
+		echo '<li class="membergroup">';
 		if (!empty($message['member']['group']))
 			echo $message['member']['group'];
 		else
@@ -320,7 +319,7 @@ if( $context['user']['is_guest'] )
 				echo '
 								<li class="avatar">
 									<a href="', $scripturl, '?action=profile;u=', $message['member']['id'], '">';
-									
+
 									if($message['member']['online']['label'] == 'Online')
 										$icon = '/inde/classicon-'.strtolower($message['member']['options']['cust_class']).'.png';
 									else {
@@ -344,10 +343,10 @@ if( $context['user']['is_guest'] )
 
 									}
 
-									
 
 
-									
+
+
 								echo'</li>';
 
 			// Show how many posts they have made.
@@ -397,7 +396,7 @@ if( $context['user']['is_guest'] )
 									<ul>';
 					}
 
-										
+
 				}
 				if ($shown)
 					echo '
@@ -436,7 +435,7 @@ if( $context['user']['is_guest'] )
 											<a href="', $scripturl, '?action=pm;sa=send;u=', $message['member']['id'], '" title="', $message['member']['online']['is_online'] ? $txt['pm_online'] : $txt['pm_offline'], '" class="member__profile--icon round icon-mail"></a></div>';
 
 				echo '
-									
+
 								</li>';
 			}
 
@@ -627,7 +626,7 @@ if( $context['user']['is_guest'] )
 		echo '
 							<div class="smalltext reportlinks">';
 							if(!empty($message['member']['signature']))
-								
+
 							echo '<div class="divider"></div><br />';
 
 		// Can we issue a warning because of this post?  Remember, we can't give guests warnings.
@@ -765,7 +764,7 @@ if( $context['user']['is_guest'] )
 
 
 
-	
+
 
 	// Show the jumpto box, or actually...let Javascript do it.
 	// echo '<div class="plainbox" id="display_jump_to">&nbsp;</div>';
