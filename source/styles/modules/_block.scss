@@ -85,6 +85,11 @@ span.topslice + div {
 	margin-top: $spacing;
 }
 
+.breadcrumb.open {
+	a {
+		font-size: 15px;
+	}
+}
 .link-previous {
 	display: none;
 }

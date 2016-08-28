@@ -520,6 +520,8 @@ function HideEmptyDays() {
 function ExpandCrumbs() {
   var breadcrumbs = $(".breadcrumb").find("li");
   var delay = 0
+  $(".breadcrumb").next('.link-current').hide();
+
   breadcrumbs.each(function(idx) {
     var item = breadcrumbs[idx];
     var itemType = item.hasClass('link-previous');
@@ -528,6 +530,9 @@ function ExpandCrumbs() {
       delay += 50;
     }
   });
+
+  $(".breadcrumb").next('.link-current').fadeIn();
+
 }
 
 // The purpose of this code is to fix the height of overflow: auto blocks, because some browsers can't figure it out for themselves.

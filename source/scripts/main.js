@@ -520,6 +520,8 @@ function HideEmptyDays() {
 function ExpandCrumbs() {
   var breadcrumbs = $(".breadcrumb").find("li");
   var delay = 0
+  $(".breadcrumb").next('.link-current').hide();
+
   breadcrumbs.each(function(idx) {
     var item = breadcrumbs[idx];
     var itemType = item.hasClass('link-previous');
@@ -528,4 +530,7 @@ function ExpandCrumbs() {
       delay += 50;
     }
   });
+
+  $(".breadcrumb").next('.link-current').fadeIn();
+
 }

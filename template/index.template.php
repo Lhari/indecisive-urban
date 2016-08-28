@@ -339,7 +339,7 @@ function theme_linktree($force_show = false) {
 	{
 
 		echo '
-			<li', ($link_num == count($context['linktree']) - 1) ? ' class="link-current"' : ' class="link-previous"', '>';
+			<li onclick="ExpandCrumbs();"', ($link_num == count($context['linktree']) - 1) ? ' class="link-current"' : ' class="link-previous"', '>';
 
 		// Show something before the link?
 		if (isset($tree['extra_before']))
@@ -349,13 +349,11 @@ function theme_linktree($force_show = false) {
 			$tree['name'] = 'Home';
 
 		// Show the link, including a URL if it should have one.
-
-
 		if($settings['linktree_link'] && isset($tree['url'])) {
 			if($link_num != count($context['linktree']) - 1) {
 				echo '<a href="' . $tree['url'] . '"><span>' . $tree['name'] . '</span></a>';
 			} else {
-				echo '<a onclick="ExpandCrumbs();"" href="javascript:void(0);"><span>' . $tree['name'] . '</span></a>';
+				echo '<a href="javascript:void(0);"><span>' . $tree['name'] . '</span></a>';
 			}
 		} else {
 			echo '<span>' . $tree['name'] . '</span>';

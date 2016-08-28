@@ -20,10 +20,16 @@ function template_main()
 		echo '</pre>';
 	}
 
-	echo '<h3 class="titlebg" id="top">'.$context['page_title_html_safe'].'</h3>';
-	// Show breadcrumb
+	echo '
+		<h3 class="titlebg" id="top">';
+		//.$context['page_title_html_safe'].
+		// Show breadcrumb
+		theme_linktree();
+
+	echo '
+		</h3>';
+
 	echo '<div class="grid-group">';
-	theme_linktree();
 	echo '</div>';
 	// Board overview - is there any boards to display
 	// FUNCTION IS CURRENTLY UNSUPPORTED IN TEMPLATE
@@ -95,11 +101,11 @@ function template_main()
 					<td class="windowbg stats">
 						', $board['topics'], '
 					</td>';
-	
+
 					else
 					echo '
 					<td class="windowbg" valign="middle" align="center" colspan="2" width="14%">', $board['posts'], ' ', $txt['redirects'], '</td>';
-					
+
 					echo '
 					<td class="lastpost windowbg">';
 
@@ -293,18 +299,18 @@ function template_main()
 				<td class="icon2 ', $color_class, '">
 					<img src="', $topic['first_post']['icon_url'], '" alt="" />
 				</td>
-					
+
 			*/
 
 
 
 
 			echo '
-				
+
 					<div class="grid size-1" style="font-size: 14px; margin-top: 15px;">
 						';
 
-						if(strstr($topic['class'], 'my')) 
+						if(strstr($topic['class'], 'my'))
 							echo '<i class="icon-doc-text-inv"></i>';
 						else
 							echo '<i class="icon-doc-text"></i>';
@@ -411,7 +417,7 @@ function template_main()
 
 		{
 			echo '
-				
+
 					<div class="grid-group grid--last size-12 align-right" style="margin-bottom: 22px; margin-top: 22px;">
 						<select class="qaction" name="qaction"', $context['can_move'] ? ' onchange="this.form.moveItTo.disabled = (this.options[this.selectedIndex].value != \'move\');"' : '', '>
 							<option value="">--------</option>', $context['can_remove'] ? '
