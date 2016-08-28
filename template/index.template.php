@@ -320,8 +320,7 @@ function template_html_below()
 }
 
 // Show a linktree. This is that thing that shows "My Community | General Category | General Discussion"..
-function theme_linktree($force_show = false)
-{
+function theme_linktree($force_show = false) {
 	global $context, $settings, $options, $shown_linktree, $txt;
 
 	// If linktree is empty, just return - also allow an override.
@@ -333,7 +332,7 @@ function theme_linktree($force_show = false)
 	<div class="grid size-12 breadcrumb">';
 		//if($_SERVER['REQUEST_URI'] != '/') {
 		echo '<ul>';
-			echo '<li class="link-title">Viewing:&nbsp;</li>';
+			echo '<li class="link-title"></li>';
 
 	// Each tree item has a URL and name. Some may have extra_before and extra_after.
 	foreach ($context['linktree'] as $link_num => $tree)
@@ -356,7 +355,7 @@ function theme_linktree($force_show = false)
 			if($link_num != count($context['linktree']) - 1) {
 				echo '<a href="' . $tree['url'] . '"><span>' . $tree['name'] . '</span></a>';
 			} else {
-				echo '<span>' . $tree['name'] . '</span>';
+				echo '<a onclick="ExpandCrumbs();"" href="javascript:void(0);"><span>' . $tree['name'] . '</span></a>';
 			}
 		} else {
 			echo '<span>' . $tree['name'] . '</span>';

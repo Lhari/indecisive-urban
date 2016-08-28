@@ -194,15 +194,13 @@ function template_main()
 
 	// Now show the subject box for this post.
 	echo '
-						<div>
-							<label class="'.(isset($context['post_error']['no_subject']) ? 'error' : '').'" id="caption_subject" for="subject">
-								'.$txt['subject'].'<br/>
-								<input type="text" name="subject"', $context['subject'] == '' ? '' : ' value="' . $context['subject'] . '"', ' tabindex="', $context['tabindex']++, '" size="80" maxlength="80" class="input_text" />
-							</label>
-						</div>
-							
+			<div>
+				<label class="'.(isset($context['post_error']['no_subject']) ? 'error' : '').'" id="caption_subject" for="subject">
+					'.$txt['subject'].'<br/>
+					<input type="text" name="subject"', $context['subject'] == '' ? '' : ' value="' . $context['subject'] . '"', ' tabindex="', $context['tabindex']++, '" size="80" maxlength="80" class="input_text" />
+				</label>
+			</div>';
 
-';
 	$messageIcons = false;
 	if($messageIcons) {
 		echo '
@@ -817,8 +815,8 @@ function template_main()
 					<?php echo $txt['posted_by']; ?>: <?php echo $post['poster']; ?>, <?php echo $post['time']; ?>
 				</div>
 
-		<?php 
-		if ($context['can_quote']) 
+		<?php
+		if ($context['can_quote'])
 			echo '
 				<div class="quote_button grid size-6 align-right">
 					<a href="#postmodify" onclick="return insertQuoteFast(', $post['id'], ');" class="button" style="margin-right: 0;">
@@ -828,7 +826,7 @@ function template_main()
 				';
 		?>
 		</div>
-		<?php 
+		<?php
 		if ($ignoring)
 			echo '
 				<div id="msg_', $post['id'], '_ignored_prompt" class="" style="margin-top: 11px;">
@@ -842,7 +840,7 @@ function template_main()
 
 		?>
 				<div id="msg_<?php echo $post['id']; ?>_body" style="margin-top: 11px;">
-					<?php echo $post['message']; ?>	
+					<?php echo $post['message']; ?>
 				</div>
 			</div>
 		</div>
@@ -902,7 +900,7 @@ function template_spellcheck()
 
 	// The style information that makes the spellchecker look... like the forum hopefully!
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"', $context['right_to_left'] ? ' dir="rtl"' : '', '>
+	<html xmlns="http://www.w3.org/1999/xhtml"', $context['right_to_left'] ? ' dir="rtl"' : '', '>
 	<head>
 		<title>', $txt['spell_check'], '</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=', $context['character_set'], '" />
@@ -967,7 +965,7 @@ function template_spellcheck()
 			</div>
 		</form>
 	</body>
-</html>';
+	</html>';
 }
 
 function template_quotefast()
@@ -975,7 +973,7 @@ function template_quotefast()
 	global $context, $settings, $options, $txt;
 
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"', $context['right_to_left'] ? ' dir="rtl"' : '', '>
+	<html xmlns="http://www.w3.org/1999/xhtml"', $context['right_to_left'] ? ' dir="rtl"' : '', '>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=', $context['character_set'], '" />
 		<title>', $txt['retrieving_quote'], '</title>
@@ -1018,7 +1016,7 @@ function template_quotefast()
 	echo '
 		// ]]></script>
 	</body>
-</html>';
+	</html>';
 }
 
 function template_announce()

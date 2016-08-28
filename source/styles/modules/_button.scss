@@ -57,7 +57,7 @@ input[type="submit"], input[type="button"], button {
 }
 
 .button--secondary {
-	background: ligthen($color-dark-gray, 5%);
+	background: lighten($color-dark-gray, 5%);
 
 	&:hover {
 		color: $color-light;

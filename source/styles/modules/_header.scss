@@ -21,7 +21,7 @@
 	padding: 0;
 	text-transform: uppercase;
   white-space: nowrap;
-  
+
 	@include media('palm') {
 	    margin-top: 1.75rem;
       padding-right: $spacing/2;

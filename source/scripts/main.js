@@ -515,3 +515,17 @@ function HideEmptyDays() {
         if (hasContents) element.addClass("show-border");
     });
 }
+
+// Breadcrumbs
+function ExpandCrumbs() {
+  var breadcrumbs = $(".breadcrumb").find("li");
+  var delay = 0
+  breadcrumbs.each(function(idx) {
+    var item = breadcrumbs[idx];
+    var itemType = item.hasClass('link-previous');
+    if (itemType) {
+      $( item ).delay( delay ).fadeIn(800);
+      delay += 50;
+    }
+  });
+}

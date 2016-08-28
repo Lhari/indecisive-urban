@@ -10,13 +10,11 @@
  * @version 2.0
  */
 
-function template_main()
-{
+function template_main() {
 	global $context, $settings, $options, $txt, $scripturl, $modSettings;
 
 	// Let them know, if their report was a success!
-	if ($context['report_sent'])
-	{
+	if ($context['report_sent']) {
 		echo '
 			<div class="windowbg" id="profile_success">
 				', $txt['report_sent'], '
@@ -44,10 +42,10 @@ function template_main()
 
 		foreach ($context['linked_calendar_events'] as $event)
 			echo '
-							<li>
-								', ($event['can_edit'] ? '<a href="' . $event['modify_href'] . '"> <img src="' . $settings['images_url'] . '/icons/modify_small.gif" alt="" title="' . $txt['modify'] . '" class="edit_event" /></a> ' : ''), '<strong>', $event['title'], '</strong>: ', $event['start_date'], ($event['start_date'] != $event['end_date'] ? ' - ' . $event['end_date'] : ''), '
+							<li>', ($event['can_edit'] ? '<a href="' . $event['modify_href'] . '"> <img src="' . $settings['images_url'] . '/icons/modify_small.gif" alt="" title="' . $txt['modify']
+								. '" class="edit_event" /></a> ' : ''), '<strong>',
+								$event['title'], '</strong>: ', $event['start_date'], ($event['start_date'] != $event['end_date'] ? ' - ' . $event['end_date'] : ''), '
 							</li>';
-
 		echo '
 						</ul>
 					</div>
@@ -55,15 +53,6 @@ function template_main()
 				</div>
 			</div>';
 	}
-	// Show the topic information - icon, subject, etc.
-	echo '
-			<div id="forumposts">
-				<div class="cat_bar">
-					<h3 class="titlebg">
-						', $txt['topic'], ': ', $context['subject'], ' &nbsp;(', $txt['read'], ' ', $context['num_views'], ' ', $txt['times'], ')
-					</h3>
-				</div>';
-
 
 
 	// Build the normal button array.
@@ -107,13 +96,24 @@ function template_main()
 	'print' => array('text' => 'print', 'image' => 'print.gif', 'lang' => true, 'custom' => 'rel="new_win nofollow"', 'url' => $scripturl . '?action=printpage;topic=' . $context['current_topic'] . '.0'),
 	*/
 
-if( $context['user']['is_guest'] )
+	if( $context['user']['is_guest'] )
 		unset( $normal_buttons['print'] );
 
+	// Show the topic information - icon, subject, etc.
+	echo '
+			<div id="forumposts">
+				<div class="cat_bar">
+					<h3 class="titlebg">';
+
+							theme_linktree();
+
+				echo '
+					</h3>
+				</div>';
+
+ //', $txt['topic'], ': ', $context['subject'], ' &nbsp;(', $txt['read'], ' ', $context['num_views'], ' ', $txt['times'], ')
+
 	echo '<div class="grid-group">';
-
-	theme_linktree();
-
 
 	/* Begin Poll code */
 
@@ -225,9 +225,19 @@ if( $context['user']['is_guest'] )
 	//call_integration_hook('integrate_display_buttons', array(&$normal_buttons));
 	// Show the page index... "Pages: [1]".
 	echo '
-			<div class="pagesection left is-hidden--palm">
-				<div class="nextlinks">', $context['previous_next'], '</div>
-				<div class="pagelinks">', $txt['pages'], ': ', $context['page_index'], !empty($modSettings['topbottomEnable']) ? $context['menu_separator'] . ' &nbsp;&nbsp;<a href="#lastPost"><strong>' . $txt['go_down'] . '</strong></a>' : '', '</div>
+			<div class="pagesection left is-hidden--palm">';
+
+			if (!empty($context['links']['prev'])) {
+				echo ' <a class="btn btn-default previous" href="'.$context['links']['prev'].'" title="Previous page"><span class="icon-up-open"></span></a>';
+			}
+
+		echo '<div class="pagelinks">', $context['page_index'], '</div>';
+
+			if (!empty($context['links']['next'])) {
+				echo ' <a class="btn btn-default next" href="'.$context['links']['next'].'" title="Next page"><span class="icon-up-open"></span></a>';
+			}
+
+		echo '
 			</div>';
 
 	echo '<div class="grid--last grid-group main-control">';
@@ -469,9 +479,7 @@ if( $context['user']['is_guest'] )
 						<div class="postarea grid size-10 size-12--palm">
 							<div class="relative">
 								<div class="keyinfo">
-									<h5 class="titlebg" id="subject_'.$message['id'].'">
-										<a href="', $message['href'], '" rel="nofollow">'.(!empty($message['counter']) ? ' #' . $message['counter'] : '').' '.$message['subject'].' - '.$message['time'].'</a>
-									</h5>
+									<h5 class="titlebg" id="subject_'.$message['id'].'">' . $message['time'] .'</h5>
 									<div id="msg_', $message['id'], '_quick_mod"></div>
 								</div>';
 
@@ -752,11 +760,20 @@ if( $context['user']['is_guest'] )
 	//call_integration_hook('integrate_display_buttons', array(&$normal_buttons));
 	// Show the page index... "Pages: [1]".
 		echo '
-				<div class="pagesection left">
-					<div class="nextlinks">', $context['previous_next'], '</div>
-					<div class="pagelinks">', $txt['pages'], ': ', $context['page_index'], !empty($modSettings['topbottomEnable']) ? $context['menu_separator'] . ' &nbsp;&nbsp;<a href="#top"><strong>' . $txt['go_up'] . '</strong></a>' : '', '</div>
-				</div>';
+				<div class="pagesection left">';
 
+				if (!empty($context['links']['prev'])) {
+					echo ' <a class="btn btn-default previous" href="'.$context['links']['prev'].'" title="Previous page"><span class="icon-up-open"></span></a>';
+				}
+
+			echo '<div class="pagelinks">', $context['page_index'], '</div>';
+
+				if (!empty($context['links']['next'])) {
+					echo ' <a class="btn btn-default next" href="'.$context['links']['next'].'" title="Next page"><span class="icon-up-open"></span></a>';
+				}
+
+			echo '
+				</div>';
 			echo '<div class="grid-group main-control grid--last">';
 				template_button_strip_with_icons_and_text($normal_buttons);
 			echo '</div>';

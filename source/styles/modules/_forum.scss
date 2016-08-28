@@ -141,6 +141,13 @@
 .postarea .inner {
 	min-height: 250px;
 }
+
+.postarea .titlebg {
+	font-size: $font-size-base;
+	color: #737475;
+	font-weight: 700;
+}
+
 .round {
 	border-radius: 50%;
 	background-size: cover;
@@ -155,7 +162,7 @@
 }
 .new a {
 	color: $color-teritary;
-	
+
 	&:hover {
 		color: $color-light;
 	}
@@ -218,7 +225,7 @@ blockquote {
 		}
 	}
 	.postarea .titlebg {
-		background-image: none;	
+		background-image: none;
 		height: auto;
 		border: none;
 		box-shadow: none;
