@@ -216,7 +216,7 @@ function template_folder()
 								<li class="title">', $message['member']['title'], '</li>';
 
 		// Show the member's primary group (like 'Administrator') if they have one.
-		echo '<li class="membergroup">';					
+		echo '<li class="membergroup">';
 		if (!empty($message['member']['group']))
 			echo $message['member']['group'];
 		else
@@ -231,7 +231,7 @@ function template_folder()
 				echo '
 					<li class="avatar">
 						<a href="', $scripturl, '?action=profile;u=', $message['member']['id'], '">';
-						
+
 						if($message['member']['online']['label'] == 'Online')
 							$icon = '/inde/classicon-'.strtolower($message['member']['options']['cust_class']).'.png';
 						else {
@@ -281,7 +281,7 @@ function template_folder()
 											<a href="', $scripturl, '?action=pm;sa=send;u=', $message['member']['id'], '" title="', $message['member']['online']['is_online'] ? $txt['pm_online'] : $txt['pm_offline'], '" class="member__profile--icon round icon-mail"></a></div>';
 
 				echo '
-									
+
 				</li>';
 			}
 
@@ -313,7 +313,7 @@ function template_folder()
 			}
 
 			// This shows the popular messaging icons.
-			
+
 			/*
 			if ($message['member']['has_messenger'] && $message['member']['can_view_profile'])
 				echo '
@@ -600,7 +600,7 @@ function template_subject_list()
 		echo '<div class="grid size-12 private-message__content '.($i % 2 ? 'odd' : 'even').'">';
 
 
-		
+
 
 
 		echo '
@@ -622,13 +622,14 @@ function template_subject_list()
 		echo '
 					};
 				// ]]></script>
-					', $message['is_replied_to'] ? '<img src="' . $settings['images_url'] . '/icons/pm_replied.gif" style="margin-right: 4px;" alt="' . $txt['pm_replied'] . '" />' : '<img src="' . $settings['images_url'] . '/icons/pm_read.gif" style="margin-right: 4px;" alt="' . $txt['pm_read'] . '" />', '</div>
+					', $message['is_replied_to'] ? ' <span class="icon-comment-1"></span>' : '<span class="icon-comment-empty"></span>', '</div>
+
 				<div class="grid size-2">', $message['time'], '</div>
 				<div class="grid size-5">', ($context['display_mode'] != 0 && $context['current_pm'] == $message['id'] ? '<img src="' . $settings['images_url'] . '/selected.gif" alt="*" />' : ''), '<a href="', ($context['display_mode'] == 0 || $context['current_pm'] == $message['id'] ? '' : ($scripturl . '?action=pm;pmid=' . $message['id'] . ';kstart;f=' . $context['folder'] . ';start=' . $context['start'] . ';sort=' . $context['sort_by'] . ($context['sort_direction'] == 'up' ? ';' : ';desc') . ($context['current_label_id'] != -1 ? ';l=' . $context['current_label_id'] : ''))), '#msg', $message['id'], '">', $message['subject'], '</a>', $message['is_unread'] ? '&nbsp;<img src="' . $settings['lang_images_url'] . '/new.gif" alt="' . $txt['new'] . '" />' : '', '</div>
 				<div class="grid size-3">', ($context['from_or_to'] == 'from' ? $message['member']['link'] : (empty($message['recipients']['to']) ? '' : implode(', ', $message['recipients']['to']))), '</div>
 				<div class="grid size-1 align-right"><input type="checkbox" name="pms[]" id="deletelisting', $message['id'], '" value="', $message['id'], '"', $message['is_selected'] ? ' checked="checked"' : '', ' onclick="if (document.getElementById(\'deletedisplay', $message['id'], '\')) document.getElementById(\'deletedisplay', $message['id'], '\').checked = this.checked;" class="input_check" /></div>
 			</div>';
-			
+
 	}
 
 	echo '

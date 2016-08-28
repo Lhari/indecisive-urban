@@ -519,6 +519,9 @@ function HideEmptyDays() {
 // Breadcrumbs
 function ExpandCrumbs() {
   var breadcrumbs = $(".breadcrumb").find("li");
+
+  if (breadcrumbs.hasClass("open")) return;
+  
   var delay = 0
   $(".breadcrumb").next('.link-current').hide();
 

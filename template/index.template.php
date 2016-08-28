@@ -470,7 +470,7 @@ function template_menu()
 						echo '</i></a></span>';
 					}
 					echo '<a tabindex="-1" class="grid size-4" href="'.$moveElement['Profile'].'"><i class="icon-user-1"></i></a>';
-					echo '<a tabindex="-1" class="grid size-4" href="'.$moveElement['Logout'].'"><i class="icon-logout-1"></i></a>';
+					echo '<a tabindex="-1" class="grid size-4" href="'.$moveElement['Logout'].'"><i class="icon-logout-2"></i></a>';
 					echo '</div>';
 				}
 

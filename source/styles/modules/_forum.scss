@@ -289,3 +289,27 @@ blockquote {
 	}
 
 }
+
+
+.bbc_u {
+	text-decoration: underline;
+}
+
+.member__image.round {
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-position: center;
+}
+
+#moderationbuttons_strip {
+	padding-top: $spacing;
+	a {
+		color: #B21000;
+
+		&:hover {
+			color: red;
+		}
+	}
+}

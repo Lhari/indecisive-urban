@@ -231,7 +231,7 @@ function template_main() {
 				echo ' <a class="btn btn-default previous" href="'.$context['links']['prev'].'" title="Previous page"><span class="icon-up-open"></span></a>';
 			}
 
-		echo '<div class="pagelinks">', $context['page_index'], '</div>';
+			echo '<div class="pagelinks">', $context['page_index'], '</div>';
 
 			if (!empty($context['links']['next'])) {
 				echo ' <a class="btn btn-default next" href="'.$context['links']['next'].'" title="Next page"><span class="icon-up-open"></span></a>';
