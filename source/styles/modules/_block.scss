@@ -56,8 +56,6 @@ span.topslice + div {
 
 	@include media(palm) {
 		height: auto;
-		margin-bottom: $spacing/2;
-
 		li {
 			display: block;
 			width: 100%;
@@ -85,11 +83,32 @@ span.topslice + div {
 	margin-top: $spacing;
 }
 
-.breadcrumb.open {
+.breadcrumb.expanded {
 	a {
 		font-size: 15px;
 	}
+
+	.link-current {
+
+		i {
+			display: none;
+		}
+
+		a:hover {
+			cursor: text;
+			color: inherit;
+		}
+	}
+
 }
+
+.link-current i {
+	cursor: pointer;
+	&:hover {
+		color: $color-light;
+	}
+}
+
 .link-previous {
 	display: none;
 }

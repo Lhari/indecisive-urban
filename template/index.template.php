@@ -84,6 +84,10 @@ function template_html_above()
 <html xmlns="http://www.w3.org/1999/xhtml"', $context['right_to_left'] ? ' dir="rtl"' : '', '>
 <head>';
 
+	// PNG favicon
+	echo '
+		<link rel="icon" type="image/png" href="/favicon.png" />';
+
 	// The ?fin20 part of this link is just here to make sure browsers don't cache it wrongly.
 	echo '
 	<link rel="stylesheet" type="text/css" href="', $settings['theme_url'], '/css/index', $context['theme_variant'], '.css?fin20" />';
@@ -364,7 +368,7 @@ function theme_linktree($force_show = false) {
 			echo $tree['extra_after'];
 
 		// Don't show a separator for the last one.
-		if ($link_num != count($context['linktree']) - 1 && !$context['right_to_left'])
+		// if ($link_num != count($context['linktree']) - 1 && !$context['right_to_left'])
 			echo '<i class="icon-up-open"></i>';
 
 		echo '

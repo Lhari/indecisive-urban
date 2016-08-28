@@ -518,15 +518,19 @@ function HideEmptyDays() {
 
 // Breadcrumbs
 function ExpandCrumbs() {
-  var breadcrumbs = $(".breadcrumb").find("li");
+  var breadcrumb = $(".breadcrumb");
+  var crumbs = $(".breadcrumb").find("li");
+  var currentLink = crumbs.next('.link-current');
 
-  if (breadcrumbs.hasClass("open")) return;
-  
+  if ( breadcrumb.hasClass("expanded") ) return;
+
   var delay = 0
-  $(".breadcrumb").next('.link-current').hide();
 
-  breadcrumbs.each(function(idx) {
-    var item = breadcrumbs[idx];
+  // console.log(arrow)
+  currentLink.hide();
+
+  crumbs.each(function(idx) {
+    var item = crumbs[idx];
     var itemType = item.hasClass('link-previous');
     if (itemType) {
       $( item ).delay( delay ).fadeIn(800);
@@ -534,8 +538,8 @@ function ExpandCrumbs() {
     }
   });
 
-  $(".breadcrumb").next('.link-current').fadeIn();
-
+  breadcrumb.addClass("expanded");
+  currentLink.fadeIn();
 }
 
 // The purpose of this code is to fix the height of overflow: auto blocks, because some browsers can't figure it out for themselves.

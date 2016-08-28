@@ -926,7 +926,7 @@ function template_main() {
 								</div>'), ',
 
 
-							sTemplateSubjectEdit: '.JavaScriptEscape('<input type="text" style="width: 90%;max-width: 760px;background: none;border: none;color: #c6c8c9;padding-top: 9px;text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.4);outline: none;" name="subject" value="%subject%" size="80" maxlength="80" tabindex="' . $context['tabindex']++ . '" class="input_text" />').',
+							sTemplateSubjectEdit: '.JavaScriptEscape('<input type="text" style="width: 90%;max-width: 760px;background: none;border: none;color: #c6c8c9;padding-top: 9px;text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.4);outline: none;" name="subject" value="%subject%" size="80" maxlength="80" tabindex="' . $context['tabindex']++ . '" class="input_text hidden" />').',
 							sTemplateBodyNormal: ', JavaScriptEscape('%body%'), ',
 							sTemplateSubjectNormal: ', JavaScriptEscape('<a href="' . $scripturl . '?topic=' . $context['current_topic'] . '.msg%msg_id%#msg%msg_id%" rel="nofollow">%subject%</a>'), ',
 							sTemplateTopSubject: ', JavaScriptEscape($txt['topic'] . ': %subject% &nbsp;(' . $txt['read'] . ' ' . $context['num_views'] . ' ' . $txt['times'] . ')'), ',
