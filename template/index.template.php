@@ -86,7 +86,7 @@ function template_html_above()
 
 	// PNG favicon
 	echo '
-		<link rel="icon" type="image/png" href="/favicon.png" />';
+		<link rel="icon" type="image/png" href="/favicon.png?v=2" />';
 
 	// The ?fin20 part of this link is just here to make sure browsers don't cache it wrongly.
 	echo '
@@ -192,7 +192,7 @@ function template_body_above() {
 		<div id="bg-video-wrapper">
 			<video preload="auto" autoplay="true" loop="loop" style="opacity: 1;" poster="/inde/illidan-test.jpg">
 				<source src="/inde/key-render.webm" type="video/webm">
-				
+
 			</video>
 		</div>
 	</div>';
@@ -213,7 +213,7 @@ function template_body_above() {
 				<div id="ds-usernme" class="login__username--wrapper icon-user-1">
 					<input id="usrnme" placeholder="Username" name="user" type="text" />
 					</div>
-				<div id="ds-passwrd" class="login__password--wrapper icon-login">
+				<div id="ds-passwrd" class="login__password--wrapper icon-key">
 					<input id="psswrd" name="passwrd" placeholder="Password" type="password" />
 				</div>
 					<input id="loginbutton" type="submit" value="Login" class="login__button" name="submit" />
@@ -241,7 +241,7 @@ function template_body_above() {
 		</div>
 		<div class="grid grid--last header__menu">';
 			if(!$context['user']['is_logged'])
-				echo '<div class="js-login__toggle"><span class="is-hidden--palm is-hidden--lap">Login</span><i class="icon-login"></i></div>';
+				echo '<div class="js-login__toggle"><span class="is-hidden--palm is-hidden--lap">Login</span><i class="icon-login-1"></i></div>';
 			else
 				echo '<div class="js-offcanvas__toggle extra-spacing"><span class="is-hidden--palm is-hidden--lap">Menu</span><i class="icon-menu"></i></div>';
 		echo '

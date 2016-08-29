@@ -1940,3 +1940,15 @@ span {
 .editor {
   //border-color: #43474c !important;
 }
+
+
+.themes_list {
+  float: left;
+  width: 100%;
+}
+
+.editor, .rich_editor_frame {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(248, 252, 255, 0.2);
+}

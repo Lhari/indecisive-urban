@@ -18,4 +18,18 @@
     width: 100%;
     font-size: 1em;
   }
+
+  .recruitment__roles .is-active {
+    opacity: 1;
+  }
+  .recruitment__roles i {
+    opacity: 0.3;
+  }
+  .inactive {
+    opacity: 0.17;
+  }
+  .no-padding, .no-padding--desk {
+    padding-top: 0;
+    margin-top: 0;
+  }
 }
