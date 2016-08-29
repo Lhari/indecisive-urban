@@ -1,7 +1,6 @@
 .loading {
 	background-image: url('/inde/ring.svg');
 	background-repeat: no-repeat;
-    background-position-x: 50%;
-    background-position-y: 50%;
-    transition: height 500ms ease;
+  transition: height 500ms ease;
+	background-position: 50%;
 }

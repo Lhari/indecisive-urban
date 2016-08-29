@@ -241,32 +241,26 @@ function template_results() {
 }
 
 function template_search_header($headerText) {
-	global $context, $txt;
+	global $context, $txt, $options;
 
 	echo '
 	<div class="cat_bar">
-		<h3 class="titlebg">', 	$headerText, '</h3>
-	</div>';
+		<h3 class="titlebg">' .	$headerText;
 
-	// <div class="pagesection">
-	// 	<span>', $context['page_index'], '</span>
-	// </div>';
-
-	echo '
-			<div class="pagesection">';
-
-			if (!empty($context['links']['prev'])) {
-				echo ' <a class="btn btn-default previous" href="'.$context['links']['prev'].'" title="Previous page"><span class="icon-up-open"></span></a>';
-			}
-
-		echo '<div class="pagelinks">', $context['page_index'], '</div>';
-
-			if (!empty($context['links']['next'])) {
-				echo ' <a class="btn btn-default next" href="'.$context['links']['next'].'" title="Next page"><span class="icon-up-open"></span></a>';
+			if (!empty($options['display_quick_mod']) && $options['display_quick_mod'] == 1) {
+				echo '
+					<div style="float:right;margin-top:15px;">
+						<input type="checkbox" onclick="invertAll(this, this.form, \'topics[]\');" class="input_check" />
+					</div>';
 			}
 
 		echo '
-			</div>';
+		</h3>
+	</div>';
+
+	echo '<div class="pagesection">';
+		echo '<div class="pagelinks">', $context['page_index'], '</div>';
+	echo '</div>';
 }
 
 function template_results_topics() {

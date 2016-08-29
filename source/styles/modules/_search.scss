@@ -1,5 +1,5 @@
 
-#search_results {
+#showposts, #search_results {
   .search-text {
     color: $color-light-gray;
     margin-left: $spacing/2;
@@ -26,9 +26,9 @@
 }
 
 
-.search_results_posts {
-  padding: $spacing/2 0 $spacing 0;
-  margin: $spacing 0;
+.search_results_posts, .topic {
+  padding: $spacing 0;
+  // margin: $spacing 0;
 
   h4 {
     margin: 0;
@@ -50,4 +50,27 @@
 .quick_mod {
   text-align: right;
   padding-right: $spacing;
+}
+
+#showposts {
+
+  .core_posts {
+    margin-bottom: 0;
+  }
+  .topic {
+    overflow: hidden;
+  }
+
+  .quickbuttons {
+    padding-top: $spacing;
+    text-align: right;
+
+    li {
+      display: inline-block;
+
+      a {
+        @include standard-button;
+      }
+    }
+  }
 }

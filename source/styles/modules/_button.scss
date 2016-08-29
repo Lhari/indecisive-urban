@@ -1,5 +1,20 @@
 
-.button, .buttons input[type="button"], input[type="submit"], .spoiler_head {
+@mixin submit-button {
+	border-left: 0;
+	border-right: 0;
+	outline: none;
+	background-color: #BF7300;
+	color: $color-light;
+	text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.4);
+	border-radius: 4px;
+
+	&:hover {
+		background-color: $color-teritary;
+		color: $color-light;
+	}
+}
+
+@mixin standard-button {
 	padding: $spacing/3 $spacing/2;
 	margin: 0 $spacing/2;
 	color: $color-light-gray;
@@ -31,6 +46,10 @@
 	}
 }
 
+.button, .buttons input[type="button"], input[type="submit"], .spoiler_head {
+	@include standard-button;
+}
+
 .spoiler_head {
 	margin: $spacing/2 0;
 }
@@ -42,18 +61,7 @@
 }
 
 input[type="submit"], input[type="button"], button {
-	border-left: 0;
-	border-right: 0;
-	outline: none;
-	background-color: #BF7300;
-	color: $color-light;
-	text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.4);
-	border-radius: 4px;
-
-	&:hover {
-		background-color: $color-teritary;
-		color: $color-light;
-	}
+	@include submit-button;
 }
 
 .button--secondary {
@@ -101,6 +109,19 @@ input[type="submit"], input[type="button"], button {
 }
 
 /* Admin Nav */
+#adm_submenus {
+	padding-top: $spacing;
+	a {
+		@include submit-button;
+		padding: 10px;
+	}
+}
+
+#admin_content {
+	input[type="submit"], input[type="button"], button {
+		@include submit-button;
+	}
+}
 
 $button-border: 1px solid #000;
 

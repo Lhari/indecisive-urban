@@ -363,19 +363,24 @@ echo '</div';
 }
 
 // Template for showing all the posts of the user, in chronological order.
-function template_showPosts()
-{
+function template_showPosts() {
 	global $context, $settings, $options, $scripturl, $modSettings, $txt;
 
 	echo '
-		<div class="cat_bar">
-			<h3 class="catbg">
-				', (!isset($context['attachments']) && empty($context['is_topics']) ? $txt['showMessages'] : (!empty($context['is_topics']) ? $txt['showTopics'] : $txt['showAttachments'])), ' - ', $context['member']['name'], '
-			</h3>
-		</div>
+	<div class="cat_bar">
+		<h3 class="titlebg">',
+			(!isset($context['attachments']) && empty($context['is_topics']) ? $txt['showMessages'] : (!empty($context['is_topics']) ? $txt['showTopics'] : $txt['showAttachments'])), ' - ', $context['member']['name'],
+		'</h3>
+	</div>';
+
+	echo '
 		<div class="pagesection">
-			<span>', $txt['pages'], ': ', $context['page_index'], '</span>
+			<div class="pagelinks">', $context['page_index'], '</div>
 		</div>';
+
+
+	echo '
+		<div id="showposts">';
 
 	// Button shortcuts
 	$quote_button = create_button('quote.gif', 'reply_quote', 'quote', 'align="middle"');
@@ -384,73 +389,71 @@ function template_showPosts()
 	$notify_button = create_button('notify_sm.gif', 'notify_replies', 'notify', 'align="middle"');
 
 	// Are we displaying posts or attachments?
-	if (!isset($context['attachments']))
-	{
+	if (!isset($context['attachments'])) {
 		// For every post to be displayed, give it its own div, and show the important details of the post.
-		foreach ($context['posts'] as $post)
-		{
+		foreach ($context['posts'] as $post) {
 			echo '
-		<div class="topic">
-			<div class="', $post['alternate'] == 0 ? 'windowbg2' : 'windowbg', ' core_posts">
-				<span class="topslice"><span></span></span>
-				<div class="content">
-					<div class="counter">', $post['counter'], '</div>
-					<div class="topic_details">
-						<h5><strong><a href="', $scripturl, '?board=', $post['board']['id'], '.0">', $post['board']['name'], '</a> / <a href="', $scripturl, '?topic=', $post['topic'], '.', $post['start'], '#msg', $post['id'], '">', $post['subject'], '</a></strong></h5>
+			<div class="topic ', $post['alternate'] == 0 ? 'windowbg' : 'windowbg2', '">
+				<div class="core_posts">
+				<div class="grid-group topic_details">
+					<div class="counter grid size-1">', $post['counter'], '</div>
+					<div class="grid size-11">
+						<h4>
+							<a href="', $scripturl, '?board=', $post['board']['id'], '.0">', $post['board']['name'], '</a> / <a href="', $scripturl, '?topic=', $post['topic'], '.', $post['start'], '#msg', $post['id'], '">', $post['subject'], '</a>
+						</h4>
 						<span class="smalltext">&#171;&nbsp;<strong>', $txt['on'], ':</strong> ', $post['time'], '&nbsp;&#187;</span>
 					</div>
-					<div class="list_posts">';
-
-			if (!$post['approved'])
+				</div>
+				<div class="list_posts grid-group">';
 				echo '
-					<div class="approve_post">
-						<em>', $txt['post_awaiting_approval'], '</em>
-					</div>';
-
-			echo '
-					', $post['body'], '
-					</div>
+					<div class="grid size-1">&nbsp;</div>
+					<div class="grid size-11">', $post['body'], '</div>
 				</div>';
 
 			if ($post['can_reply'] || $post['can_mark_notify'] || $post['can_delete'])
 				echo '
-				<div class="floatright">
 					<ul class="reset smalltext quickbuttons">';
 
 			// If they *can* reply?
 			if ($post['can_reply'])
 				echo '
-						<li class="reply_button"><a href="', $scripturl, '?action=post;topic=', $post['topic'], '.', $post['start'], '"><span>', $txt['reply'], '</span></a></li>';
+						<li class="reply_button">
+							<a href="', $scripturl, '?action=post;topic=', $post['topic'], '.', $post['start'], '"><span><i class="icon-reply"></i>', $txt['reply'], '</span></a>
+						</li>';
 
 			// If they *can* quote?
 			if ($post['can_quote'])
 				echo '
-						<li class="quote_button"><a href="', $scripturl . '?action=post;topic=', $post['topic'], '.', $post['start'], ';quote=', $post['id'], '"><span>', $txt['quote'], '</span></a></li>';
+						<li class="quote_button">
+							<a href="', $scripturl . '?action=post;topic=', $post['topic'], '.', $post['start'], ';quote=', $post['id'], '"><span><i class="icon-quote"></i>', $txt['quote'], '</span></a>
+						</li>';
 
 			// Can we request notification of topics?
 			if ($post['can_mark_notify'])
 				echo '
-						<li class="notify_button"><a href="', $scripturl, '?action=notify;topic=', $post['topic'], '.', $post['start'], '"><span>', $txt['notify'], '</span></a></li>';
+						<li class="notify_button">
+							<a href="', $scripturl, '?action=notify;topic=', $post['topic'], '.', $post['start'], '"><span><i class="icon-bell"></i>', $txt['notify'], '</span></a>
+						</li>';
 
 			// How about... even... remove it entirely?!
 			if ($post['can_delete'])
 				echo '
-						<li class="remove_button"><a href="', $scripturl, '?action=deletemsg;msg=', $post['id'], ';topic=', $post['topic'], ';profile;u=', $context['member']['id'], ';start=', $context['start'], ';', $context['session_var'], '=', $context['session_id'], '" onclick="return confirm(\'', $txt['remove_message'], '?\');"><span>', $txt['remove'], '</span></a></li>';
+						<li class="remove_button">
+							<a href="', $scripturl, '?action=deletemsg;msg=', $post['id'], ';topic=', $post['topic'], ';profile;u=',
+							$context['member']['id'], ';start=', $context['start'], ';', $context['session_var'], '=', $context['session_id'], '" onclick="return confirm(\'',
+							$txt['remove_message'], '?\');"><span><i class="icon-cancel-1"></i>', $txt['remove'], '</span></a>
+						</li>';
 
 			if ($post['can_reply'] || $post['can_mark_notify'] || $post['can_delete'])
 				echo '
-					</ul>
-				</div>';
+					</ul>';
 
 			echo '
-				<br class="clear" />
-				<span class="botslice"><span></span></span>
 			</div>
 		</div>';
 		}
 	}
-	else
-	{
+	else {
 		echo '
 		<table border="0" width="100%" cellspacing="1" cellpadding="2" class="table_grid" align="center">
 			<thead>
@@ -510,16 +513,13 @@ function template_showPosts()
 			</tbody>
 		</table>';
 	}
-	// Show more page numbers.
-	echo '
-		<div class="pagesection" style="margin-bottom: 0;">
-			<span>', $txt['pages'], ': ', $context['page_index'], '</span>
-		</div>';
+
+	echo '</div>';
 }
 
 // Template for showing all the buddies of the current user.
 function template_editBuddies()
-{
+	{
 	global $context, $settings, $options, $scripturl, $modSettings, $txt;
 
 	echo '
