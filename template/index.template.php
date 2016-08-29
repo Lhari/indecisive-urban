@@ -190,9 +190,9 @@ function template_body_above() {
 		<div class="oncanvas__overlay js-overlay is-hidden"></div>
 	<div class="background">
 		<div id="bg-video-wrapper">
-			<video preload="auto" autoplay="true" loop="loop" style="opacity: 1;">
-
+			<video preload="auto" autoplay="true" loop="loop" style="opacity: 1;" poster="/inde/illidan-test.jpg">
 				<source src="/inde/key-render.webm" type="video/webm">
+				
 			</video>
 		</div>
 	</div>';

@@ -1,0 +1,21 @@
+.recruitment__class {
+  display: flex;
+  margin-bottom: $spacing;
+
+  .recruitment-text {
+    text-shadow: 0 2px 2px black;
+    align-self: center;
+  }
+
+  img {
+    margin: 0 auto;
+    display: block;
+    align-self: center;
+  }
+
+  h3 {
+    margin-bottom: $spacing/2;
+    width: 100%;
+    font-size: 1em;
+  }
+}
