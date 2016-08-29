@@ -1,0 +1,35 @@
+.recruitment__class {
+  display: flex;
+  margin-bottom: $spacing;
+
+  .recruitment-text {
+    text-shadow: 0 2px 2px black;
+    align-self: center;
+  }
+
+  img {
+    margin: 0 auto;
+    display: block;
+    align-self: center;
+  }
+
+  h3 {
+    margin-bottom: $spacing/2;
+    width: 100%;
+    font-size: 1em;
+  }
+
+  .recruitment__roles .is-active {
+    opacity: 1;
+  }
+  .recruitment__roles i {
+    opacity: 0.3;
+  }
+  .inactive {
+    opacity: 0.17;
+  }
+  .no-padding, .no-padding--desk {
+    padding-top: 0;
+    margin-top: 0;
+  }
+}

@@ -1,4 +1,4 @@
-$color-primary: #FF9900;
+$color-primary: #FFA319;
 $color-secondary: #aeb6b9;
 $color-teritary: darken(#a1fe16, 20%);
 
@@ -8,6 +8,7 @@ $color-fade: rgba(0,0,0,.8);
 
 $color-dark-gray: #32363b;
 $color-light-gray: #c6c8c9;
+$color-medium-gray: #737475;
 
 $color-font-base: #f8fcff;
 $color-body: #000;
@@ -168,7 +169,7 @@ $class-warrior: #C79C6E;
 		a {
 			color: $color-dark;
 		}
-		
+
 	}
 	.poster[data-class="rogue"] .titlebg {
 		background: $class-rogue;
@@ -180,10 +181,9 @@ $class-warrior: #C79C6E;
 		background: $class-shaman;
 	}
 		.poster[data-class="warlock"] .titlebg {
-		background: $class-warrior;
+		background: $class-warlock;
 	}
 	.poster[data-class="warrior"] .titlebg {
 		background: $class-warrior;
 	}
 }
-

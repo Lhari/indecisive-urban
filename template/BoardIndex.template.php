@@ -126,7 +126,7 @@ function template_main()
 
 		// Assuming the category hasn't been collapsed...
 		if (!$category['is_collapsed']) {
-			
+
 			/* Each board in each category's boards has:
 			new (is it new?), id, name, description, moderators (see below), link_moderators (just a list.),
 			children (see below.), link_children (easier to use.), children_new (are they new?),
@@ -183,7 +183,7 @@ function template_main()
 						}
 						*/
 					}
-					
+
 					?>
 					</DIV>
 					<div class="grid size-7 size-5--lap is-hidden--palm">
@@ -214,7 +214,7 @@ function template_main()
 								<div class="grid size-3 size-6--palm">
 									<?php echo 	'<a class="subject boardIndex__title '.($child['new'] ? 'new' : '').'" href="'.$child['href'].'" name="b'.$child['id'].'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$child['name'].'</a>';?>
 
-									
+
 									<?php
 									if (!empty($child['last_post']['id'])) {
 										/*
@@ -261,7 +261,7 @@ function template_main()
 								</div>
 							</div>
 							<?php
-							
+
 						endforeach;
 						echo '</div>';
 					endif;
@@ -272,7 +272,7 @@ function template_main()
 					</div>
 
 					</div>
-				</div>	
+				</div>
 
 				<?php
 
@@ -336,10 +336,10 @@ function template_main()
 				else
 				echo '
 				<td class="windowbg" valign="middle" align="center" colspan="2" width="14%">', $board['posts'], ' ', $txt['redirects'], '</td>';
-				
+
 				*/
 
-			}		
+			}
 		}
 	}
 	echo '
@@ -352,7 +352,12 @@ function template_main()
 
 		// Mark read button.
 		$mark_read_button = array(
-			'markread' => array('text' => 'mark_as_read', 'image' => 'markread.gif', 'lang' => true, 'url' => $scripturl . '?action=markasread;sa=all;' . $context['session_var'] . '=' . $context['session_id']),
+			'markread' => array(
+				'text' => 'mark_as_read',
+				'image' => 'markread.gif', 
+				'icon' => 'icon-mail-1',
+				'lang' => true,
+				'url' => $scripturl . '?action=markasread;sa=all;' . $context['session_var'] . '=' . $context['session_id']),
 		);
 
 		echo '</div>';

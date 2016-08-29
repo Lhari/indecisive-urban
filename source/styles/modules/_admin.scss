@@ -137,7 +137,7 @@
   margin: 0;
 
   a {
-    @extend .button;
+    // @extend .button;
     float: left;
     margin: 0 2px;
   }
@@ -741,6 +741,37 @@ tr.windowbg2 td {
 }
 /* Styles for the profile section.
 ---------------------------------- */
+#profileview {
+  padding-top: $spacing*2;
+
+  .member__profile {
+    display: flex;
+    margin: 0 10%;
+    padding-top: $spacing;
+  }
+
+  .member__profile__icon {
+    position: relative;
+    right: 0;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .member__profile__icon a {
+    display: block;
+    text-align: center;
+    width: 44px;
+    &.round {
+      padding: 13px 11px;
+    }
+  }
+
+  li {
+  	list-style: none;
+  }
+}
+
 dl {
   overflow: auto;
   margin: 0;
@@ -1019,15 +1050,6 @@ dl {
 -------------- */
 .topic .time {
   float: right;
-}
-
-.counter {
-  margin: 0;
-  padding: 0.2em 0.5em 0.1em 0.2em;
-  font-size: 2.2em;
-  font-weight: bold;
-  color: #9aa0a5;
-  float: left;
 }
 
 .list_posts {
@@ -1917,4 +1939,16 @@ span {
 
 .editor {
   //border-color: #43474c !important;
+}
+
+
+.themes_list {
+  float: left;
+  width: 100%;
+}
+
+.editor, .rich_editor_frame {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(248, 252, 255, 0.2);
 }

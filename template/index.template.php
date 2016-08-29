@@ -84,6 +84,10 @@ function template_html_above()
 <html xmlns="http://www.w3.org/1999/xhtml"', $context['right_to_left'] ? ' dir="rtl"' : '', '>
 <head>';
 
+	// PNG favicon
+	echo '
+		<link rel="icon" type="image/png" href="/favicon.png?v=2" />';
+
 	// The ?fin20 part of this link is just here to make sure browsers don't cache it wrongly.
 	echo '
 	<link rel="stylesheet" type="text/css" href="', $settings['theme_url'], '/css/index', $context['theme_variant'], '.css?fin20" />';
@@ -186,9 +190,9 @@ function template_body_above() {
 		<div class="oncanvas__overlay js-overlay is-hidden"></div>
 	<div class="background">
 		<div id="bg-video-wrapper">
-			<video preload="auto" autoplay="true" loop="loop" style="opacity: 1;">
-
+			<video preload="auto" autoplay="true" loop="loop" style="opacity: 1;" poster="/inde/illidan-test.jpg">
 				<source src="/inde/key-render.webm" type="video/webm">
+
 			</video>
 		</div>
 	</div>';
@@ -209,7 +213,7 @@ function template_body_above() {
 				<div id="ds-usernme" class="login__username--wrapper icon-user-1">
 					<input id="usrnme" placeholder="Username" name="user" type="text" />
 					</div>
-				<div id="ds-passwrd" class="login__password--wrapper icon-login">
+				<div id="ds-passwrd" class="login__password--wrapper icon-key">
 					<input id="psswrd" name="passwrd" placeholder="Password" type="password" />
 				</div>
 					<input id="loginbutton" type="submit" value="Login" class="login__button" name="submit" />
@@ -237,7 +241,7 @@ function template_body_above() {
 		</div>
 		<div class="grid grid--last header__menu">';
 			if(!$context['user']['is_logged'])
-				echo '<div class="js-login__toggle"><span class="is-hidden--palm is-hidden--lap">Login</span><i class="icon-login"></i></div>';
+				echo '<div class="js-login__toggle"><span class="is-hidden--palm is-hidden--lap">Login</span><i class="icon-login-1"></i></div>';
 			else
 				echo '<div class="js-offcanvas__toggle extra-spacing"><span class="is-hidden--palm is-hidden--lap">Menu</span><i class="icon-menu"></i></div>';
 		echo '
@@ -320,8 +324,7 @@ function template_html_below()
 }
 
 // Show a linktree. This is that thing that shows "My Community | General Category | General Discussion"..
-function theme_linktree($force_show = false)
-{
+function theme_linktree($force_show = false) {
 	global $context, $settings, $options, $shown_linktree, $txt;
 
 	// If linktree is empty, just return - also allow an override.
@@ -333,14 +336,14 @@ function theme_linktree($force_show = false)
 	<div class="grid size-12 breadcrumb">';
 		//if($_SERVER['REQUEST_URI'] != '/') {
 		echo '<ul>';
-			echo '<li class="link-title">You are here:&nbsp;</li>';
+			echo '<li class="link-title"></li>';
 
 	// Each tree item has a URL and name. Some may have extra_before and extra_after.
 	foreach ($context['linktree'] as $link_num => $tree)
 	{
 
 		echo '
-			<li', ($link_num == count($context['linktree']) - 1) ? ' class="link-current"' : ' class="link-previous"', '>';
+			<li onclick="ExpandCrumbs();"', ($link_num == count($context['linktree']) - 1) ? ' class="link-current"' : ' class="link-previous"', '>';
 
 		// Show something before the link?
 		if (isset($tree['extra_before']))
@@ -350,13 +353,11 @@ function theme_linktree($force_show = false)
 			$tree['name'] = 'Home';
 
 		// Show the link, including a URL if it should have one.
-
-
 		if($settings['linktree_link'] && isset($tree['url'])) {
 			if($link_num != count($context['linktree']) - 1) {
 				echo '<a href="' . $tree['url'] . '"><span>' . $tree['name'] . '</span></a>';
 			} else {
-				echo '<span>' . $tree['name'] . '</span>';
+				echo '<a href="javascript:void(0);"><span>' . $tree['name'] . '</span></a>';
 			}
 		} else {
 			echo '<span>' . $tree['name'] . '</span>';
@@ -367,7 +368,7 @@ function theme_linktree($force_show = false)
 			echo $tree['extra_after'];
 
 		// Don't show a separator for the last one.
-		if ($link_num != count($context['linktree']) - 1 && !$context['right_to_left'])
+		// if ($link_num != count($context['linktree']) - 1 && !$context['right_to_left'])
 			echo '<i class="icon-up-open"></i>';
 
 		echo '
@@ -473,7 +474,7 @@ function template_menu()
 						echo '</i></a></span>';
 					}
 					echo '<a tabindex="-1" class="grid size-4" href="'.$moveElement['Profile'].'"><i class="icon-user-1"></i></a>';
-					echo '<a tabindex="-1" class="grid size-4" href="'.$moveElement['Logout'].'"><i class="icon-logout-1"></i></a>';
+					echo '<a tabindex="-1" class="grid size-4" href="'.$moveElement['Logout'].'"><i class="icon-logout-2"></i></a>';
 					echo '</div>';
 				}
 

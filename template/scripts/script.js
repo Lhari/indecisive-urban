@@ -593,7 +593,7 @@ function smf_avatarResize()
 		// Image.prototype.avatar = possibleAvatars[i];
 		tempAvatars[j] = new Image();
 		tempAvatars[j].avatar = possibleAvatars[i];
-		
+
 		tempAvatars[j].onload = function()
 		{
 			this.avatar.width = this.width;
@@ -1398,8 +1398,8 @@ function smc_saveEntities(sFormName, aElementNames, sMask)
 	}
 }
 
-			
-		
+
+
 // Shows the image when it is clicked on.
 function showImage(obj)
 {
@@ -1408,8 +1408,8 @@ function showImage(obj)
 	return false;
 }
 
- 
-			
+
+
 // A function used to clean the attachments on post page
 function cleanFileInput(idElement)
 {

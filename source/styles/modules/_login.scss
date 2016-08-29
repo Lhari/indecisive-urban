@@ -3,10 +3,11 @@
 	z-index: 1000;
 
 	.login__wrapper {
+		z-index: 1000;
     background: $color-dark-gray;
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 500px;
     transform: translate(-50%, -50%);
     border-radius: $spacing/4;
     box-shadow: 0 0 30px $color-fade;

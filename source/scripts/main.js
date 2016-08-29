@@ -515,3 +515,29 @@ function HideEmptyDays() {
         if (hasContents) element.addClass("show-border");
     });
 }
+
+// Breadcrumbs
+function ExpandCrumbs() {
+  var breadcrumb = $(".breadcrumb");
+  var crumbs = $(".breadcrumb").find("li");
+  var currentLink = crumbs.next('.link-current');
+
+  if ( breadcrumb.hasClass("expanded") ) return;
+
+  var delay = 0
+
+  // console.log(arrow)
+  currentLink.hide();
+
+  crumbs.each(function(idx) {
+    var item = crumbs[idx];
+    var itemType = item.hasClass('link-previous');
+    if (itemType) {
+      $( item ).delay( delay ).fadeIn(800);
+      delay += 50;
+    }
+  });
+
+  breadcrumb.addClass("expanded");
+  currentLink.fadeIn();
+}

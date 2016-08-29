@@ -10,13 +10,11 @@
  * @version 2.0
  */
 
-function template_main()
-{
+function template_main() {
 	global $context, $settings, $options, $txt, $scripturl, $modSettings;
 
 	// Let them know, if their report was a success!
-	if ($context['report_sent'])
-	{
+	if ($context['report_sent']) {
 		echo '
 			<div class="windowbg" id="profile_success">
 				', $txt['report_sent'], '
@@ -28,28 +26,117 @@ function template_main()
 			<a id="top"></a>
 			<a id="msg', $context['first_message'], '"></a>', $context['first_new_message'] ? '<a id="new"></a>' : '';
 
+
+	// Does this topic have some events linked to it?
+	if (!empty($context['linked_calendar_events']))
+	{
+		echo '
+			<div class="linked_events">
+				<div class="title_bar">
+					<h3 class="titlebg headerpadding">', $txt['calendar_linked_events'], '</h3>
+				</div>
+				<div class="windowbg">
+					<span class="topslice"><span></span></span>
+					<div class="content">
+						<ul class="reset">';
+
+		foreach ($context['linked_calendar_events'] as $event)
+			echo '
+							<li>', ($event['can_edit'] ? '<a href="' . $event['modify_href'] . '"> <img src="' . $settings['images_url'] . '/icons/modify_small.gif" alt="" title="' . $txt['modify']
+								. '" class="edit_event" /></a> ' : ''), '<strong>',
+								$event['title'], '</strong>: ', $event['start_date'], ($event['start_date'] != $event['end_date'] ? ' - ' . $event['end_date'] : ''), '
+							</li>';
+		echo '
+						</ul>
+					</div>
+					<span class="botslice"><span></span></span>
+				</div>
+			</div>';
+	}
+
+
+	// Build the normal button array.
+	$normal_buttons = array(
+		'add_poll' => array(
+			'test' => 'can_add_poll',
+			'icon' => 'icon-chart-bar-3',
+			'text' => 'add_poll',
+			'image' => 'add_poll.gif',
+			'lang' => true, 'url' => $scripturl . '?action=editpoll;add;topic=' . $context['current_topic'] . '.' . $context['start']
+		),
+		'notify' => array(
+			'test' => 'can_mark_notify',
+			'icon' => 'icon-bell',
+			'text' => $context['is_marked_notify'] ? 'unnotify' : 'notify',
+			'image' => ($context['is_marked_notify'] ? 'un' : '') . 'notify.gif', 'lang' => true, 'custom' => 'onclick="return confirm(\'' . ($context['is_marked_notify'] ? $txt['notification_disable_topic'] : $txt['notification_enable_topic']) . '\');"',
+			'url' => $scripturl . '?action=notify;sa=' . ($context['is_marked_notify'] ? 'off' : 'on') . ';topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id']
+		),
+		'mark_unread' => array(
+			'test' => 'can_mark_unread',
+			'icon' => 'icon-mail',
+			'text' => 'mark_unread',
+			'image' => 'markunread.gif',
+			'lang' => true,
+			'url' => $scripturl . '?action=markasread;sa=topic;t=' . $context['mark_unread_time'] . ';topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id']
+		),
+		'reply' => array(
+			'test' => 'can_reply',
+			'icon' => 'icon-reply',
+			'text' => 'reply',
+			'image' => 'reply.gif',
+			'lang' => true,
+			'url' => $scripturl . '?action=post;topic=' . $context['current_topic'] . '.' . $context['start'] . ';last_msg=' . $context['topic_last_message'], 'active' => true
+		)
+	);
+
+	/*
+	Excluded buttons
+
+	'send' => array('test' => 'can_send_topic', 'text' => 'send_topic', 'image' => 'sendtopic.gif', 'lang' => true, 'url' => $scripturl . '?action=emailuser;sa=sendtopic;topic=' . $context['current_topic'] . '.0'),
+	'print' => array('text' => 'print', 'image' => 'print.gif', 'lang' => true, 'custom' => 'rel="new_win nofollow"', 'url' => $scripturl . '?action=printpage;topic=' . $context['current_topic'] . '.0'),
+	*/
+
+	if( $context['user']['is_guest'] )
+		unset( $normal_buttons['print'] );
+
+	// Show the topic information - icon, subject, etc.
+	echo '
+			<div id="forumposts">
+				<div class="cat_bar">
+					<h3 class="titlebg">';
+
+							theme_linktree();
+
+				echo '
+					</h3>
+				</div>';
+
+ //', $txt['topic'], ': ', $context['subject'], ' &nbsp;(', $txt['read'], ' ', $context['num_views'], ' ', $txt['times'], ')
+
+	echo '<div class="grid-group">';
+
+	/* Begin Poll code */
+
+
 	// Is this topic also a poll?
 	if ($context['is_poll'])
 	{
 		echo '
-			<div id="poll">
+			<div id="poll" class="poll grid size-12">
 				<div class="cat_bar">
-					<h3 class="catbg">
-						<span class="ie6_header floatleft"><img src="', $settings['images_url'], '/topic/', $context['poll']['is_locked'] ? 'normal_poll_locked' : 'normal_poll', '.gif" alt="" class="icon" /> ', $txt['poll'], '</span>
+					<h3 class="titlebg">
+						'.$txt['poll'].': '.$context['poll']['question'].'
 					</h3>
 				</div>
 				<div class="windowbg">
 					<span class="topslice"><span></span></span>
-					<div class="content" id="poll_options">
-						<h4 id="pollquestion">
-							', $context['poll']['question'], '
-						</h4>';
+					<div class="content" id="poll_options">';
 
 		// Are they not allowed to vote but allowed to view the options?
 		if ($context['poll']['show_results'] || !$context['allow_vote'])
 		{
 			echo '
-					<dl class="options">';
+					<dl class="options grid size-12">';
 
 			// Show each option with its corresponding percentage bar.
 			foreach ($context['poll']['options'] as $option)
@@ -124,106 +211,33 @@ function template_main()
 			'remove_poll' => array('test' => 'can_remove_poll', 'text' => 'poll_remove', 'image' => 'admin_remove_poll.gif', 'lang' => true, 'custom' => 'onclick="return confirm(\'' . $txt['poll_remove_warn'] . '\');"', 'url' => $scripturl . '?action=removepoll;topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id']),
 		);
 
-		template_button_strip($poll_buttons);
+		template_button_strip_with_icons_and_text($poll_buttons);
 
 		echo '
 			</div>';
 	}
 
-	// Does this topic have some events linked to it?
-	if (!empty($context['linked_calendar_events']))
-	{
-		echo '
-			<div class="linked_events">
-				<div class="title_bar">
-					<h3 class="titlebg headerpadding">', $txt['calendar_linked_events'], '</h3>
-				</div>
-				<div class="windowbg">
-					<span class="topslice"><span></span></span>
-					<div class="content">
-						<ul class="reset">';
+	/* End Poll code */
 
-		foreach ($context['linked_calendar_events'] as $event)
-			echo '
-							<li>
-								', ($event['can_edit'] ? '<a href="' . $event['modify_href'] . '"> <img src="' . $settings['images_url'] . '/icons/modify_small.gif" alt="" title="' . $txt['modify'] . '" class="edit_event" /></a> ' : ''), '<strong>', $event['title'], '</strong>: ', $event['start_date'], ($event['start_date'] != $event['end_date'] ? ' - ' . $event['end_date'] : ''), '
-							</li>';
-
-		echo '
-						</ul>
-					</div>
-					<span class="botslice"><span></span></span>
-				</div>
-			</div>';
-	}
-	// Show the topic information - icon, subject, etc.
-	echo '
-			<div id="forumposts">
-				<div class="cat_bar">
-					<h3 class="titlebg">
-						<img src="', $settings['images_url'], '/topic/', $context['class'], '.gif" align="bottom" alt="" />
-						', $txt['topic'], ': ', $context['subject'], ' &nbsp;(', $txt['read'], ' ', $context['num_views'], ' ', $txt['times'], ')
-					</h3>
-				</div>';
-
-				
-
-	// Build the normal button array.
-	$normal_buttons = array(
-		'add_poll' => array(
-			'test' => 'can_add_poll',
-			'icon' => 'icon-chart-bar-2',
-			'text' => 'add_poll',
-			'image' => 'add_poll.gif',
-			'lang' => true, 'url' => $scripturl . '?action=editpoll;add;topic=' . $context['current_topic'] . '.' . $context['start']
-		),
-		'notify' => array(
-			'test' => 'can_mark_notify',
-			'icon' => 'icon-bell',
-			'text' => $context['is_marked_notify'] ? 'unnotify' : 'notify',
-			'image' => ($context['is_marked_notify'] ? 'un' : '') . 'notify.gif', 'lang' => true, 'custom' => 'onclick="return confirm(\'' . ($context['is_marked_notify'] ? $txt['notification_disable_topic'] : $txt['notification_enable_topic']) . '\');"',
-			'url' => $scripturl . '?action=notify;sa=' . ($context['is_marked_notify'] ? 'off' : 'on') . ';topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id']
-		),
-		'mark_unread' => array(
-			'test' => 'can_mark_unread',
-			'icon' => 'icon-mail',
-			'text' => 'mark_unread',
-			'image' => 'markunread.gif',
-			'lang' => true,
-			'url' => $scripturl . '?action=markasread;sa=topic;t=' . $context['mark_unread_time'] . ';topic=' . $context['current_topic'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id']
-		),
-		'reply' => array(
-			'test' => 'can_reply',
-			'icon' => 'icon-reply',
-			'text' => 'reply',
-			'image' => 'reply.gif',
-			'lang' => true,
-			'url' => $scripturl . '?action=post;topic=' . $context['current_topic'] . '.' . $context['start'] . ';last_msg=' . $context['topic_last_message'], 'active' => true
-		)
-	);
-
-	/*
-	Excluded buttons
-
-	'send' => array('test' => 'can_send_topic', 'text' => 'send_topic', 'image' => 'sendtopic.gif', 'lang' => true, 'url' => $scripturl . '?action=emailuser;sa=sendtopic;topic=' . $context['current_topic'] . '.0'),
-	'print' => array('text' => 'print', 'image' => 'print.gif', 'lang' => true, 'custom' => 'rel="new_win nofollow"', 'url' => $scripturl . '?action=printpage;topic=' . $context['current_topic'] . '.0'),
-	*/
-
-if( $context['user']['is_guest'] )
-		unset( $normal_buttons['print'] );
-
-	echo '<div class="grid-group">';
-
-	theme_linktree();
 
 	echo '<div class="grid size-12 controls">';
 
 	//call_integration_hook('integrate_display_buttons', array(&$normal_buttons));
 	// Show the page index... "Pages: [1]".
 	echo '
-			<div class="pagesection left is-hidden--palm">
-				<div class="nextlinks">', $context['previous_next'], '</div>
-				<div class="pagelinks">', $txt['pages'], ': ', $context['page_index'], !empty($modSettings['topbottomEnable']) ? $context['menu_separator'] . ' &nbsp;&nbsp;<a href="#lastPost"><strong>' . $txt['go_down'] . '</strong></a>' : '', '</div>
+			<div class="pagesection left is-hidden--palm">';
+
+			if (!empty($context['links']['prev'])) {
+				echo ' <a class="btn btn-default previous" href="'.$context['links']['prev'].'" title="Previous page"><span class="icon-up-open"></span></a>';
+			}
+
+			echo '<div class="pagelinks">', $context['page_index'], '</div>';
+
+			if (!empty($context['links']['next'])) {
+				echo ' <a class="btn btn-default next" href="'.$context['links']['next'].'" title="Next page"><span class="icon-up-open"></span></a>';
+			}
+
+		echo '
 			</div>';
 
 	echo '<div class="grid--last grid-group main-control">';
@@ -231,7 +245,6 @@ if( $context['user']['is_guest'] )
 	echo '</div>';
 	echo '</div>';
 	echo '</div>';
-
 
 	if (!empty($settings['display_who_viewing']))
 	{
@@ -304,7 +317,7 @@ if( $context['user']['is_guest'] )
 								<li class="title">', $message['member']['title'], '</li>';
 
 		// Show the member's primary group (like 'Administrator') if they have one.
-		echo '<li class="membergroup">';					
+		echo '<li class="membergroup">';
 		if (!empty($message['member']['group']))
 			echo $message['member']['group'];
 		else
@@ -320,7 +333,7 @@ if( $context['user']['is_guest'] )
 				echo '
 								<li class="avatar">
 									<a href="', $scripturl, '?action=profile;u=', $message['member']['id'], '">';
-									
+
 									if($message['member']['online']['label'] == 'Online')
 										$icon = '/inde/classicon-'.strtolower($message['member']['options']['cust_class']).'.png';
 									else {
@@ -344,10 +357,10 @@ if( $context['user']['is_guest'] )
 
 									}
 
-									
 
 
-									
+
+
 								echo'</li>';
 
 			// Show how many posts they have made.
@@ -397,7 +410,7 @@ if( $context['user']['is_guest'] )
 									<ul>';
 					}
 
-										
+
 				}
 				if ($shown)
 					echo '
@@ -436,7 +449,7 @@ if( $context['user']['is_guest'] )
 											<a href="', $scripturl, '?action=pm;sa=send;u=', $message['member']['id'], '" title="', $message['member']['online']['is_online'] ? $txt['pm_online'] : $txt['pm_offline'], '" class="member__profile--icon round icon-mail"></a></div>';
 
 				echo '
-									
+
 								</li>';
 			}
 
@@ -466,9 +479,7 @@ if( $context['user']['is_guest'] )
 						<div class="postarea grid size-10 size-12--palm">
 							<div class="relative">
 								<div class="keyinfo">
-									<h5 class="titlebg" id="subject_'.$message['id'].'">
-										<a href="', $message['href'], '" rel="nofollow">'.(!empty($message['counter']) ? ' #' . $message['counter'] : '').' '.$message['subject'].' - '.$message['time'].'</a>
-									</h5>
+									<h5 class="titlebg" id="subject_'.$message['id'].'">' . $message['time'] .'</h5>
 									<div id="msg_', $message['id'], '_quick_mod"></div>
 								</div>';
 
@@ -627,7 +638,7 @@ if( $context['user']['is_guest'] )
 		echo '
 							<div class="smalltext reportlinks">';
 							if(!empty($message['member']['signature']))
-								
+
 							echo '<div class="divider"></div><br />';
 
 		// Can we issue a warning because of this post?  Remember, we can't give guests warnings.
@@ -749,11 +760,20 @@ if( $context['user']['is_guest'] )
 	//call_integration_hook('integrate_display_buttons', array(&$normal_buttons));
 	// Show the page index... "Pages: [1]".
 		echo '
-				<div class="pagesection left">
-					<div class="nextlinks">', $context['previous_next'], '</div>
-					<div class="pagelinks">', $txt['pages'], ': ', $context['page_index'], !empty($modSettings['topbottomEnable']) ? $context['menu_separator'] . ' &nbsp;&nbsp;<a href="#top"><strong>' . $txt['go_up'] . '</strong></a>' : '', '</div>
-				</div>';
+				<div class="pagesection left">';
 
+				if (!empty($context['links']['prev'])) {
+					echo ' <a class="btn btn-default previous" href="'.$context['links']['prev'].'" title="Previous page"><span class="icon-up-open"></span></a>';
+				}
+
+			echo '<div class="pagelinks">', $context['page_index'], '</div>';
+
+				if (!empty($context['links']['next'])) {
+					echo ' <a class="btn btn-default next" href="'.$context['links']['next'].'" title="Next page"><span class="icon-up-open"></span></a>';
+				}
+
+			echo '
+				</div>';
 			echo '<div class="grid-group main-control grid--last">';
 				template_button_strip_with_icons_and_text($normal_buttons);
 			echo '</div>';
@@ -765,7 +785,7 @@ if( $context['user']['is_guest'] )
 
 
 
-	
+
 
 	// Show the jumpto box, or actually...let Javascript do it.
 	// echo '<div class="plainbox" id="display_jump_to">&nbsp;</div>';
@@ -906,7 +926,7 @@ if( $context['user']['is_guest'] )
 								</div>'), ',
 
 
-							sTemplateSubjectEdit: '.JavaScriptEscape('<input type="text" style="width: 90%;max-width: 760px;background: none;border: none;color: #c6c8c9;padding-top: 9px;text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.4);outline: none;" name="subject" value="%subject%" size="80" maxlength="80" tabindex="' . $context['tabindex']++ . '" class="input_text" />').',
+							sTemplateSubjectEdit: '.JavaScriptEscape('<input type="text" style="width: 90%;max-width: 760px;background: none;border: none;color: #c6c8c9;padding-top: 9px;text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.4);outline: none;" name="subject" value="%subject%" size="80" maxlength="80" tabindex="' . $context['tabindex']++ . '" class="input_text hidden" />').',
 							sTemplateBodyNormal: ', JavaScriptEscape('%body%'), ',
 							sTemplateSubjectNormal: ', JavaScriptEscape('<a href="' . $scripturl . '?topic=' . $context['current_topic'] . '.msg%msg_id%#msg%msg_id%" rel="nofollow">%subject%</a>'), ',
 							sTemplateTopSubject: ', JavaScriptEscape($txt['topic'] . ': %subject% &nbsp;(' . $txt['read'] . ' ' . $context['num_views'] . ' ' . $txt['times'] . ')'), ',
@@ -983,5 +1003,3 @@ if( $context['user']['is_guest'] )
 	echo '
 				// ]]></script>';
 }
-
-?>

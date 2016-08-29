@@ -20,10 +20,16 @@ function template_main()
 		echo '</pre>';
 	}
 
-	echo '<h3 class="titlebg" id="top">'.$context['page_title_html_safe'].'</h3>';
-	// Show breadcrumb
+	echo '
+		<h3 class="titlebg" id="top">';
+		//.$context['page_title_html_safe'].
+		// Show breadcrumb
+		theme_linktree();
+
+	echo '
+		</h3>';
+
 	echo '<div class="grid-group">';
-	theme_linktree();
 	echo '</div>';
 	// Board overview - is there any boards to display
 	// FUNCTION IS CURRENTLY UNSUPPORTED IN TEMPLATE
@@ -95,11 +101,11 @@ function template_main()
 					<td class="windowbg stats">
 						', $board['topics'], '
 					</td>';
-	
+
 					else
 					echo '
 					<td class="windowbg" valign="middle" align="center" colspan="2" width="14%">', $board['posts'], ' ', $txt['redirects'], '</td>';
-					
+
 					echo '
 					<td class="lastpost windowbg">';
 
@@ -157,10 +163,38 @@ function template_main()
 
 	// Create the button set...
 	$normal_buttons = array(
-		'new_topic' => array('test' => 'can_post_new', 'text' => 'new_topic', 'image' => 'new_topic.gif', 'lang' => true, 'url' => $scripturl . '?action=post;board=' . $context['current_board'] . '.0', 'active' => true),
-		'post_poll' => array('test' => 'can_post_poll', 'text' => 'new_poll', 'image' => 'new_poll.gif', 'lang' => true, 'url' => $scripturl . '?action=post;board=' . $context['current_board'] . '.0;poll'),
-		'notify' => array('test' => 'can_mark_notify', 'text' => $context['is_marked_notify'] ? 'unnotify' : 'notify', 'image' => ($context['is_marked_notify'] ? 'un' : ''). 'notify.gif', 'lang' => true, 'custom' => 'onclick="return confirm(\'' . ($context['is_marked_notify'] ? $txt['notification_disable_board'] : $txt['notification_enable_board']) . '\');"', 'url' => $scripturl . '?action=notifyboard;sa=' . ($context['is_marked_notify'] ? 'off' : 'on') . ';board=' . $context['current_board'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id']),
-		'markread' => array('text' => 'mark_read_short', 'image' => 'markread.gif', 'lang' => true, 'url' => $scripturl . '?action=markasread;sa=board;board=' . $context['current_board'] . '.0;' . $context['session_var'] . '=' . $context['session_id']),
+		'new_topic' => array(
+			'test' => 'can_post_new',
+			'text' => 'new_topic',
+			'image' => 'new_topic.gif',
+			'icon' => 'icon-doc-text-inv',
+			'lang' => true,
+			'url' => $scripturl . '?action=post;board=' . $context['current_board'] . '.0',
+			'active' => true
+		),
+		'post_poll' => array(
+			'test' => 'can_post_poll',
+			'text' => 'new_poll',
+			'image' => 'new_poll.gif',
+			'icon' => 'icon-chart-bar-3',
+			'lang' => true,
+			'url' => $scripturl . '?action=post;board=' . $context['current_board'] . '.0;poll'
+		),
+		'notify' => array(
+			'test' => 'can_mark_notify',
+			'text' => $context['is_marked_notify'] ? 'unnotify' : 'notify',
+			'image' => ($context['is_marked_notify'] ? 'un' : ''). 'notify.gif',
+			'icon' => 'icon-bell',
+			'lang' => true,
+			'custom' => 'onclick="return confirm(\'' . ($context['is_marked_notify'] ? $txt['notification_disable_board'] : $txt['notification_enable_board']) . '\');"',
+			'url' => $scripturl . '?action=notifyboard;sa=' . ($context['is_marked_notify'] ? 'off' : 'on') . ';board=' . $context['current_board'] . '.' . $context['start'] . ';' . $context['session_var'] . '=' . $context['session_id']),
+		'markread' => array(
+			'text' => 'mark_read_short',
+			'image' => 'markread.gif',
+			'icon' => 'icon-mail-1',
+			'lang' => true,
+			'url' => $scripturl . '?action=markasread;sa=board;board=' . $context['current_board'] . '.0;' . $context['session_var'] . '=' . $context['session_id']
+		),
 	);
 
 	// They can only mark read if they are logged in and it's enabled!
@@ -172,13 +206,30 @@ function template_main()
 
 	if (!$context['no_topic_listing'])
 	{
+		echo '<div class="grid size-12 controls">';
+
+		//call_integration_hook('integrate_display_buttons', array(&$normal_buttons));
+		// Show the page index... "Pages: [1]".
 		echo '
-	<div class="pagesection">
-		<div class="pagelinks left">', $txt['pages'], ': ', $context['page_index'], !empty($modSettings['topbottomEnable']) ? $context['menu_separator'] . '&nbsp;&nbsp;<a href="#bot"><strong>' . $txt['go_down'] . '</strong></a>' : '', '</div>
-		<div class="right grid-group">';
-		echo template_button_strip_with_icons_and_text($normal_buttons);
-		echo '</div>
-	</div>';
+				<div class="pagesection left is-hidden--palm">';
+
+				if (!empty($context['links']['prev'])) {
+					echo ' <a class="btn btn-default previous" href="'.$context['links']['prev'].'" title="Previous page"><span class="icon-up-open"></span></a>';
+				}
+
+				echo '<div class="pagelinks">', $context['page_index'], '</div>';
+
+				if (!empty($context['links']['next'])) {
+					echo ' <a class="btn btn-default next" href="'.$context['links']['next'].'" title="Next page"><span class="icon-up-open"></span></a>';
+				}
+
+			echo '
+				</div>';
+
+		echo '<div class="grid--last grid-group main-control">';
+		template_button_strip_with_icons_and_text($normal_buttons);
+		echo '</div>';
+		echo '</div>';
 
 		// If Quick Moderation is enabled start the form.
 		if (!empty($context['can_quick_mod']) && $options['display_quick_mod'] > 0 && !empty($context['topics']))
@@ -293,18 +344,18 @@ function template_main()
 				<td class="icon2 ', $color_class, '">
 					<img src="', $topic['first_post']['icon_url'], '" alt="" />
 				</td>
-					
+
 			*/
 
 
 
 
 			echo '
-				
+
 					<div class="grid size-1" style="font-size: 14px; margin-top: 15px;">
 						';
 
-						if(strstr($topic['class'], 'my')) 
+						if(strstr($topic['class'], 'my'))
 							echo '<i class="icon-doc-text-inv"></i>';
 						else
 							echo '<i class="icon-doc-text"></i>';
@@ -411,7 +462,7 @@ function template_main()
 
 		{
 			echo '
-				
+
 					<div class="grid-group grid--last size-12 align-right" style="margin-bottom: 22px; margin-top: 22px;">
 						<select class="qaction" name="qaction"', $context['can_move'] ? ' onchange="this.form.moveItTo.disabled = (this.options[this.selectedIndex].value != \'move\');"' : '', '>
 							<option value="">--------</option>', $context['can_remove'] ? '
@@ -460,11 +511,13 @@ function template_main()
 	<input type="hidden" name="' . $context['session_var'] . '" value="' . $context['session_id'] . '" />
 	</form>';
 
+
+//<div class="grid">', $txt['pages'], ': ', $context['page_index'], !empty($modSettings['topbottomEnable']) ? $context['menu_separator'] . '&nbsp;&nbsp;<a href="#top"><strong>' . $txt['go_up'] . '</strong></a>' : '', '</div>';
 		echo '
-	<div class="grid-group pagesection">
+	<div class="grid-group pagesection">';
 
 
-		<div class="grid">', $txt['pages'], ': ', $context['page_index'], !empty($modSettings['topbottomEnable']) ? $context['menu_separator'] . '&nbsp;&nbsp;<a href="#top"><strong>' . $txt['go_up'] . '</strong></a>' : '', '</div>';
+
 		echo '<div class="right">';
 		//echo template_button_strip_with_icons_and_text($normal_buttons);
 		echo '</div>

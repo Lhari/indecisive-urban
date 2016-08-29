@@ -348,9 +348,9 @@ function template_show_month_grid($grid_name)
 				{
 					echo '
 							<div class="smalltext">
-								<span class="icon-user-1"></span>';
+								<span class="icon-birthday"></span>';
 								// $txt['birthdays'],
-								
+
 					/* Each of the birthdays has:
 						id, name (person), age (if they have one set?), and is_last. (last in list?) */
 					$use_js_hide = empty($context['show_all_birthdays']) && count($day['birthdays']) > 15;

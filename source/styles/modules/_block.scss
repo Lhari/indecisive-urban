@@ -35,19 +35,27 @@ span.topslice + div {
 
 .breadcrumb {
 	height: $spacing*2;
+	padding: 0;
 
 	li {
 		float: left;
 		list-style: none;
 	}
-	i:before {
-		transform: rotate(90deg);
+	i {
+    font-size: 24px;
+		&:before {
+			transform: rotate(90deg);
+		}
+	}
+
+	@include media(below-desk-wide) {
+		.link-previous {
+			display: none !important;
+		}
 	}
 
 	@include media(palm) {
 		height: auto;
-		margin-bottom: $spacing/2;
-
 		li {
 			display: block;
 			width: 100%;
@@ -67,6 +75,7 @@ span.topslice + div {
 			display: none;
 		}
 	}
+
 }
 
 .bottom-controls {
@@ -74,6 +83,73 @@ span.topslice + div {
 	margin-top: $spacing;
 }
 
+.breadcrumb.expanded {
+	a {
+		font-size: 15px;
+	}
+
+	.link-current {
+
+		i {
+			display: none;
+		}
+
+		a:hover {
+			cursor: text;
+			color: inherit;
+		}
+	}
+
+}
+
+.link-current i {
+	cursor: pointer;
+	&:hover {
+		color: $color-light;
+	}
+}
+
+.link-previous {
+	display: none;
+}
+
 .controls {
 	min-height: $spacing*2;
+}
+
+#forumposts .controls {
+	padding-bottom: $spacing;
+}
+
+.pagesection {
+	line-height: 2.5;
+	.previous span::before {
+		webkit-transform: rotate(270deg);
+		transform: rotate(270deg);
+	}
+
+	.next span::before {
+		webkit-transform: rotate(90deg);
+		transform: rotate(90deg);
+	}
+
+	.pagelinks {
+		display: inline-block;
+	}
+}
+
+.navPages {
+	// background: rgba(0,0,0,.25);
+	padding: 5px 10px;
+	margin: 0;
+	// border: 1px solid $color-light;
+
+	&.active {
+		color: $color-light;
+	}
+}
+
+
+.topic__title .navPages {
+	padding: 5px 3px;
 }

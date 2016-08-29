@@ -141,6 +141,13 @@
 .postarea .inner {
 	min-height: 250px;
 }
+
+.postarea .titlebg {
+	font-size: $font-size-base;
+	color: #737475;
+	font-weight: 700;
+}
+
 .round {
 	border-radius: 50%;
 	background-size: cover;
@@ -155,7 +162,7 @@
 }
 .new a {
 	color: $color-teritary;
-	
+
 	&:hover {
 		color: $color-light;
 	}
@@ -218,7 +225,6 @@ blockquote {
 		}
 	}
 	.postarea .titlebg {
-		background-image: none;	
 		height: auto;
 		border: none;
 		box-shadow: none;
@@ -247,7 +253,6 @@ blockquote {
 	}
 	.titlebg {
 		height: auto;
-		background-image: none;
 		border: none;
 		box-shadow: none;
 		color: $color-light;
@@ -281,4 +286,28 @@ blockquote {
 	    float: left;
 	}
 
+}
+
+
+.bbc_u {
+	text-decoration: underline;
+}
+
+.member__image.round {
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-position: center;
+}
+
+#moderationbuttons_strip {
+	padding-top: $spacing;
+	a {
+		color: #B21000;
+
+		&:hover {
+			color: red;
+		}
+	}
 }
