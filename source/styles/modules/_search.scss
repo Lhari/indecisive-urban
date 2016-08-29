@@ -23,22 +23,24 @@
     padding-bottom: $spacing/2;
   }
 
+
+  .search_results_posts, .topic {
+    padding: $spacing 0;
+    // margin: $spacing 0;
+
+    h4 {
+      margin: 0;
+    }
+
+    .icon-up-open::before {
+      -webkit-transform: rotate(90deg);
+      transform: rotate(90deg);
+    }
+  }
+
 }
 
 
-.search_results_posts, .topic {
-  padding: $spacing 0;
-  // margin: $spacing 0;
-
-  h4 {
-    margin: 0;
-  }
-
-  .icon-up-open::before {
-    -webkit-transform: rotate(90deg);
-    transform: rotate(90deg);
-  }
-}
 
 .counter {
   margin: 0;
