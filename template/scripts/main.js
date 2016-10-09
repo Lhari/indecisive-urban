@@ -1,3 +1,12 @@
+// auto refresh on recent posts
+// does not work while inside jquery ready tag?
+setInterval(function() {
+
+        $( ".js-recent-posts" ).parent().load( "http://indecisive.eu?skipcontent .js-recent-posts" );
+        $( ".js-members" ).load( "http://indecisive.eu?skipcontent .js-members" );
+
+}, 30000);
+
 jQuery(document).ready(function($) {
 
     var offcanvas, login;

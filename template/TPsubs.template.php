@@ -162,7 +162,7 @@ function TPortal_recentbox()
 	if($context['TPortal']['useavatar'] == 0)
 	{
 
-	echo '<div class="block__inner">';
+	echo '<div class="block__inner js-recent-posts">';
 	$what = ssi_recentTopics($num_recent = $context['TPortal']['recentboxnum'] , $exclude_boards = array($bb),  $output_method = 'array');
 
 		// Output the topics
@@ -598,7 +598,7 @@ function TPortal_statsbox()
 		
 		
 		echo '
-			<div class="members">';
+			<div class="members js-members">';
 
 		foreach($online['users'] as $user) {
 
@@ -1150,14 +1150,18 @@ function article_renders($type = 1, $single = false, $first = false)
 	if($image = $context['TPortal']['article']['body']) {
 		$src = explode('src="', $image);
 		$src = explode('"', $src[1]);
-
+		
 		$context['TPortal']['article']['body'] = '
 
-		<div class="article__content-wrapper">
+		<div class="article__content-wrapper">';
+		if(!isset($_GET['skipcontent'])) {
+		$context['TPortal']['article']['body'] .= '
 			<div class="loading">
 				<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="'.$src[0].'" class="blazy fpsc" />
-			</div>
-		</div>';
+			</div>';
+		}
+		$context['TPortal']['article']['body'] .= '</div>';
+		
 	}
 
 	if($type == 1)
