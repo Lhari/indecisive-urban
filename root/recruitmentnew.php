@@ -1,6 +1,6 @@
 <style type="text/css">
-	.recruitment div {
-		padding-bottom: 11px;
+	.recruitment .divider {
+		padding: 11px 0 12px 0;
 	}
 	.recruitment div:last-child {
 		border-bottom: 0;
@@ -70,7 +70,7 @@ $classes = array(
 		'name' => 'Priest',
 		'roles' => array(
 			'ranged' => false,
-			'healer' => false
+			'healer' => true
 		)
 	),
 	array(
@@ -121,7 +121,7 @@ $roles = array('Tank', 'Healer', 'Ranged', 'Melee');
 
 		if(!$roleHTML == "") {
 			echo '<div class="divider">';
-				echo '<h3>' . $role . '</h3>' . $roleHTML;
+				echo '<h3>' . $role . '</h3><div class="text-center">' . $roleHTML . '</div>';
 			echo '</div>';
 		}
 	}
