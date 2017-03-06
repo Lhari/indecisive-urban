@@ -4,14 +4,14 @@ jQuery(document).ready(function($) {
 
     // auto refresh on recent posts
 
-    setInterval(function() {
-    $.ajax({
-        url: "indecisive.eu",
-        method: "get"
-    }).success(function(response) {
-        $('.js-recent-posts').html($(response).find('.js-recent-posts').html());
-    });
-}, 10000);
+//     setInterval(function() {
+//     $.ajax({
+//         url: "indecisive.eu",
+//         method: "get"
+//     }).success(function(response) {
+//         $('.js-recent-posts').html($(response).find('.js-recent-posts').html());
+//     });
+// }, 10000);
 
     $('.link-current').click(function() {
         $('.breadcrumb').toggleClass('open');

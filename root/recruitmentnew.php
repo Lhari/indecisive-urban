@@ -1,16 +1,13 @@
 <style type="text/css">
-	.recruitment__roles .is-active {
-		opacity: 1;
+	.recruitment div {
+		padding-bottom: 11px;
 	}
-	.recruitment__roles i {
-		opacity: 0.3;
+	.recruitment div:last-child {
+		border-bottom: 0;
 	}
-	.inactive {
-		opacity: 0.17;
-	}
-	.no-padding, .no-padding--desk {
-		padding-top: 0;
-		margin-top: 0;
+	.recruitment h3 {
+		margin:0 0 11px 0;
+		text-align: center;
 	}
 </style>
 
@@ -19,15 +16,13 @@
 $classes = array(
 	array(
 		'name' => 'Death Knight',
-		'active' => false,
 		'roles' => array(
-			'melee' => false,
+			'melee' => true,
 			'tank' => false
 		)
 	),
 	array(
 		'name' => 'Demon Hunter',
-		'active' => false,
 		'roles' => array(
 			'melee' => false,
 			'tank' => false
@@ -35,41 +30,36 @@ $classes = array(
 	),
 	array(
 		'name' => 'Druid',
-		'active' => false,
 		'roles' => array(
-			'ranged' => false,
-			'melee' => false,
+			'ranged' => true,
+			'melee' => true,
 			'tank' => false,
 			'healer' => false
 		)
 	),
 	array(
 		'name' => 'Hunter',
-		'active' => false,
 		'roles' => array(
-			'ranged' => false,
-			'melee' => false
+			'ranged' => true,
+			'melee' => true
 		)
 	),
 	array(
 		'name' => 'Mage',
-		'active' => false,
 		'roles' => array(
-			'ranged' => false
+			'ranged' => true
 		)
 	),
 	array(
 		'name' => 'Monk',
-		'active' => true,
 		'roles' => array(
 			'melee' => false,
 			'tank' => false,
-			'healer' => true
+			'healer' => false
 		)
 	),
 	array(
 		'name' => 'Paladin',
-		'active' => false,
 		'roles' => array(
 			'melee' => false,
 			'tank' => false,
@@ -78,7 +68,6 @@ $classes = array(
 	),
 	array(
 		'name' => 'Priest',
-		'active' => false,
 		'roles' => array(
 			'ranged' => false,
 			'healer' => false
@@ -86,74 +75,56 @@ $classes = array(
 	),
 	array(
 		'name' => 'Rogue',
-		'active' => false,
 		'roles' => array(
-			'melee' => false
+			'melee' => true
 		)
 	),
 	array(
 		'name' => 'Shaman',
-		'active' => true,
 		'roles' => array(
-			'melee' => false,
-			'ranged' => false,
-			'healer' => true
+			'melee' => true,
+			'ranged' => true,
+			'healer' => false
 		)
 	),
 	array(
 		'name' => 'Warlock',
-		'active' => false,
 		'roles' => array(
-			'ranged' => false
+			'ranged' => true
 		)
 	),
 	array(
 		'name' => 'Warrior',
-		'active' => false,
 		'roles' => array(
-			'melee' => false,
+			'melee' => true,
 			'tank' => false
 		)
 	)
 );
 
+$roles = array('Tank', 'Healer', 'Ranged', 'Melee');
+
 ?>
 
-<div class="recruitment">
-	<div class="grid size-12">
-	<?php
-	foreach($classes as $key => $class) {
-		
-		$name = strtolower(str_replace(' ', '_', $class['name']));
+<div class="recruitment grid size-12">
 
-		$displayName = $class['name'];
+<?php
+	foreach ($roles as $role) {
+		$roleHTML = "";
+		$roleLowerCase = strtolower($role);
 
-		if($class['active']) {
+		foreach($classes as $key => $class) {
+			if($class['roles'][$roleLowerCase]) {
+				$roleHTML = $roleHTML . '<img src="/inde/ClassIcons/icon-class-' . str_replace(' ', '', $class['name']).'.png" alt="' . $class['name'].'" class="size-3--desk-wide size-4--desk size-4--palm" style="padding: 5px;"/>';
+			}
+		}
 
-		echo '<div class="recruitment__class grid-group'.($class['active'] ? '' : ' inactive').'">';
-			echo '<div class="grid size-5">';
-			echo '<img src="/inde/icon/classicon-'.str_replace('_', '', $name).'.png" alt="'.$class['name'].'" class="size-12 size-12--lap size-12--palm" style="margin: 0 auto; display: block; padding-bottom: 11px;"/>';
+		if(!$roleHTML == "") {
+			echo '<div class="divider">';
+				echo '<h3>' . $role . '</h3>' . $roleHTML;
 			echo '</div>';
-			echo '<div class="grid size-7" style="text-shadow: 0 2px 2px black">';
-			echo '<h3 data-key="'.$key.'" class="class-color--'.$name.' no-padding" style="width:100%; padding-top: 22px; margin-bottom: 6px; font-size: 1em;">'.$displayName.'</h3>';
-	foreach ($class['roles'] as $role => $availability) {
-
-		$isActive = false;
-
-		if($availability)
-
-			echo '<i class="class-color--'.$name.' icon-'.$role.' is-active"></i>';
-
+		}
 	}
-		echo '</div>';
-	echo '</div>';
-	}
-}
-
 ?>
 
 </div>
-
-</div>
-
-
