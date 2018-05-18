@@ -5,6 +5,8 @@ const gulp = require('gulp'),
 	prefix = require('gulp-autoprefixer'),
 	sass = require('gulp-sass')
 
+const themeName = 'indecisive-bfa'
+
 gulp.task('css', function () {
 	gulp.src('source/styles/**.*css')
 		.pipe(sass({
@@ -14,23 +16,23 @@ gulp.task('css', function () {
 			.on('error', function (error) {
 				console.warn(error.message);
 			}))
-		.pipe(gulp.dest('template/css/'))
+		.pipe(gulp.dest(themeName + '/css/'))
 });
 
 gulp.task('fonts', function () {
 	gulp.src('source/font/*')
-		.pipe(gulp.dest('template/css/font'))
+		.pipe(gulp.dest(themeName + '/css/font'))
 });
 
 gulp.task('scripts', function () {
 	return gulp.src('source/scripts/*.js')
 		.pipe(concat('main.js'))
-		.pipe(gulp.dest('template/scripts'))
+		.pipe(gulp.dest(themeName + '/scripts'))
 		.pipe(rename({
 			suffix: '.min'
 		}))
 		.pipe(uglify())
-		.pipe(gulp.dest('template/scripts'))
+		.pipe(gulp.dest(themeName + '/scripts'))
 });
 
 gulp.task('root', function () {
