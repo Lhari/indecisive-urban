@@ -3,7 +3,8 @@ const gulp = require('gulp'),
 	concat = require('gulp-concat'),
 	rename = require('gulp-rename'),
 	prefix = require('gulp-autoprefixer'),
-	sass = require('gulp-sass')
+	sass = require('gulp-sass'),
+	cleanCSS = require('gulp-clean-css');
 
 const themeName = 'indecisive-bfa'
 
@@ -16,6 +17,7 @@ gulp.task('css', function () {
 			.on('error', function (error) {
 				console.warn(error.message);
 			}))
+		.pipe(cleanCSS({compatibility: 'ie9'}))
 		.pipe(gulp.dest(themeName + '/css/'))
 });
 
