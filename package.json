@@ -1,7 +1,7 @@
 {
-  "name": "indecisive-urban",
+  "name": "indecisive-bfa",
   "version": "1.0.0",
-  "description": "",
+  "description": "Indecisive Theme",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,21 +17,12 @@
   },
   "homepage": "https://github.com/Lhari/indecisive-urban#readme",
   "dependencies": {
-    "babel-preset-es2015": "^6.5.0",
     "browser-sync": "^2.11.0",
-    "gulp": "^3.9.0",
-    "gulp-autoprefixer": "^2.3.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-bower": "0.0.10",
-    "gulp-concat": "^2.5.2",
-    "gulp-cssnano": "^2.1.1",
-    "gulp-jshint": "^1.11.0",
-    "gulp-plumber": "^1.0.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^2.0.1",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-uglify": "^1.2.0",
-    "gulp-util": "^3.0.5",
-    "jshint-stylish": "^2.0.0"
+    "gulp": "3.9.1",
+    "gulp-autoprefixer": "5.0.0",
+    "gulp-concat": "2.6.1",
+    "gulp-rename": "1.2.3",
+    "gulp-sass": "4.0.1",
+    "gulp-uglify": "3.0.0"
   }
 }
