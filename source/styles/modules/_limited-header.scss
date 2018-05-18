@@ -1,7 +1,5 @@
 .limited-header {
-
 	// background: #000;
-
 	#header {
 		height: 360px;
 	}
@@ -16,8 +14,8 @@
 	}
 
 	#tpfrontpanel_top {
-    	margin: 0!important;
-    	padding: 0!important;
+		margin: 0!important !important;
+		padding: 0!important !important;
 	}
 
 	.tp_container {
@@ -33,15 +31,19 @@
 	}
 }
 
-
 .limited-header--2 {
-
-	// background: #000;
-
-	body {
-		background: url('/inde/site-BG-dark.png');
+	.logo {
+		width: 400px;
+		float: left;
+		margin-top: 30px;
+		@include media('lap') {
+			width: 325px;
+		}
+		@include media('palm') {
+			width: 200px;
+		}
 	}
-
+	// background: #000;
 	img {
 		max-width: 100%;
 		height: auto;
@@ -50,17 +52,25 @@
 	.header-wrap {
 		margin-left: -$spacing/2;
 		margin-right: -$spacing/2;
-		box-shadow: 0 0 20px rgba(0,0,0,0.5);
+		height: 300px;
+		background: url("/themes/indecisive-bfa/images/custom/bfa-header.jpg");
+		background-size: cover;
+		background-position: 50%;
+		border-bottom: 2px solid $color-alliance-blue;
 	}
+
 	.content--wrapper {
 		max-width: 1720px;
-    	margin: 0 auto;
+		margin: 0 auto;
 	}
 
-	#header {
-		height: 360px;
+	.content--background {
+		background-color: $color-background;
+		// background-image: url("/themes/indecisive-bfa/images/custom/bfa-content-bg-blue.png");
+		// background-position: 50% 0;
+		// background-repeat: no-repeat;
+		// background-size: contain;
 	}
-
 
 	.background {
 		background: #000;
@@ -68,11 +78,9 @@
 		overflow: hidden;
 	}
 
-
-
 	#tpfrontpanel_top {
-    	margin: 0!important;
-    	padding: 0!important;
+		margin: 0!important !important;
+		padding: 0!important !important;
 	}
 
 	.tp_container {

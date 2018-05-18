@@ -9,6 +9,10 @@
 		margin:0 0 11px 0;
 		text-align: center;
 	}
+	.recruitment {
+		padding-left: 30px;
+		padding-right: 30px;
+	}
 </style>
 
 

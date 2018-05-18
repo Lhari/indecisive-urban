@@ -1,19 +1,14 @@
 @mixin title-style {
-  background-image: url('/inde/titlebg.png');
-  background-color: #646464;
-  text-shadow: 0px -1px 0px rgba(0,0,0,0.4);
-  text-indent: 5px;
-  border-radius: 4px;
-  box-shadow: 0px 1px 3px rgba(0,0,0,0.4),0px 1px 0px rgba(255,255,255,0.3) inset;
   padding: 0 $spacing/2;
   height: $spacing*2;
   line-height: $spacing*2;
-  color: $color-light-gray;
+  color: $color-light;
   font-weight: $font-weight-heavy;
   font-size: $font-size-medium;
+  border-bottom: 1px solid;
 
   a,a:visited {
-    color: $color-light-gray;
+    color: $color-light;
     font-weight: $font-weight-heavy;
     font-size: $font-size-medium;
     text-decoration: none;
@@ -21,7 +16,7 @@
   }
 
   a:hover {
-    color: $color-light;
+    color: $color-light-gray;
     cursor: pointer;
   }
 }

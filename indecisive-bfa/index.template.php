@@ -187,15 +187,7 @@ function template_body_above() {
 		</div>
 	</div>
 	<div class="oncanvas">
-		<div class="oncanvas__overlay js-overlay is-hidden"></div>
-	<div class="background">
-		<div id="bg-video-wrapper">
-			<video preload="auto" autoplay="true" loop="loop" style="opacity: 1;" poster="/inde/illidan-test.jpg">
-				<source src="/inde/key-render.webm" type="video/webm">
-
-			</video>
-		</div>
-	</div>';
+		<div class="oncanvas__overlay js-overlay is-hidden"></div>';
 
 	if(!$context['user']['is_logged']) {
 
@@ -243,7 +235,7 @@ function template_body_above() {
 			if(!$context['user']['is_logged'])
 				echo '<div class="js-login__toggle"><span class="is-hidden--palm is-hidden--lap">Login</span><i class="icon-login-1"></i></div>';
 			else
-				echo '<div class="js-offcanvas__toggle extra-spacing"><span class="is-hidden--palm is-hidden--lap">Menu</span><i class="icon-menu"></i></div>';
+				echo '<div class="js-offcanvas__toggle extra-spacing"><i class="icon-menu"></i></div>';
 		echo '
 		</div>
 
@@ -280,8 +272,8 @@ function template_body_above() {
 			</div>
 		</div>
 	</div>
-		<div class="grid-group content--wrapper">
-			';
+	<div class="content--background">
+		<div class="grid-group content--wrapper">';
 
 				// Show the navigation tree.
 				//theme_linktree();
@@ -308,7 +300,7 @@ function template_body_below()
 
 	echo '
 
-		</div>';
+		</div></div>';
 
 	// Show the "Powered by" and "Valid" logos, as well as the copyright. Remember, the copyright must be somewhere!
 
