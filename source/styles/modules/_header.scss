@@ -28,8 +28,18 @@
 }
 
 #head-wrap {
-  width: 100%;
-  align-self: center;
+    height: 300px;
+    display: flex;
+    width: 100%;
+    .logo {
+        align-self: flex-end;
+    }
+}
+
+// Remove cursor: pointer from .header__menu
+.header__menu {
+    align-self: flex-end;
+    /* cursor: pointer; */
 }
 
 .header-video {

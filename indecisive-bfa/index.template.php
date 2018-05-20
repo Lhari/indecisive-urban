@@ -235,7 +235,7 @@ function template_body_above() {
 			if(!$context['user']['is_logged'])
 				echo '<div class="js-login__toggle"><span class="is-hidden--palm is-hidden--lap">Login</span><i class="icon-login-1"></i></div>';
 			else
-				echo '<div class="js-offcanvas__toggle extra-spacing"><i class="icon-menu"></i></div>';
+				echo '<div class="js-offcanvas__toggle extra-spacing"><span>menu</span><i class="icon-menu"></i></div>';
 		echo '
 		</div>
 
