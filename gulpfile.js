@@ -30,10 +30,10 @@ gulp.task('scripts', function () {
 	return gulp.src('source/scripts/*.js')
 		.pipe(concat('main.js'))
 		.pipe(gulp.dest(themeName + '/scripts'))
-		.pipe(rename({
-			suffix: '.min'
-		}))
-		.pipe(uglify())
+		// .pipe(rename({
+		// 	suffix: '.min'
+		// }))
+		// .pipe(uglify())
 		.pipe(gulp.dest(themeName + '/scripts'))
 });
 

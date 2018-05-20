@@ -13,6 +13,25 @@ jQuery(document).ready(function($) {
 //     });
 // }, 10000);
 
+
+    var z = document.createElement('div'); // is a node
+    z.classList = "scrollToTop -hidden"
+    z.innerHTML = '<i class="icon-up-open"></i>';
+    document.body.appendChild(z);
+
+    window.addEventListener('scroll', () => {
+
+        if(window.scrollY + window.innerHeight > window.innerHeight) {
+            z.classList = 'scrollToTop'
+        } else {
+            z.classList = 'scrollToTop -hidden'
+        }
+    })
+
+    z.addEventListener('click', () => {
+        document.querySelector('#header').scrollIntoView({behaviour: "smooth"})
+    })
+
     $('.spoiler_head').click(function() {
 
         if ($(this).next('.spoiler_body').hasClass('active')) {
@@ -519,7 +538,6 @@ function HideEmptyDays() {
         if (hasContents) element.addClass("show-border");
     });
 }
-
 // The purpose of this code is to fix the height of overflow: auto blocks, because some browsers can't figure it out for themselves.
 function smf_codeBoxFix() {
   var codeFix = document.getElementsByTagName('code');
