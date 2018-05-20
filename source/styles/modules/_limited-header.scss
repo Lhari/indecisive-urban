@@ -64,9 +64,9 @@
 	}
 
 	.content--background {
-		background-color: $color-background;
-		background-image: url("/themes/indecisive-bfa/images/custom/bfa-content-bg.jpg");
-		background-size: cover;
+		background-color: rgba($color-background, 0.6);
+		// background-image: url("/themes/indecisive-bfa/images/custom/bfa-content-bg.jpg");
+		// background-size: cover;
 	}
 
 	.background {
