@@ -10,7 +10,7 @@ $palm-end: ($lap-start - 1px);
 $lap-end: ($desk-start - 1px);
 $desk-end: ($desk-wide-start - 1px);
 
-$breakpoints: 'palm', 'lap', 'lap-and-up', 'portable', 'desk-small', 'desk', 'desk-wide', 'ultra-wide';
+$breakpoints: 'palm', 'lap', 'lap-and-up', 'portable', 'desk-small', 'desk', 'desk-wide', 'ultra-wide', 'below-ultra-wide';
 
 @mixin media($media) {
   @if $media == 'palm-small' {
@@ -41,7 +41,7 @@ $breakpoints: 'palm', 'lap', 'lap-and-up', 'portable', 'desk-small', 'desk', 'de
     @media only screen and (min-width: $desk-wide-start) { @content; }
   }
 
-  @if $media == 'below-desk-wide'{
+  @if $media == 'below-desk-wide' {
     @media only screen and (max-width: $desk-wide-start) { @content; }
   }
 

@@ -9,13 +9,14 @@
   padding: 0;
   text-transform: uppercase;
   white-space: nowrap;
-  @include media('palm') {
-    margin-top: 1.75rem;
-    padding-right: $spacing/2;
-  }
 
   .extra-spacing {
     margin-bottom: $spacing;
+  }
+}
+@media only screen and (max-width: 1730px) {
+  .header__menu {
+    padding-right: $spacing/2;
   }
 }
 
@@ -36,10 +37,8 @@
     }
 }
 
-// Remove cursor: pointer from .header__menu
 .header__menu {
     align-self: flex-end;
-    /* cursor: pointer; */
 }
 
 .header-video {

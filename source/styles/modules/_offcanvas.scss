@@ -38,7 +38,7 @@
   background: url("/inde/site-BG-dark.png");
   z-index: 1000;
   font-size: $font-size-base;
-  
+
 
   li {
     list-style: none;
@@ -163,6 +163,7 @@
   display: block;
   color: $color-light;
   text-decoration: none;
+  outline: none;
 }
 
 .offcanvas__nav .list a:hover {
@@ -255,15 +256,8 @@
 .offcanvas .usermenu i:hover {
   color: $color-primary;
 }
-@include media(lap) {
-  .header__menu {
-    padding-left: $spacing;
-  }
-}
+
 @include media('palm') {
-  .header__menu {
-    padding-left: $spacing;
-  }
 
   .offcanvas {
     width: 80%;
