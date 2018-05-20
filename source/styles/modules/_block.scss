@@ -37,12 +37,22 @@ span.topslice + div {
 	height: $spacing*2;
 	padding: 0;
 
+	a {
+		font-size: $font-size-medium - 2;
+	}
+
+	a:last-child, a:last-child:hover  {
+		cursor: default;
+		color: $color-primary;
+	}
+
 	li {
 		float: left;
 		list-style: none;
 	}
+
 	i {
-    font-size: 24px;
+    font-size: $font-size-medium - 2;
 		&:before {
 			transform: rotate(90deg);
 		}
@@ -110,7 +120,7 @@ span.topslice + div {
 }
 
 .link-previous {
-	display: none;
+
 }
 
 .controls {

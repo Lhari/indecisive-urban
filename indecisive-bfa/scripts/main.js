@@ -13,13 +13,6 @@ jQuery(document).ready(function($) {
 //     });
 // }, 10000);
 
-    $('.link-current').click(function() {
-        $('.breadcrumb').toggleClass('open');
-    })
-
-    $('.link-title').click(function() {
-        $('.breadcrumb').toggleClass('open');
-    })
     $('.spoiler_head').click(function() {
 
         if ($(this).next('.spoiler_body').hasClass('active')) {
@@ -525,32 +518,6 @@ function HideEmptyDays() {
 
         if (hasContents) element.addClass("show-border");
     });
-}
-
-// Breadcrumbs
-function ExpandCrumbs() {
-  var breadcrumb = $(".breadcrumb");
-  var crumbs = $(".breadcrumb").find("li");
-  var currentLink = crumbs.next('.link-current');
-
-  if ( breadcrumb.hasClass("expanded") ) return;
-
-  var delay = 0
-
-  // console.log(arrow)
-  currentLink.hide();
-
-  crumbs.each(function(idx) {
-    var item = crumbs[idx];
-    var itemType = item.hasClass('link-previous');
-    if (itemType) {
-      $( item ).delay( delay ).fadeIn(800);
-      delay += 50;
-    }
-  });
-
-  breadcrumb.addClass("expanded");
-  currentLink.fadeIn();
 }
 
 // The purpose of this code is to fix the height of overflow: auto blocks, because some browsers can't figure it out for themselves.

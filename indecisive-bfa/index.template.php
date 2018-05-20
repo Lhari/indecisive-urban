@@ -335,7 +335,7 @@ function theme_linktree($force_show = false) {
 	{
 
 		echo '
-			<li onclick="ExpandCrumbs();"', ($link_num == count($context['linktree']) - 1) ? ' class="link-current"' : ' class="link-previous"', '>';
+			<li "', ($link_num == count($context['linktree']) - 1) ? ' class="link-current"' : ' class="link-previous"', '>';
 
 		// Show something before the link?
 		if (isset($tree['extra_before']))
@@ -360,7 +360,7 @@ function theme_linktree($force_show = false) {
 			echo $tree['extra_after'];
 
 		// Don't show a separator for the last one.
-		// if ($link_num != count($context['linktree']) - 1 && !$context['right_to_left'])
+		if ($link_num != count($context['linktree']) - 1 && !$context['right_to_left'])
 			echo '<i class="icon-up-open"></i>';
 
 		echo '

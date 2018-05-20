@@ -231,9 +231,9 @@ function template_results() {
 	global $context, $settings, $options, $txt, $scripturl, $message;
 
 	echo '<div id="search_results">';
+		template_search_header( $txt['mlist_search_results'] . ':&nbsp;' . $context['search_params']['search'] );
 
 	echo '<form action="', $scripturl, '?action=quickmod" method="post" accept-charset="', $context['character_set'], '" name="topicForm">';
-		template_search_header( $txt['mlist_search_results'] . ':&nbsp;' . $context['search_params']['search'] );
 		template_results_topics();
 	echo '</form';
 
