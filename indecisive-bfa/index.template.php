@@ -220,16 +220,17 @@ function template_body_above() {
 	echo '
 	<div class="header-wrap">
 	<div id="header" class="grid-group content--wrapper">
-		<div class="grid" id="head-wrap">
-			<div class="logo">
-			';
-			if($_SERVER['REQUEST_URI'] == '/')
-				echo '<img class="logo" src="/inde/indecisive-logo.svg">';
-			else
-				echo '<a href="'.$scripturl.'" title=""><img class="logo" src="/inde/indecisive-logo.svg"></a>';
+	<div class="logo">
+	';
+	if($_SERVER['REQUEST_URI'] == '/')
+		echo '<img class="logo" src="/inde/indecisive-logo.svg">';
+	else
+		echo '<a href="'.$scripturl.'" title="Indecisive Logo"><img src="/inde/indecisive-logo.svg"></a>';
 
-			echo '
-			</div>
+	echo '
+	</div>
+		<div class="grid" id="head-wrap">
+
 		</div>
 		<div class="grid grid--last header__menu">';
 			if(!$context['user']['is_logged'])
