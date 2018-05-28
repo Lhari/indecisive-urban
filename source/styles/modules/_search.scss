@@ -1,5 +1,9 @@
+.search-results-form {
+  float: left;
+}
 
-#showposts, #search_results {
+#search_results,
+#showposts {
   .search-text {
     color: $color-light-gray;
     margin-left: $spacing/2;
@@ -10,7 +14,8 @@
     padding-top: 0;
   }
 
-  .windowbg, .windowbg2 {
+  .windowbg,
+  .windowbg2 {
     border-radius: 5.5px;
   }
 
@@ -23,11 +28,10 @@
     padding-bottom: $spacing/2;
   }
 
-
-  .search_results_posts, .topic {
+  .search_results_posts,
+  .topic {
     padding: $spacing 0;
     // margin: $spacing 0;
-
     h4 {
       margin: 0;
     }
@@ -37,10 +41,7 @@
       transform: rotate(90deg);
     }
   }
-
 }
-
-
 
 .counter {
   margin: 0;
@@ -55,10 +56,10 @@
 }
 
 #showposts {
-
   .core_posts {
     margin-bottom: 0;
   }
+
   .topic {
     overflow: hidden;
   }
