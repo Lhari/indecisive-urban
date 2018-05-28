@@ -233,7 +233,7 @@ function template_results() {
 	echo '<div id="search_results">';
 		template_search_header( $txt['mlist_search_results'] . ':&nbsp;' . $context['search_params']['search'] );
 
-	echo '<form action="', $scripturl, '?action=quickmod" method="post" accept-charset="', $context['character_set'], '" name="topicForm">';
+	echo '<form class="search-results-form" action="', $scripturl, '?action=quickmod" method="post" accept-charset="', $context['character_set'], '" name="topicForm">';
 		template_results_topics();
 	echo '</form';
 

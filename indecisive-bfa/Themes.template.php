@@ -86,23 +86,10 @@ function template_main()
 
 	echo '
 							</select>
-							<span class="smalltext pick_theme"><a href="', $scripturl, '?action=theme;sa=pick;u=0;', $context['session_var'], '=', $context['session_id'], '">', $txt['theme_select'], '</a></span>
-						</dd>
-						<dt>
-							<label for="mobile_theme_id">', $txt['mobile_theme_id'], ':</label>
-						</dt>
-						<dd>
-							<select name="mobile_theme_id" id="mobile_theme_id">';
-
-	// Put an option for each theme in the select box.
-	foreach ($context['themes'] as $theme)
-		echo '
-								<option value="', $theme['id'], '"', !empty($modSettings['mobile_theme_id']) && $modSettings['mobile_theme_id'] == $theme['id'] ? ' selected="selected"' : '', '>', $theme['name'], '</option>';
-
+							<span class="smalltext pick_theme"><a href="', $scripturl, '?action=theme;sa=pick;u=0;', $context['session_var'], '=', $context['session_id'], '">', $txt['theme_select'], '</a></span></select>';
+	
 	echo '
-							</select>
-							<span class="smalltext pick_theme"><a href="', $scripturl, '?action=theme;sa=pick;u=-2;', $context['session_var'], '=', $context['session_id'], '">', $txt['theme_select'], '</a></span>
-						</dd>
+							</dd>
 					</dl>
 					<div class="righttext">
 						<input type="submit" name="submit" value="' . $txt['save'] . '" class="button_submit" />
