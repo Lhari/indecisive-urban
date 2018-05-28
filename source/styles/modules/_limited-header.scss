@@ -57,10 +57,11 @@
 	}
 
 	#header {
-		background: url(/Themes/indecisive-bfa/images/bfa-header.jpg);
+		// background: url(/Themes/indecisive-bfa/images/bfa-header.jpg);
 	    background-position: 50%;
 	    height: 250px;
 		border-bottom: 2px solid darken($color-alliance-blue, 0%);
+		z-index: 90;
 	}
 
 	.content--wrapper {
@@ -69,7 +70,7 @@
 	}
 
 	.content--background {
-		background-color: rgba($color-background, 0.6);
+		// background-color: rgba(darken($alliance-color, 5%), 0.6);
 		// background-image: url("/themes/indecisive-bfa/images/custom/bfa-content-bg.jpg");
 		// background-size: cover;
 	}
@@ -96,4 +97,106 @@
 			//box-shadow: 0 1px 4px rgba(0, 0, 0, 0.8), 0 0 25px 1px rgba(0, 0, 0, 0.7);
 		}
 	}
+}
+
+
+
+.header-background  {
+	width: 100%;
+	height: 250px;
+	overflow: hidden;
+	position: relative;
+}
+
+
+.middle-container {
+	position: absolute;
+	height: 250px;
+	width: 881px;
+	margin: 0 auto;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 70;
+
+	&:before, &:after {
+		content: "";
+		width: 300px;
+		height: 50px;
+		background-image: url(https://worldofwarcraft.akamaized.net/static/components/Divider/Divider-ocho-thin.png);
+		position: absolute;
+		z-index: 30;
+	}
+
+	&:before {
+
+		top: 90px;
+		left: -105px;
+		transform: rotate(78.5deg);
+	}
+	
+	&:after {
+
+		top: 90px;
+		left: 691px;
+		transform: rotate(101.5deg);
+	}
+}
+.middle {
+
+	height: 100%;
+	width: 840px;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 20;
+	-webkit-clip-path: polygon(0 0, 100% 0, 94% 100%, 6% 100%);
+	clip-path: polygon(0 0, 100% 0, 94% 100%, 6% 100%);
+	background-image: url('/Themes/indecisive-bfa/images/orc-vs-human-banner.jpg');
+}
+
+
+
+.map {
+	float: left;
+	background-image: url('/Themes/indecisive-bfa/images/map.jpg');
+	width: 50%;
+	height: 100%;
+	position: relative;
+	background-position: -2% 46%;
+	background-color: $alliance-color;
+	background-blend-mode: luminosity;
+
+	&.horde {
+		background-position-x: 100%;
+		background-position-y: 61%;
+		background-color: $horde-color;
+		// &:before {
+		// 	background: linear-gradient(to right, rgba($horde-color,1) 0%,rgba($horde-color,0.15) 80%,rgba($horde-color,0.15) 100%);
+		// }
+
+	}
+
+	&.alliance {
+
+		&:before {
+			// background: linear-gradient(to right, rgba($alliance-color,0.15) 0%,rgba($alliance-color,0.15) 20%,rgba($alliance-color,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+		}
+	}
+
+	&:before {
+		content: "";
+		width: 100%;
+		height: 100%;
+		position: absolute;
+	}
+
+}
+
+
+.header__background-image {
+	position: absolute;
+    left: 0;
+    top: 0;
+    height: 250px;
+    width: 100%;
 }

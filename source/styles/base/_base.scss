@@ -14,8 +14,9 @@ body {
   margin: 0;
   color: $color-light;
   font-size: $font-size-base;
-  // background-color: $color-background;
   background-image: url('/Themes/indecisive-bfa/images/background-manipulated.jpg');
+  background-blend-mode: luminosity;
+  background-color: $alliance-color;
 }
 
 p {

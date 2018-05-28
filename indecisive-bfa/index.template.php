@@ -219,6 +219,20 @@ function template_body_above() {
 
 	echo '
 	<div class="header-wrap">
+	<div class="header__background-image">
+		<div class="header-background">
+			<div class="map horde">
+				<div class="gradient"></div>
+			</div>
+			<div class="middle-container">
+
+				<div class="middle"></div>
+			</div>
+			<div class="map alliance">
+				<div class="gradient"></div>
+			</div>
+		</div>
+	</div>
 	<div id="header" class="grid-group content--wrapper">
 	<div class="logo">
 	';

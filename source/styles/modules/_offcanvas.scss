@@ -14,9 +14,9 @@
 
 .oncanvas__overlay {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background: $color-fade;
-  position: absolute;
+  position: fixed;
   content: "";
   top: 0;
   left: 0;
@@ -30,7 +30,7 @@
 
 .offcanvas {
   height: 100%;
-  position: absolute;
+  position: fixed;
   right: -$offcanvas-width;
   top: 0;
   width: $offcanvas-width;

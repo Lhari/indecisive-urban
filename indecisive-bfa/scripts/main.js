@@ -19,14 +19,19 @@ jQuery(document).ready(function($) {
     z.innerHTML = '<i class="icon-up-open"></i>';
     document.body.appendChild(z);
 
-    window.addEventListener('scroll', () => {
+    setClass(z)
 
-        if(window.scrollY + window.innerHeight > window.innerHeight) {
-            z.classList = 'scrollToTop'
-        } else {
-            z.classList = 'scrollToTop -hidden'
-        }
+    window.addEventListener('scroll', () => {
+        setClass(z)
     })
+
+    function setClass(element) {
+        if(window.scrollY + window.innerHeight > window.innerHeight) {
+            element.classList = 'scrollToTop'
+        } else {
+            element.classList = 'scrollToTop -hidden'
+        }
+    }
 
     z.addEventListener('click', () => {
         document.querySelector('#header').scrollIntoView({behaviour: "smooth"})

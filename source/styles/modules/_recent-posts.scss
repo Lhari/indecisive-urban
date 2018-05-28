@@ -22,7 +22,7 @@
 		color: $color-light;
 
 		&:before {
- 			margin-right: 5px;
+			margin-right: 5px;
 		}
 	}
 
@@ -62,10 +62,12 @@
 			font-weight: 900;
 			text-transform: uppercase;
 			background-color: #0cb5f9;
-			padding: 3px 6px 3px;
-			border-radius: 5px;
-			font-size: 12px;
+			padding: 0.3em 0.6em;
+			border-radius: 0.5em;
+			font-size: 10px;
 			text-shadow: none;
+			animation: pulse 2s infinite;
+			z-index: -1;
 		}
 	}
 	.recent-post__time {
@@ -99,5 +101,19 @@
 	&.last {
 		border-bottom: 0;
 		//padding-bottom: 0;
+	}
+}
+
+
+
+@keyframes pulse {
+	0% {
+		box-shadow: 0 0 0 0 rgba(#0cb5f9, 0.5);
+	}
+	70% {
+		box-shadow: 0 0 0 10px rgba(#0cb5f9, 0);
+	}
+	100% {
+		box-shadow: 0 0 0 0 rgba(#0cb5f9, 0);
 	}
 }
