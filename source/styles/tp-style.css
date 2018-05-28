@@ -39,6 +39,10 @@
   border-top: 1px solid #FFFFFF;
 }
 
+#tpadmin_content input[type="radio"] {
+  display: inline-block;
+}
+
 /* Standard TP css below */
 
 .tp_container {
