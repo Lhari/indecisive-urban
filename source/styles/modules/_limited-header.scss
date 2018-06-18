@@ -38,13 +38,21 @@
 		display: flex;
 		img {
 			width: 400px;
+
+			@include media('palm') {
+				width: 300px;
+				position: absolute;
+				top: 50px;
+				left: 50%;
+				transform: translateX(-50%);
+			}
 		}
 
 		@include media('lap') {
 			width: 325px;
 		}
 		@include media('palm') {
-			width: 200px;
+			width: 300px;
 		}
 	}
 
@@ -57,12 +65,10 @@
 	}
 
 	#header {
-		// background: url(/Themes/indecisive-bfa/images/bfa-header.jpg);
-		// background: url('/images/bfa-header.jpg');
 	    background-position: 50%;
 	    height: 250px;
-		// border-bottom: 2px solid darken($color-alliance-blue, 0%);
 		z-index: 90;
+		border-bottom: 1px solid rgba(12, 181, 249, 0.4);
 	}
 
 	.content--wrapper {
@@ -200,5 +206,4 @@
     top: 0;
     height: 250px;
 	width: 100%;
-	border-bottom: 1px solid rgba(12, 181, 249, 0.4);
 }
