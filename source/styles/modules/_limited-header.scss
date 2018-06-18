@@ -163,13 +163,13 @@
 	width: 50%;
 	height: 100%;
 	position: relative;
-	background-position: -2% 46%;
+	background-position: 97% 58%;
 	background-color: $alliance-color;
 	background-blend-mode: luminosity;
 
 	&.horde {
-		background-position-x: 100%;
-		background-position-y: 61%;
+		background-position-x: 3%;
+		background-position-y: 62%;
 		background-color: $horde-color;
 		// &:before {
 		// 	background: linear-gradient(to right, rgba($horde-color,1) 0%,rgba($horde-color,0.15) 80%,rgba($horde-color,0.15) 100%);
